@@ -40,7 +40,21 @@ const arenaObserverConfig = {
 };
 const matchSize = (size) => {
     const currentSize = document.querySelector('.level-select-link.active');
-    return !!currentSize && currentSize.innerText === size;
+    let result;
+    if (!!currentSize) {
+        if (size === 'Beginner' && /Beginner|初級|Anfänger|Новичок|Novato|Principiante|Principiante|Débutant|初级|初級|초급/.test(currentSize.innerText) ||
+            size === 'Intermediate' && /Intermediate|中級|Fortgeschrittene|Любитель|Aficionado|Intermédio|Intermedio|Intermédiaire|中级|中級|중급/.test(currentSize.innerText) ||
+            size === 'Expert' && /Expert|上級|Profis|Профессионал|Experimentado|Especialista|Esperto|Expert|高级|高級|상급/.test(currentSize.innerText)) {
+            result = true;
+        }
+        else {
+            result = false;
+        }
+    }
+    else {
+        result = false;
+    }
+    return result;
 };
 const enduranceObserverTarget = document.getElementById('G64');
 let startPathname = '';

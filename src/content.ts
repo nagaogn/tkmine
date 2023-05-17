@@ -47,7 +47,21 @@ const arenaObserverConfig: MutationObserverInit = {
 
 const matchSize = (size: string): boolean => {
 	const currentSize: HTMLElement | null = document.querySelector('.level-select-link.active');
-	return !!currentSize && currentSize.innerText === size;
+	let result;
+	if(!!currentSize) {
+		if(
+			size === 'Beginner' && /Beginner|初級|Anfänger|Новичок|Novato|Principiante|Principiante|Débutant|初级|初級|초급/.test(currentSize.innerText) ||
+			size === 'Intermediate' && /Intermediate|中級|Fortgeschrittene|Любитель|Aficionado|Intermédio|Intermedio|Intermédiaire|中级|中級|중급/.test(currentSize.innerText) ||
+			size === 'Expert' && /Expert|上級|Profis|Профессионал|Experimentado|Especialista|Esperto|Expert|高级|高級|상급/.test(currentSize.innerText)
+		) {
+			result = true;
+		} else {
+			result = false;
+		}
+	} else {
+		result = false;
+	}
+	return result;
 }
 
 // FIXME: 有効じゃないやつは除外したい
