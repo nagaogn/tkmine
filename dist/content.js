@@ -21,7 +21,7 @@ const arenaObserver = new MutationObserver(mutations => {
                 gameStatus.level === level &&
                 gameStatus.elite === elite) {
                 const remainTime = document.getElementById('arena_remain_time');
-                const difficultyRegx = /(?:複雑さ|Difficulty|Schwierigkeit|Сложность|Complejidad|Dificuldade|Difficoltà|Difficulté|难度|難度|난이도): (?:<img src="\/img\/skull.svg" class="diff-icon" alt="Difficulty"\/>)?([\d ]+)/;
+                const difficultyRegx = /(?:複雑さ|Difficulty|Schwierigkeit|Сложность|Complejidad|Dificuldade|Difficoltà|Difficulté|难度|難度|난이도)(?: ?: |：)(?:<img src="\/img\/skull.svg" class="diff-icon" alt="Difficulty"\/>)?([\d ]+)/;
                 const difficulty = difficultyRegx.exec(mutation.target.getAttribute('data-content') ?? '')?.[1].trim();
                 if (remainTime && difficulty !== undefined) {
                     gameStatus.recordWin(remainTime.innerText);
