@@ -20,9 +20,6 @@ const getGameStatus = async () => {
             console.error(`Unexpected category: ${gameStatus.category}`);
         }
     }
-    else {
-        console.error(`'gameStatus' not found in local storage`);
-    }
     return result;
 };
 const removeGameStatus = () => {
