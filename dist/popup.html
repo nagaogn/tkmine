@@ -1,0 +1,58 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<script type="module" src="popup.js"></script>
+	<link rel="stylesheet" href="popup.css">
+</head>
+<body>
+	<h1>タイムキーパー for Minesweeper Online</h1>
+	<div>
+		<label for="arena">
+			<input type="radio" id="arena" name="category" value="arena" checked>
+			アリーナ
+		</label>
+		<label for="endurance">
+			<input type="radio" id="endurance" name="category" value="endurance">
+			耐久
+		</label>
+	</div>
+	<div>
+		<select id="type" name="type">
+			<option value="ticket1">速度</option>
+			<option value="ticket2">速度NG</option>
+			<option value="ticket3">フラグなし</option>
+			<option value="ticket4">効率</option>
+			<option value="ticket5">高難易度</option>
+			<option value="ticket6">ランダム難易度</option>
+			<option value="ticket7">ハードコア</option>
+			<option value="ticket8">ハードコアNG</option>
+			<option value="ticket9">耐久</option>
+			<option value="ticket10">ナイトメア</option>
+		</select>
+		<select id="level" name="level">
+			<option value="L1">L1</option>
+			<option value="L2">L2</option>
+			<option value="L3">L3</option>
+			<option value="L4">L4</option>
+			<option value="L5">L5</option>
+			<option value="L6">L6</option>
+			<option value="L7">L7</option>
+			<option value="L8">L8</option>
+		</select>
+		<label for="elite">
+			<input type="checkbox" id="elite" name="elite" value="E">
+			エリート
+		</label>
+	</div>
+	<div>
+		<select id="size" name="size">
+			<option value="Beginner">初級</option>
+			<option value="Intermediate">中級</option>
+			<option value="Expert">上級</option>
+		</select>
+	</div>
+	<br>
+	<input type="button" id="start" class="blue" value="開始">
+	<input type="button" id="stop" class="red" value="終了">
+</body>
+</html>

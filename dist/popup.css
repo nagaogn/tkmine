@@ -1,0 +1,33 @@
+* {
+	font-size: 14px;
+}
+body {
+	width: 265px;
+}
+div {
+	line-height: 1.5em;
+}
+select {
+	border-radius: 0;
+}
+[type="button"] {
+	padding: 3px 14px;
+	border: none transparent;
+}
+.blue {
+	background-color: #0078e7;
+	color: #fff;
+}
+.red {
+	background-color: #ca3c3c;
+	color: #fff;
+}
+.hide {
+	display: none;
+}
+div:has(#arena:checked) ~ div:has(#size) {
+	display: none;
+}
+div:has(#endurance:checked) ~ div:has(#type) {
+	display: none;
+}
