@@ -64,11 +64,8 @@ const matchSize = (size: string): boolean => {
 	return result;
 }
 
-// FIXME: 有効じゃないやつは除外したい
-// Continue playingの盤面を判別できない
-// プレミアムアカウントならヒントの下のFREEでわかるけど、プレミアムアカウントじゃない場合はわからない
-// pathnameの順番でわかるかとおもったけど、Continue playingのときだけ番号が飛んで、普通のゲームに戻ったら前のゲームに近い番号に戻る。どういう仕様?
-// Spectator modeは対応しなくていい してもいい
+// FIXME: 耐久のカウント対象じゃないやつは除外したい
+// Continue playing、Spectator mode、記録の再生
 const enduranceObserverTarget = document.getElementById('G64') as HTMLElement;
 
 let startPathname = '';
