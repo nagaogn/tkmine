@@ -20,12 +20,12 @@ const getGameStatus = async (): Promise<GameStatus | undefined> => {
 				(gameStatus as Arena).type,
 				(gameStatus as Arena).level,
 				(gameStatus as Arena).elite,
-				gameStatus
+				gameStatus as Arena
 			);
 		} else if(gameStatus.category === ENDURANCE) {
 			result = new Endurance(
 				(gameStatus as Endurance).size,
-				gameStatus
+				gameStatus as Endurance
 			);
 		} else {
 			console.error(`Unexpected category: ${gameStatus.category}`);

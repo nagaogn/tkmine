@@ -28,9 +28,9 @@ const arenaObserver = new MutationObserver(mutations => {
 				const difficultyRegx = /(?:複雑さ|Difficulty|Schwierigkeit|Сложность|Complejidad|Dificuldade|Difficoltà|Difficulté|难度|難度|난이도)(?: ?: |：)(?:<img src="\/img\/skull.svg" class="diff-icon" alt="Difficulty"\/>)?([\d ]+)/;
 				const difficulty = difficultyRegx.exec(mutation.target.getAttribute('data-content') ?? '')?.[1].trim();
 				if(remainTime && difficulty !== undefined) {
-					gameStatus.recordWin(remainTime.innerText);
+					gameStatus.recordWin(wins, remainTime.innerText);
 					// const textToSpeak = `前回${formatSecToHMS(gameStatus.lastGameTime)}, ${wins}回目, 複雑さ${difficulty}, 目標${gameStatus.estimateWinTime(parseInt(difficulty))}`;
-					const textToSpeak = `${wins}回目, 残り${formatSecToHMS(gameStatus.remainTime)}, 複雑さ${difficulty}, 目標${gameStatus.estimateWinTime(parseInt(difficulty))}`;
+					const textToSpeak = `残り${gameStatus.remainGame}回, 残り${formatSecToHMS(gameStatus.remainTime)}, 複雑さ${difficulty}, 目標${gameStatus.estimateWinTime(parseInt(difficulty))}`;
 					chrome.runtime.sendMessage({ action: 'speak', text: textToSpeak });
 					setGameStatus(gameStatus);
 				}

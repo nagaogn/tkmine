@@ -19,17 +19,20 @@ class Arena {
     difficulty;
     wins = 0;
     remainTime;
+    remainGame;
     lastGameTime = 0;
     constructor(type, level, elite, init) {
         this.type = type;
         this.level = level;
         this.elite = elite;
         [this.games, this.timeLimit, this.difficulty] = GAMES_AND_TIME_LIMITS[this.type][this.level][this.elite ? 'elite' : 'classic'];
+        this.remainGame = this.games;
         this.remainTime = this.timeLimit;
         Object.assign(this, init);
     }
-    recordWin(remainTime) {
-        this.wins++;
+    recordWin(wins, remainTime) {
+        this.wins = wins;
+        this.remainGame = this.games - wins + 1;
         const t = this.calcRemainTime(remainTime);
         this.lastGameTime = this.remainTime - t;
         this.remainTime = t;
