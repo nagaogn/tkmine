@@ -69,6 +69,10 @@ class Arena {
 		return result;
 	}
 
+	public getRemainTime() {
+		return formatSecToHMS(this.remainTime);
+	}
+
 	// NOTE:
 	// 1: 複雑さのみを考慮したクリア時間目安
 	// 現ゲームの複雑さ/(平均複雑さ/(全所要時間(秒)/全ゲーム数))

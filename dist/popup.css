@@ -3,6 +3,13 @@
 }
 body {
 	width: 265px;
+	position: relative;
+}
+#options {
+	position: absolute;
+	right: 0;
+	bottom: 0;
+	cursor: pointer;
 }
 div {
 	line-height: 1.5em;
@@ -13,6 +20,7 @@ select {
 [type="button"] {
 	padding: 3px 14px;
 	border: none transparent;
+	cursor: pointer;
 }
 .blue {
 	background-color: #0078e7;

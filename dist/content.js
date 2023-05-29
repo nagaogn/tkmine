@@ -1,6 +1,6 @@
 import { ARENA, Arena } from './arena.js';
 import { ENDURANCE, Endurance } from './endurance.js';
-import { setGameStatus, getGameStatus, formatSecToHMS } from './common.js';
+import { setGameStatus, getGameStatus, getOptions } from './common.js';
 const arenaObserverTarget = document.getElementById('A35');
 const arenaObserver = new MutationObserver(mutations => {
     mutations.forEach(async (mutation) => {
@@ -23,11 +23,27 @@ const arenaObserver = new MutationObserver(mutations => {
                 const remainTime = document.getElementById('arena_remain_time');
                 const difficultyRegx = /(?:複雑さ|Difficulty|Schwierigkeit|Сложность|Complejidad|Dificuldade|Difficoltà|Difficulté|难度|難度|난이도)(?: ?: |：)(?:<img src="\/img\/skull.svg" class="diff-icon" alt="Difficulty"\/>)?([\d ]+)/;
                 const difficulty = difficultyRegx.exec(mutation.target.getAttribute('data-content') ?? '')?.[1].trim();
-                if (remainTime && difficulty !== undefined) {
+                const options = await getOptions();
+                if (remainTime && difficulty && options) {
                     gameStatus.recordWin(wins, remainTime.innerText);
-                    const textToSpeak = `残り${gameStatus.remainGame}回, 残り${formatSecToHMS(gameStatus.remainTime)}, 複雑さ${difficulty}, 目標${gameStatus.estimateWinTime(parseInt(difficulty))}`;
+                    let textToSpeak = '';
+                    if (options.arenaRemainGame) {
+                        textToSpeak += `残り${gameStatus.remainGame}回 `;
+                    }
+                    if (options.arenaRemainTime) {
+                        textToSpeak += `残り${gameStatus.getRemainTime()} `;
+                    }
+                    if (options.arenaDifficulty) {
+                        textToSpeak += `複雑さ${difficulty} `;
+                    }
+                    if (options.arenaTargetTime) {
+                        textToSpeak += `目標${gameStatus.estimateWinTime(parseInt(difficulty))}`;
+                    }
                     chrome.runtime.sendMessage({ action: 'speak', text: textToSpeak });
                     setGameStatus(gameStatus);
+                }
+                else {
+                    console.error(`remainTime: ${remainTime} or difficulty: ${difficulty} or options: ${options} does not exist`);
                 }
             }
         }
@@ -88,10 +104,22 @@ const enduranceObserver = new MutationObserver(mutations => {
                 if (gameStatus instanceof Endurance &&
                     matchSize(gameStatus.size) &&
                     gameStatus.isCorrectWinPathname(winPathname)) {
-                    gameStatus.recordWin(winPathname);
-                    const textToSpeak = `${gameStatus.getWins()}回目, ${gameStatus.getElapsedTime()}`;
-                    chrome.runtime.sendMessage({ action: 'speak', text: textToSpeak });
-                    setGameStatus(gameStatus);
+                    const options = await getOptions();
+                    if (options) {
+                        gameStatus.recordWin(winPathname);
+                        let textToSpeak = '';
+                        if (options.enduranceWins) {
+                            textToSpeak += `${gameStatus.getWins()}回目 `;
+                        }
+                        if (options.enduranceElapsedTime) {
+                            textToSpeak += `${gameStatus.getElapsedTime()}`;
+                        }
+                        chrome.runtime.sendMessage({ action: 'speak', text: textToSpeak });
+                        setGameStatus(gameStatus);
+                    }
+                    else {
+                        console.error(`options: ${options} does not exist`);
+                    }
                 }
                 else {
                     winPathname = tmpPathname;

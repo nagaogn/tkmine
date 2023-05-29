@@ -1,7 +1,7 @@
 import { ARENA, Arena } from './arena.js';
 import { ENDURANCE, Endurance } from './endurance.js';
 
-export { GameStatus, setGameStatus, getGameStatus, removeGameStatus, formatSecToHMS };
+export { GameStatus, setGameStatus, getGameStatus, removeGameStatus, formatSecToHMS, Options, setOptions, getOptions };
 
 type GameStatus = Arena | Endurance;
 
@@ -46,4 +46,25 @@ const formatSecToHMS = (sec: number) => {
 	result += m === 0 ? '' : `${m}分`;
 	result += s === 0 ? '' : `${s}秒`;
 	return result;
+}
+
+interface Options {
+    arenaRemainGame: boolean;
+    arenaRemainTime: boolean;
+    arenaMineDensity: boolean;
+    arenaDifficulty: boolean;
+    arenaWinProbability: boolean;
+    arenaTargetTime: boolean;
+    enduranceWins: boolean;
+    enduranceElapsedTime: boolean;
+}
+
+const setOptions = (options: Options) => {
+	chrome.storage.local.set({ options: options });
+}
+
+const getOptions = async (): Promise<Options | undefined> => {
+	return await new Promise(resolve => {
+		chrome.storage.local.get('options', result => resolve(result.options));
+	});
 }

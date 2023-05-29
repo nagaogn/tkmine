@@ -72,3 +72,7 @@ import { setGameStatus, getGameStatus, removeGameStatus } from './common.js';
 	});
 	window.close();
 }
+
+(document.getElementById('options') as HTMLElement).onclick = () => {
+	chrome.runtime.openOptionsPage();
+}

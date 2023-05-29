@@ -76,3 +76,6 @@ document.getElementById('stop').onclick = () => {
     });
     window.close();
 };
+document.getElementById('options').onclick = () => {
+    chrome.runtime.openOptionsPage();
+};

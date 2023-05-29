@@ -1,0 +1,62 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<title>タイムキーパー for Minesweeper Online: Options</title>
+	<script type="module" src="options.js"></script>
+</head>
+<body>
+<h2>タイムキーパー for Minesweeper Online</h2>
+<h3>アリーナ</h3>
+<div>
+	<label for="arenaRemainGame">
+		<input type="checkbox" id="arenaRemainGame" name="arenaRemainGame" value="arenaRemainGame">
+		残りゲーム数
+	</label>
+</div>
+<div>
+	<label for="arenaRemainTime">
+		<input type="checkbox" id="arenaRemainTime" name="arenaRemainTime" value="arenaRemainTime">
+		残り時間
+	</label>
+</div>
+<div>
+	<label for="arenaMineDensity">
+		<input type="checkbox" id="arenaMineDensity" name="arenaMineDensity" value="arenaMineDensity">
+		爆弾の密度
+	</label>
+</div>
+<div>
+	<label for="arenaDifficulty">
+		<input type="checkbox" id="arenaDifficulty" name="arenaDifficulty" value="arenaDifficulty">
+		複雑さ
+	</label>
+</div>
+<div>
+	<label for="arenaWinProbability">
+		<input type="checkbox" id="arenaWinProbability" name="arenaWinProbability" value="arenaWinProbability">
+		勝率
+	</label>
+</div>
+<div>
+	<label for="arenaTargetTime">
+		<input type="checkbox" id="arenaTargetTime" name="arenaTargetTime" value="arenaTargetTime">
+		目標時間　計算式: 現ゲームの複雑さ/(平均複雑さ/(全所要時間/全ゲーム数))
+	</label>
+</div>
+<h3>耐久</h3>
+<div>
+	<label for="enduranceWins">
+		<input type="checkbox" id="enduranceWins" name="enduranceWins" value="enduranceWins">
+		勝利数
+	</label>
+</div>
+<div>
+	<label for="enduranceElapsedTime">
+		<input type="checkbox" id="enduranceElapsedTime" name="enduranceElapsedTime" value="enduranceElapsedTime">
+		経過時間
+	</label>
+</div>
+<br>
+<input type="button" id="save" value="保存">
+</body>
+</html>

@@ -59,6 +59,9 @@ class Arena {
         }
         return result;
     }
+    getRemainTime() {
+        return formatSecToHMS(this.remainTime);
+    }
     estimateWinTime(difficulty) {
         const result = Math.trunc(difficulty / (this.difficulty / (this.timeLimit / this.games)));
         return formatSecToHMS(result);

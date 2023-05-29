@@ -1,9 +1,25 @@
-﻿const ttsOption = { lang:'ja' };
+﻿import { Options, setOptions } from './common.js';
+
+const ttsOption = { lang:'ja' };
 
 chrome.runtime.onMessage.addListener(request => {
 	if (request.action === 'speak') {
 		chrome.tts.speak(request.text, ttsOption);
 	}
+});
+
+chrome.runtime.onInstalled.addListener(() => {
+	const options: Options = {
+		arenaRemainGame: true,
+		arenaRemainTime: true,
+		arenaMineDensity: false,
+		arenaDifficulty: false,
+		arenaWinProbability: false,
+		arenaTargetTime: false,
+		enduranceWins: true,
+		enduranceElapsedTime: true
+	}
+	setOptions(options);
 });
 
 //TODO アイコンを動的に変える
