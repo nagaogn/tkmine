@@ -2,6 +2,15 @@
 import { ENDURANCE, Endurance } from './endurance.js';
 import { setGameStatus, getGameStatus, getOptions } from './common.js';
 
+const utterance = new SpeechSynthesisUtterance();
+utterance.lang = 'ja-JP';
+
+const speak = (text: string, volume: number = 0.5) => {
+	utterance.text = text;
+	utterance.volume = volume;
+	speechSynthesis.speak(utterance);
+} 
+
 const arenaObserverTarget = document.getElementById('A35') as HTMLElement;
 
 const arenaObserver = new MutationObserver(mutations => {
@@ -32,18 +41,18 @@ const arenaObserver = new MutationObserver(mutations => {
 					gameStatus.recordWin(wins, remainTime.innerText);
 					let textToSpeak = '';
 					if(options.arenaRemainGame) {
-						textToSpeak += `残り${gameStatus.remainGame}回 `
+						textToSpeak += `残り${gameStatus.remainGame}回 `;
 					}
 					if(options.arenaRemainTime) {
-						textToSpeak += `残り${gameStatus.getRemainTime()} `
+						textToSpeak += `残り${gameStatus.getRemainTime()} `;
 					}
 					if(options.arenaDifficulty) {
-						textToSpeak += `複雑さ${difficulty} `
+						textToSpeak += `複雑さ${difficulty} `;
 					}
 					if(options.arenaTargetTime) {
-						textToSpeak += `目標${gameStatus.estimateWinTime(parseInt(difficulty))}`
+						textToSpeak += `目標${gameStatus.estimateWinTime(parseInt(difficulty))}`;
 					}
-					chrome.runtime.sendMessage({ action: 'speak', text: textToSpeak });
+					speak(textToSpeak, options.volume);
 					setGameStatus(gameStatus);
 				} else {
 					console.error(`remainTime: ${remainTime} or difficulty: ${difficulty} or options: ${options} does not exist`);
@@ -134,7 +143,7 @@ const enduranceObserver = new MutationObserver(mutations => {
 						if(options.enduranceElapsedTime) {
 							textToSpeak += `${gameStatus.getElapsedTime()}`;
 						}
-						chrome.runtime.sendMessage({ action: 'speak', text: textToSpeak });
+						speak(textToSpeak, options.volume);
 						setGameStatus(gameStatus);
 					} else {
 						console.error(`options: ${options} does not exist`);

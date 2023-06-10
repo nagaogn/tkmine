@@ -6,10 +6,7 @@
 	"description": "Minesweeper Onlineのアリーナや耐久のプレイ中にガイド音声を出す",
 	"permissions": [
 		"storage",
-		"tts",
-		"webNavigation",
-		"tabs",
-		"history"
+		"tabs"
 	],
 	"action": {
 		"default_title": "タイムキーパー for Minesweeper Online",

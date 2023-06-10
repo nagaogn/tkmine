@@ -1,6 +1,13 @@
 import { ARENA, Arena } from './arena.js';
 import { ENDURANCE, Endurance } from './endurance.js';
 import { setGameStatus, getGameStatus, getOptions } from './common.js';
+const utterance = new SpeechSynthesisUtterance();
+utterance.lang = 'ja-JP';
+const speak = (text, volume = 0.5) => {
+    utterance.text = text;
+    utterance.volume = volume;
+    speechSynthesis.speak(utterance);
+};
 const arenaObserverTarget = document.getElementById('A35');
 const arenaObserver = new MutationObserver(mutations => {
     mutations.forEach(async (mutation) => {
@@ -39,7 +46,7 @@ const arenaObserver = new MutationObserver(mutations => {
                     if (options.arenaTargetTime) {
                         textToSpeak += `目標${gameStatus.estimateWinTime(parseInt(difficulty))}`;
                     }
-                    chrome.runtime.sendMessage({ action: 'speak', text: textToSpeak });
+                    speak(textToSpeak, options.volume);
                     setGameStatus(gameStatus);
                 }
                 else {
@@ -114,7 +121,7 @@ const enduranceObserver = new MutationObserver(mutations => {
                         if (options.enduranceElapsedTime) {
                             textToSpeak += `${gameStatus.getElapsedTime()}`;
                         }
-                        chrome.runtime.sendMessage({ action: 'speak', text: textToSpeak });
+                        speak(textToSpeak, options.volume);
                         setGameStatus(gameStatus);
                     }
                     else {

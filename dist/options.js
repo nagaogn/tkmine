@@ -2,6 +2,7 @@ import { setOptions, getOptions } from './common.js';
 (async () => {
     const options = await getOptions();
     if (options) {
+        document.getElementById('volume').value = options.volume.toString();
         document.getElementById('arenaRemainGame').checked = options.arenaRemainGame;
         document.getElementById('arenaRemainTime').checked = options.arenaRemainTime;
         document.getElementById('arenaMineDensity').checked = options.arenaMineDensity;
@@ -16,6 +17,7 @@ import { setOptions, getOptions } from './common.js';
     }
 })();
 document.getElementById('save').onclick = () => {
+    const volume = parseFloat(document.getElementById('volume').value);
     const arenaRemainGame = document.getElementById('arenaRemainGame').checked;
     const arenaRemainTime = document.getElementById('arenaRemainTime').checked;
     const arenaMineDensity = document.getElementById('arenaMineDensity').checked;
@@ -25,6 +27,7 @@ document.getElementById('save').onclick = () => {
     const enduranceWins = document.getElementById('enduranceWins').checked;
     const enduranceElapsedTime = document.getElementById('enduranceElapsedTime').checked;
     const options = {
+        volume,
         arenaRemainGame,
         arenaRemainTime,
         arenaMineDensity,

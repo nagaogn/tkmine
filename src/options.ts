@@ -3,6 +3,7 @@
 (async () => {
     const options = await getOptions();
     if(options) {
+        (document.getElementById('volume') as HTMLInputElement).value = options.volume.toString();
         (document.getElementById('arenaRemainGame') as HTMLInputElement).checked = options.arenaRemainGame;
         (document.getElementById('arenaRemainTime') as HTMLInputElement).checked = options.arenaRemainTime;
         (document.getElementById('arenaMineDensity') as HTMLInputElement).checked = options.arenaMineDensity;
@@ -17,6 +18,7 @@
 })();
 
 (document.getElementById('save') as HTMLElement).onclick = () => {
+    const volume = parseFloat((document.getElementById('volume') as HTMLInputElement).value);
     const arenaRemainGame = (document.getElementById('arenaRemainGame') as HTMLInputElement).checked;
     const arenaRemainTime = (document.getElementById('arenaRemainTime') as HTMLInputElement).checked;
     const arenaMineDensity = (document.getElementById('arenaMineDensity') as HTMLInputElement).checked;
@@ -26,6 +28,7 @@
     const enduranceWins = (document.getElementById('enduranceWins') as HTMLInputElement).checked;
     const enduranceElapsedTime = (document.getElementById('enduranceElapsedTime') as HTMLInputElement).checked;
     const options: Options = {
+        volume,
         arenaRemainGame,
         arenaRemainTime,
         arenaMineDensity,
