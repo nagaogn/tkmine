@@ -41,16 +41,16 @@ const arenaObserver = new MutationObserver(mutations => {
 					gameStatus.recordWin(wins, remainTime.innerText);
 					let textToSpeak = '';
 					if(options.arenaRemainGame) {
-						textToSpeak += `残り${gameStatus.remainGame}回 `;
+						textToSpeak += `残り,${gameStatus.remainGame}回.`;
 					}
 					if(options.arenaRemainTime) {
-						textToSpeak += `残り${gameStatus.getRemainTime()} `;
+						textToSpeak += `残り,${gameStatus.getRemainTime()}.`;
 					}
 					if(options.arenaDifficulty) {
-						textToSpeak += `複雑さ${difficulty} `;
+						textToSpeak += `複雑さ,${difficulty}.`;
 					}
 					if(options.arenaTargetTime) {
-						textToSpeak += `目標${gameStatus.estimateWinTime(parseInt(difficulty))}`;
+						textToSpeak += `目標,${gameStatus.estimateWinTime(parseInt(difficulty))}.`;
 					}
 					speak(textToSpeak, options.volume);
 					setGameStatus(gameStatus);
@@ -138,10 +138,10 @@ const enduranceObserver = new MutationObserver(mutations => {
 						gameStatus.recordWin(winPathname);
 						let textToSpeak = '';
 						if(options.enduranceWins) {
-							textToSpeak += `${gameStatus.getWins()}回目 `;
+							textToSpeak += `${gameStatus.getWins()}回目.`;
 						}
 						if(options.enduranceElapsedTime) {
-							textToSpeak += `${gameStatus.getElapsedTime()}`;
+							textToSpeak += `${gameStatus.getElapsedTime()}.`;
 						}
 						speak(textToSpeak, options.volume);
 						setGameStatus(gameStatus);
@@ -193,6 +193,7 @@ chrome.runtime.onMessage.addListener(request => {
 	} else if(request.action === 'stop'){
 		arenaObserver.disconnect();
 		enduranceObserver.disconnect();
+		// TODO: 時間のほうも止める
 	} else {
 		console.error(`Invalid action: ${request.action}`);
 	}
