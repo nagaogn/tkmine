@@ -10,6 +10,7 @@ chrome.runtime.onInstalled.addListener((details) => {
 			arenaDifficulty: false,
 			arenaWinProbability: false,
 			arenaTargetTime: false,
+			arenaTheatreMode: false,
 			enduranceWins: true,
 			enduranceElapsedTime: true
 		}

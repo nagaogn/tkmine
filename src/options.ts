@@ -10,6 +10,7 @@
         (document.getElementById('arenaDifficulty') as HTMLInputElement).checked = options.arenaDifficulty;
         (document.getElementById('arenaWinProbability') as HTMLInputElement).checked = options.arenaWinProbability;
         (document.getElementById('arenaTargetTime') as HTMLInputElement).checked = options.arenaTargetTime;
+        (document.getElementById('arenaTheatreMode') as HTMLInputElement).checked = options.arenaTheatreMode;
         (document.getElementById('enduranceWins') as HTMLInputElement).checked = options.enduranceWins;
         (document.getElementById('enduranceElapsedTime') as HTMLInputElement).checked = options.enduranceElapsedTime;
     } else {
@@ -25,6 +26,7 @@
     const arenaDifficulty = (document.getElementById('arenaDifficulty') as HTMLInputElement).checked;
     const arenaWinProbability = (document.getElementById('arenaWinProbability') as HTMLInputElement).checked;
     const arenaTargetTime = (document.getElementById('arenaTargetTime') as HTMLInputElement).checked;
+    const arenaTheatreMode = (document.getElementById('arenaTheatreMode') as HTMLInputElement).checked;
     const enduranceWins = (document.getElementById('enduranceWins') as HTMLInputElement).checked;
     const enduranceElapsedTime = (document.getElementById('enduranceElapsedTime') as HTMLInputElement).checked;
     const options: Options = {
@@ -35,6 +37,7 @@
         arenaDifficulty,
         arenaWinProbability,
         arenaTargetTime,
+        arenaTheatreMode,
         enduranceWins,
         enduranceElapsedTime,
     };

@@ -9,6 +9,7 @@ import { setOptions, getOptions } from './common.js';
         document.getElementById('arenaDifficulty').checked = options.arenaDifficulty;
         document.getElementById('arenaWinProbability').checked = options.arenaWinProbability;
         document.getElementById('arenaTargetTime').checked = options.arenaTargetTime;
+        document.getElementById('arenaTheatreMode').checked = options.arenaTheatreMode;
         document.getElementById('enduranceWins').checked = options.enduranceWins;
         document.getElementById('enduranceElapsedTime').checked = options.enduranceElapsedTime;
     }
@@ -24,6 +25,7 @@ document.getElementById('save').onclick = () => {
     const arenaDifficulty = document.getElementById('arenaDifficulty').checked;
     const arenaWinProbability = document.getElementById('arenaWinProbability').checked;
     const arenaTargetTime = document.getElementById('arenaTargetTime').checked;
+    const arenaTheatreMode = document.getElementById('arenaTheatreMode').checked;
     const enduranceWins = document.getElementById('enduranceWins').checked;
     const enduranceElapsedTime = document.getElementById('enduranceElapsedTime').checked;
     const options = {
@@ -34,6 +36,7 @@ document.getElementById('save').onclick = () => {
         arenaDifficulty,
         arenaWinProbability,
         arenaTargetTime,
+        arenaTheatreMode,
         enduranceWins,
         enduranceElapsedTime,
     };

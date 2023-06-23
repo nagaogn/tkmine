@@ -54,6 +54,15 @@ const arenaObserver = new MutationObserver(mutations => {
 					}
 					speak(textToSpeak, options.volume);
 					setGameStatus(gameStatus);
+					if(options.arenaTheatreMode) {
+						const shadow = document.getElementById('shadow');
+						const themeSwitcher = document.getElementById('theme-switcher');
+						if(shadow?.style.display !== 'block' && themeSwitcher){
+							Array.from(themeSwitcher.getElementsByTagName('a')).find(a => 
+								/ (Theatre mode|シアターモード|Theatermodus|Режим кинотеатра|Modo teatro|Modo Teatro|Modalità teatro|Mode théâtre|剧院模式|劇院模式|극장 모드)/.test(a.textContent ?? '')
+							)?.click();
+						}
+					}
 				} else {
 					console.error(`remainTime: ${remainTime} or difficulty: ${difficulty} or options: ${options} does not exist`);
 				}
@@ -165,10 +174,16 @@ const enduranceObserveConfig: MutationObserverInit = {
 
 const guideArena = () => {
 	arenaObserver.observe(arenaObserverTarget, arenaObserverConfig);
+	// TODO:
+	// setInterval(); 画面のタイマーかremainTimeを見てn分おきに通知
+	// setIntervalじゃなくてobserverで画面のタイマーを監視したほうがいいかも
 }
 
 const guideEndurance = () => {
 	enduranceObserver.observe(enduranceObserverTarget, enduranceObserveConfig);
+	// TODO:
+	// setInterval(); 経過時間を見てn分おきに通知
+	// getElapsedTimeは最後の勝利までの時間だからそのまま使えない
 }
 
 getGameStatus().then(gameStatus => {

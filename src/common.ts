@@ -56,6 +56,7 @@ interface Options {
     arenaDifficulty: boolean;
     arenaWinProbability: boolean;
     arenaTargetTime: boolean;
+    arenaTheatreMode: boolean;
     enduranceWins: boolean;
     enduranceElapsedTime: boolean;
 }
