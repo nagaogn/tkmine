@@ -66,7 +66,8 @@ import { setGameStatus, getGameStatus, removeGameStatus } from './common.js';
 	chrome.tabs.query({ url: 'https://minesweeper.online/*' }, tabs => {
 		tabs.forEach(tab => {
 			if(tab.id) {
-				chrome.tabs.sendMessage(tab.id, { action: 'stop' });
+				const category = (document.querySelector('[name="category"]:checked') as HTMLInputElement).value;
+				chrome.tabs.sendMessage(tab.id, { action: 'stop', category: category });
 			}
 		});
 	});

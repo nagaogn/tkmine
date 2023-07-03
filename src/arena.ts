@@ -1,7 +1,6 @@
 export { ARENA, Arena, isGameType, isLevelType };
 import { formatSecToHMS } from './common.js';
 
-
 const ARENA = 'arena' as const;
 
 const gameType = ['ticket1', 'ticket2', 'ticket3', 'ticket4', 'ticket5', 'ticket6', 'ticket7', 'ticket8', 'ticket9', 'ticket10'] as const;
@@ -48,7 +47,7 @@ class Arena {
 		this.remainTime = t;
 	}
 
-	protected calcRemainTime(remainTime : string): number {
+	public calcRemainTime(remainTime : string): number {
 		const pattern = /^(\+|–)?(?:(\d{2,3}):)?(\d{2}):(\d{2})$/;
 		const match = remainTime.match(pattern);
 		let result = 0;
@@ -67,10 +66,6 @@ class Arena {
 			console.error(`Invalid format: ${remainTime}`);
 		}
 		return result;
-	}
-
-	public getRemainTime() {
-		return formatSecToHMS(this.remainTime);
 	}
 
 	// NOTE:

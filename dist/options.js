@@ -5,6 +5,7 @@ import { setOptions, getOptions } from './common.js';
         document.getElementById('volume').value = options.volume.toString();
         document.getElementById('arenaRemainGame').checked = options.arenaRemainGame;
         document.getElementById('arenaRemainTime').checked = options.arenaRemainTime;
+        document.getElementById('arenaRemainTimeNotifyInterval').value = options.arenaRemainTimeNotifyInterval.toString();
         document.getElementById('arenaMineDensity').checked = options.arenaMineDensity;
         document.getElementById('arenaDifficulty').checked = options.arenaDifficulty;
         document.getElementById('arenaWinProbability').checked = options.arenaWinProbability;
@@ -12,15 +13,17 @@ import { setOptions, getOptions } from './common.js';
         document.getElementById('arenaTheatreMode').checked = options.arenaTheatreMode;
         document.getElementById('enduranceWins').checked = options.enduranceWins;
         document.getElementById('enduranceElapsedTime').checked = options.enduranceElapsedTime;
+        document.getElementById('enduranceElapsedTimeNotifyInterval').value = options.enduranceElapsedTimeNotifyInterval.toString();
     }
     else {
         console.error(`options does not exist`);
     }
 })();
 document.getElementById('save').onclick = () => {
-    const volume = parseFloat(document.getElementById('volume').value);
+    const volume = Number(document.getElementById('volume').value);
     const arenaRemainGame = document.getElementById('arenaRemainGame').checked;
     const arenaRemainTime = document.getElementById('arenaRemainTime').checked;
+    const arenaRemainTimeNotifyInterval = Math.trunc(Number(document.getElementById('arenaRemainTimeNotifyInterval').value));
     const arenaMineDensity = document.getElementById('arenaMineDensity').checked;
     const arenaDifficulty = document.getElementById('arenaDifficulty').checked;
     const arenaWinProbability = document.getElementById('arenaWinProbability').checked;
@@ -28,10 +31,12 @@ document.getElementById('save').onclick = () => {
     const arenaTheatreMode = document.getElementById('arenaTheatreMode').checked;
     const enduranceWins = document.getElementById('enduranceWins').checked;
     const enduranceElapsedTime = document.getElementById('enduranceElapsedTime').checked;
+    const enduranceElapsedTimeNotifyInterval = Math.trunc(Number(document.getElementById('enduranceElapsedTimeNotifyInterval').value));
     const options = {
         volume,
         arenaRemainGame,
         arenaRemainTime,
+        arenaRemainTimeNotifyInterval,
         arenaMineDensity,
         arenaDifficulty,
         arenaWinProbability,
@@ -39,6 +44,7 @@ document.getElementById('save').onclick = () => {
         arenaTheatreMode,
         enduranceWins,
         enduranceElapsedTime,
+        enduranceElapsedTimeNotifyInterval
     };
     setOptions(options);
 };

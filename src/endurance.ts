@@ -1,5 +1,5 @@
 export { ENDURANCE, Endurance, isSizeType };
-import { formatSecToHMS } from './common.js';
+import { formatSecToHM, formatSecToHMS } from './common.js';
 
 const ENDURANCE = 'endurance' as const;
 
@@ -26,7 +26,7 @@ class Endurance {
 	}
 
 	protected recordStartTime() {
-		this.startTimes.push(new Date().toISOString());
+		this.startTimes.push(new Date().toISOString());// NOTE: Date型のままだと保存できない
 	}
 
 	protected recordStartPathname(pathname: string) {
@@ -71,9 +71,26 @@ class Endurance {
 		const start = new Date(this.startTimes[
 			this.startPathnames.indexOf(this.winPathnames[0])
 		]).getTime();
+		const now = new Date().getTime();
+		const recordTime = Math.trunc((now - start) / 1000);
+		return recordTime;
+	}
+
+	public getElapsedTimeHM() {
+		return formatSecToHM(this.getElapsedTime());
+	}
+
+	public getRecordTime() {
+		const start = new Date(this.startTimes[
+			this.startPathnames.indexOf(this.winPathnames[0])
+		]).getTime();
 		const last = new Date(this.winTimes.slice(-1)[0]).getTime();
-		const elapsedTime = Math.trunc((last - start) / 1000);
-		return formatSecToHMS(elapsedTime);
+		const recordTime = Math.trunc((last - start) / 1000);
+		return recordTime;
+	}
+
+	public getRecordTimeHMS() {
+		return formatSecToHMS(this.getRecordTime());
 	}
 
 	public getWins() {

@@ -20,8 +20,16 @@
 <div>
 	<label for="arenaRemainTime">
 		<input type="checkbox" id="arenaRemainTime" name="arenaRemainTime" value="arenaRemainTime">
-		残り時間
+		残り時間　
 	</label>
+	<select id="arenaRemainTimeNotifyInterval" name="arenaRemainTimeNotifyInterval">
+		<option value="1">1</option>
+		<option value="5">5</option>
+		<option value="10">10</option>
+		<option value="15">15</option>
+		<option value="30">30</option>
+	</select>
+	分に1回
 </div>
 <div>
 	<label for="arenaMineDensity">
@@ -63,8 +71,16 @@
 <div>
 	<label for="enduranceElapsedTime">
 		<input type="checkbox" id="enduranceElapsedTime" name="enduranceElapsedTime" value="enduranceElapsedTime">
-		経過時間
+		経過時間　
 	</label>
+	<select id="enduranceElapsedTimeNotifyInterval" name="enduranceElapsedTimeNotifyInterval">
+		<option value="1">1</option>
+		<option value="5">5</option>
+		<option value="10">10</option>
+		<option value="15">15</option>
+		<option value="30">30</option>
+	</select>
+	分に1回
 </div>
 <br>
 <input type="button" id="save" value="保存">

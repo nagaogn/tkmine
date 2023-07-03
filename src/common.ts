@@ -1,7 +1,7 @@
 import { ARENA, Arena } from './arena.js';
 import { ENDURANCE, Endurance } from './endurance.js';
 
-export { GameStatus, setGameStatus, getGameStatus, removeGameStatus, formatSecToHMS, Options, setOptions, getOptions };
+export { GameStatus, setGameStatus, getGameStatus, removeGameStatus, formatSecToHM, formatSecToHMS, Options, setOptions, getOptions };
 
 type GameStatus = Arena | Endurance;
 
@@ -38,6 +38,14 @@ const removeGameStatus = () => {
 	chrome.storage.local.remove('gameStatus');
 }
 
+const formatSecToHM = (sec: number) => {
+	const h = Math.trunc(sec / 3600);
+	const m = Math.trunc((sec % 3600) / 60);
+	let result = h === 0 ? '' : `${h}時間`;
+	result += m === 0 ? '' : `${m}分`;
+	return result;
+}
+
 const formatSecToHMS = (sec: number) => {
 	const h = Math.trunc(sec / 3600);
 	const m = Math.trunc((sec % 3600) / 60);
@@ -52,6 +60,7 @@ interface Options {
 	volume: number;
     arenaRemainGame: boolean;
     arenaRemainTime: boolean;
+	arenaRemainTimeNotifyInterval: number;
     arenaMineDensity: boolean;
     arenaDifficulty: boolean;
     arenaWinProbability: boolean;
@@ -59,6 +68,7 @@ interface Options {
     arenaTheatreMode: boolean;
     enduranceWins: boolean;
     enduranceElapsedTime: boolean;
+	enduranceElapsedTimeNotifyInterval: number;
 }
 
 const setOptions = (options: Options) => {

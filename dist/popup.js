@@ -70,7 +70,8 @@ document.getElementById('stop').onclick = () => {
     chrome.tabs.query({ url: 'https://minesweeper.online/*' }, tabs => {
         tabs.forEach(tab => {
             if (tab.id) {
-                chrome.tabs.sendMessage(tab.id, { action: 'stop' });
+                const category = document.querySelector('[name="category"]:checked').value;
+                chrome.tabs.sendMessage(tab.id, { action: 'stop', category: category });
             }
         });
     });

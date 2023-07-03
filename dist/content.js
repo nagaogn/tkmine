@@ -1,6 +1,6 @@
 import { ARENA, Arena } from './arena.js';
 import { ENDURANCE, Endurance } from './endurance.js';
-import { setGameStatus, getGameStatus, getOptions } from './common.js';
+import { setGameStatus, getGameStatus, formatSecToHM, getOptions } from './common.js';
 const utterance = new SpeechSynthesisUtterance();
 utterance.lang = 'ja-JP';
 const speak = (text, volume = 0.5) => {
@@ -35,16 +35,13 @@ const arenaObserver = new MutationObserver(mutations => {
                     gameStatus.recordWin(wins, remainTime.innerText);
                     let textToSpeak = '';
                     if (options.arenaRemainGame) {
-                        textToSpeak += `残り,${gameStatus.remainGame}回.`;
-                    }
-                    if (options.arenaRemainTime) {
-                        textToSpeak += `残り,${gameStatus.getRemainTime()}.`;
+                        textToSpeak += `残り, ${gameStatus.remainGame}回, `;
                     }
                     if (options.arenaDifficulty) {
-                        textToSpeak += `複雑さ,${difficulty}.`;
+                        textToSpeak += `複雑さ, ${difficulty}, `;
                     }
                     if (options.arenaTargetTime) {
-                        textToSpeak += `目標,${gameStatus.estimateWinTime(parseInt(difficulty))}.`;
+                        textToSpeak += `目標, ${gameStatus.estimateWinTime(parseInt(difficulty))}, `;
                     }
                     speak(textToSpeak, options.volume);
                     setGameStatus(gameStatus);
@@ -57,7 +54,7 @@ const arenaObserver = new MutationObserver(mutations => {
                     }
                 }
                 else {
-                    console.error(`remainTime: ${remainTime} or difficulty: ${difficulty} or options: ${options} does not exist`);
+                    console.error(`difficulty: ${difficulty} or options: ${options} does not exist`);
                 }
             }
         }
@@ -67,6 +64,44 @@ const arenaObserverConfig = {
     attributes: true,
     attributeFilter: ['data-content'],
     subtree: true
+};
+let arenaNextNotificationTime = Infinity;
+const arenaTimeObserver = new MutationObserver(mutations => {
+    mutations.forEach(async (mutation) => {
+        if (mutation.target instanceof HTMLElement &&
+            mutation.target.id === 'arena_remain_time') {
+            const options = await getOptions();
+            if (options &&
+                options.arenaRemainTime) {
+                const gameStatus = await getGameStatus();
+                if (gameStatus instanceof Arena) {
+                    const remainTime = gameStatus.calcRemainTime(mutation.target.innerText);
+                    const remainTimeInMinutes = Math.trunc(remainTime / 60);
+                    console.log(`remainTime: ${remainTime}`);
+                    console.log(`remainTimeInMinutes: ${remainTimeInMinutes}`);
+                    console.log(`arenaNextNotificationTime: ${arenaNextNotificationTime}`);
+                    if (remainTimeInMinutes < arenaNextNotificationTime) {
+                        const textToSpeak = `${formatSecToHM(remainTime + 60)}, `;
+                        speak(textToSpeak, options.volume);
+                        arenaNextNotificationTime = Math.floor(remainTimeInMinutes / options.arenaRemainTimeNotifyInterval) * options.arenaRemainTimeNotifyInterval;
+                    }
+                }
+            }
+        }
+    });
+});
+const arenaTimeObserverConfig = {
+    childList: true,
+    subtree: true
+};
+const startArena = () => {
+    arenaObserver.observe(arenaObserverTarget, arenaObserverConfig);
+    arenaNextNotificationTime = Infinity;
+    arenaTimeObserver.observe(arenaObserverTarget, arenaTimeObserverConfig);
+};
+const stopArena = () => {
+    arenaObserver.disconnect();
+    arenaTimeObserver.disconnect();
 };
 const matchSize = (size) => {
     const currentSize = document.querySelector('.level-select-link.active');
@@ -122,11 +157,13 @@ const enduranceObserver = new MutationObserver(mutations => {
                     if (options) {
                         gameStatus.recordWin(winPathname);
                         let textToSpeak = '';
-                        if (options.enduranceWins) {
-                            textToSpeak += `${gameStatus.getWins()}回目.`;
+                        if (options.enduranceWins &&
+                            gameStatus.getWins() < 100) {
+                            textToSpeak += `${gameStatus.getWins()}回, `;
                         }
-                        if (options.enduranceElapsedTime) {
-                            textToSpeak += `${gameStatus.getElapsedTime()}.`;
+                        if (options.enduranceElapsedTime &&
+                            gameStatus.getWins() >= 100) {
+                            textToSpeak += `${gameStatus.getRecordTimeHMS()}, `;
                         }
                         speak(textToSpeak, options.volume);
                         setGameStatus(gameStatus);
@@ -148,37 +185,66 @@ const enduranceObserveConfig = {
     attributeOldValue: true,
     subtree: true
 };
-const guideArena = () => {
-    arenaObserver.observe(arenaObserverTarget, arenaObserverConfig);
-};
-const guideEndurance = () => {
+let intervalId = null;
+const startEndurance = () => {
     enduranceObserver.observe(enduranceObserverTarget, enduranceObserveConfig);
+    let nextNotificationTime = 0;
+    intervalId = setInterval(async () => {
+        const options = await getOptions();
+        if (options &&
+            options.enduranceElapsedTime) {
+            const gameStatus = await getGameStatus();
+            if (gameStatus instanceof Endurance &&
+                gameStatus.getWins() < 100) {
+                const elapsedTimeInMinutes = gameStatus.getElapsedTime() / 60;
+                if (elapsedTimeInMinutes >= nextNotificationTime) {
+                    const textToSpeak = `${gameStatus.getElapsedTimeHM()}, `;
+                    speak(textToSpeak, options.volume);
+                    nextNotificationTime = Math.ceil((elapsedTimeInMinutes + 1) / options.enduranceElapsedTimeNotifyInterval) * options.enduranceElapsedTimeNotifyInterval;
+                }
+            }
+        }
+    }, 1000);
+};
+const stopEndurance = () => {
+    enduranceObserver.disconnect();
+    if (intervalId !== null) {
+        clearInterval(intervalId);
+        intervalId = null;
+    }
 };
 getGameStatus().then(gameStatus => {
     if (gameStatus && Object.keys(gameStatus).length) {
         if (gameStatus instanceof Arena) {
-            guideArena();
+            startArena();
         }
         else if (gameStatus instanceof Endurance) {
-            guideEndurance();
+            startEndurance();
         }
     }
 });
 chrome.runtime.onMessage.addListener(request => {
     if (request.action === 'start') {
         if (request.category === ARENA) {
-            guideArena();
+            startArena();
         }
         else if (request.category === ENDURANCE) {
-            guideEndurance();
+            startEndurance();
         }
         else {
             console.error(`Invalid category: ${request.category}`);
         }
     }
     else if (request.action === 'stop') {
-        arenaObserver.disconnect();
-        enduranceObserver.disconnect();
+        if (request.category === ARENA) {
+            stopArena();
+        }
+        else if (request.category === ENDURANCE) {
+            stopEndurance();
+        }
+        else {
+            console.error(`Invalid category: ${request.category}`);
+        }
     }
     else {
         console.error(`Invalid action: ${request.action}`);
