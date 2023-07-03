@@ -60,15 +60,13 @@ class Arena {
 				result += t * (60 ** (4 - i));
 			}
 			if(!!match[1]) {
-				const borderTime = this.timeLimit / this.games * this.remainGame;
+				const borderTime = this.timeLimit / this.games * (this.remainGame - 1);
 				if(match[1] === '+') {
 					result = borderTime + result;
 				} else if(match[1] === '–') {
 					result = borderTime - result;
 				}
-				console.log(`borderTime: ${borderTime}`);
 			}
-			console.log(formatSecToHMS(result));
 		} else {
 			console.error(`Invalid format: ${remainTime}`);
 		}
