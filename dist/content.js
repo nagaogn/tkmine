@@ -8,6 +8,15 @@ const speak = (text, volume = 0.5) => {
     utterance.volume = volume;
     speechSynthesis.speak(utterance);
 };
+const isCorrectArenaTypes = (panel, correctType, correctLevel, correctElite) => {
+    const typeRegx = /ticket\d{1,2}/;
+    const type = typeRegx.exec(panel.innerHTML)?.[0];
+    const levelEliteRegx = /(L\d)(E?)/;
+    const levelElite = levelEliteRegx.exec(panel.innerHTML);
+    const level = levelElite?.[1];
+    const elite = !!levelElite?.[2];
+    return type === correctType && level === correctLevel && elite === correctElite;
+};
 const arenaObserverTarget = document.getElementById('A35');
 const arenaObserver = new MutationObserver(mutations => {
     mutations.forEach(async (mutation) => {
@@ -15,17 +24,9 @@ const arenaObserver = new MutationObserver(mutations => {
         if (panel && mutation.target instanceof HTMLElement) {
             const winsRegx = /(\d+) \/ \d+/;
             const wins = parseInt(winsRegx.exec(panel.innerHTML)?.[1] ?? '');
-            const typeRegx = /ticket\d{1,2}/;
-            const type = typeRegx.exec(panel.innerHTML)?.[0];
-            const levelEliteRegx = /(L\d)(E?)/;
-            const levelElite = levelEliteRegx.exec(panel.innerHTML);
-            const level = levelElite?.[1];
-            const elite = !!levelElite?.[2];
             const gameStatus = await getGameStatus();
             if (gameStatus instanceof Arena &&
-                gameStatus.type === type &&
-                gameStatus.level === level &&
-                gameStatus.elite === elite) {
+                isCorrectArenaTypes(panel, gameStatus.type, gameStatus.level, gameStatus.elite)) {
                 const remainTime = document.getElementById('arena_remain_time');
                 const difficultyRegx = /(?:複雑さ|Difficulty|Schwierigkeit|Сложность|Complejidad|Dificuldade|Difficoltà|Difficulté|难度|難度|난이도)(?: ?: |：)(?:<img src="\/img\/skull.svg" class="diff-icon" alt="Difficulty"\/>)?([\d ]+)/;
                 const difficulty = Number(difficultyRegx.exec(mutation.target.getAttribute('data-content') ?? '')?.[1].trim());
@@ -77,8 +78,11 @@ const arenaTimeObserver = new MutationObserver(mutations => {
             const options = await getOptions();
             if (options &&
                 options.arenaRemainTime) {
+                const panel = document.querySelector('.pull-left.arena-panel');
                 const gameStatus = await getGameStatus();
-                if (gameStatus instanceof Arena) {
+                if (panel &&
+                    gameStatus instanceof Arena &&
+                    isCorrectArenaTypes(panel, gameStatus.type, gameStatus.level, gameStatus.elite)) {
                     const remainTime = gameStatus.calcRemainTime(mutation.target.innerText);
                     const remainTimeInMinutes = Math.trunc(remainTime / 60);
                     if (remainTimeInMinutes < arenaNextNotificationTime) {
