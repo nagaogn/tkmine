@@ -32,6 +32,10 @@ const arenaObserver = new MutationObserver(mutations => {
                 const difficulty = Number(difficultyRegx.exec(mutation.target.getAttribute('data-content') ?? '')?.[1].trim());
                 const sizeRegx = /\d+x\d+\/\d+/;
                 const size = sizeRegx.exec(mutation.target.getAttribute('data-content') ?? '')?.[0];
+                const mineDensityRegx = /(?:爆弾の密度|Mine density|Minendichte|Плотность мин|Densidad de minas|Densidade de minas|Densità di mine|Densité des mines|雷密度|地雷密度|지뢰 밀도)(?: ?: |：)<span class=".*">(\d+(\.\d+)?%)<\/span>/;
+                const mineDensity = mineDensityRegx.exec(mutation.target.getAttribute('data-content') ?? '')?.[1];
+                const winProbabilityRegx = /(?:勝率|Win Probability|Sieg|Вероятность победы|Probabilidad de victoria|Probabilidade da Vitória|Probabilità di vittoria|Probabilité de victoire|胜率|獲勝機率|승리 확률)(?: ?: |：)(\d+(\.\d+)?%)/;
+                const winProbability = winProbabilityRegx.exec(mutation.target.getAttribute('data-content') ?? '')?.[1];
                 const options = await getOptions();
                 if (remainTime && difficulty && size && options) {
                     if (gameStatus.wins !== wins ||
@@ -41,8 +45,14 @@ const arenaObserver = new MutationObserver(mutations => {
                         if (options.arenaRemainGame) {
                             textToSpeak += `残り, ${gameStatus.remainGame}回, `;
                         }
+                        if (options.arenaMineDensity) {
+                            textToSpeak += `密度, ${mineDensity}, `;
+                        }
                         if (options.arenaDifficulty) {
                             textToSpeak += `複雑さ, ${difficulty}, `;
+                        }
+                        if (options.arenaWinProbability) {
+                            textToSpeak += `勝率, ${winProbability}, `;
                         }
                         if (options.arenaTargetTime) {
                             textToSpeak += `目標, ${gameStatus.estimateWinTime(difficulty)}, `;
