@@ -57,10 +57,13 @@ class Arena {
 				const t = parseInt(match[i]);
 				result += t * (60 ** (4 - i));
 			}
-			if(match[1] === '+') {
-				result = this.timeLimit - (this.timeLimit / this.games * this.wins) + result;
-			} else if(match[1] === '–') {
-				result = this.timeLimit - (this.timeLimit / this.games * this.wins) - result;
+			if(!!match[1]) {
+				const borderTime = this.timeLimit / this.games * this.remainGame;
+				if(match[1] === '+') {
+					result = borderTime + result;
+				} else if(match[1] === '–') {
+					result = borderTime - result;
+				}
 			}
 		} else {
 			console.error(`Invalid format: ${remainTime}`);
