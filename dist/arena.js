@@ -16,26 +16,28 @@ class Arena {
     category = ARENA;
     games;
     timeLimit;
-    difficulty;
+    averageDifficulty;
     wins = 0;
     remainTime;
     remainGame;
     lastGameTime = 0;
+    currentSize = '';
     constructor(type, level, elite, init) {
         this.type = type;
         this.level = level;
         this.elite = elite;
-        [this.games, this.timeLimit, this.difficulty] = GAMES_AND_TIME_LIMITS[this.type][this.level][this.elite ? 'elite' : 'classic'];
+        [this.games, this.timeLimit, this.averageDifficulty] = GAMES_AND_TIME_LIMITS[this.type][this.level][this.elite ? 'elite' : 'classic'];
         this.remainGame = this.games;
         this.remainTime = this.timeLimit;
         Object.assign(this, init);
     }
-    recordWin(wins, remainTime) {
+    recordWin(wins, remainTime, size) {
         this.wins = wins;
         this.remainGame = this.games - wins + 1;
         const t = this.calcRemainTime(remainTime);
         this.lastGameTime = this.remainTime - t;
         this.remainTime = t;
+        this.currentSize = size;
     }
     calcRemainTime(remainTime) {
         const pattern = /^(\+|–)?(?:(\d{2,3}):)?(\d{2}):(\d{2})$/;
@@ -55,7 +57,9 @@ class Arena {
                 else if (match[1] === '–') {
                     result = borderTime - result;
                 }
+                console.log(`borderTime: ${borderTime}`);
             }
+            console.log(formatSecToHMS(result));
         }
         else {
             console.error(`Invalid format: ${remainTime}`);
@@ -63,7 +67,7 @@ class Arena {
         return result;
     }
     estimateWinTime(difficulty) {
-        const result = Math.trunc(difficulty / (this.difficulty / (this.timeLimit / this.games)));
+        const result = Math.trunc(difficulty / (this.averageDifficulty / (this.timeLimit / this.games)));
         return formatSecToHMS(result);
     }
 }

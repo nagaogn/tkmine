@@ -21,11 +21,12 @@ class Arena {
 	category: string = ARENA;
 	games: number;
 	timeLimit: number;
-	difficulty: number;
+	averageDifficulty: number;
 	wins: number = 0;
 	remainTime: number;
 	remainGame: number;
 	lastGameTime: number = 0;
+	currentSize: string = '';
 
 	constructor(
 		public type: GameType,
@@ -33,18 +34,19 @@ class Arena {
 		public elite: boolean,
 		init?: Partial<Arena>
 	) {
-		[this.games, this.timeLimit, this.difficulty] = GAMES_AND_TIME_LIMITS[this.type][this.level][this.elite ? 'elite' : 'classic'];
+		[this.games, this.timeLimit, this.averageDifficulty] = GAMES_AND_TIME_LIMITS[this.type][this.level][this.elite ? 'elite' : 'classic'];
 		this.remainGame = this.games;
 		this.remainTime = this.timeLimit;
 		Object.assign(this, init);
 	}
 
-	public recordWin(wins: number, remainTime: string) {
+	public recordWin(wins: number, remainTime: string, size: string) {
 		this.wins = wins;
 		this.remainGame = this.games - wins + 1;
 		const t = this.calcRemainTime(remainTime);
 		this.lastGameTime = this.remainTime - t;
 		this.remainTime = t;
+		this.currentSize = size;
 	}
 
 	public calcRemainTime(remainTime : string): number {
@@ -64,7 +66,9 @@ class Arena {
 				} else if(match[1] === '–') {
 					result = borderTime - result;
 				}
+				console.log(`borderTime: ${borderTime}`);
 			}
+			console.log(formatSecToHMS(result));
 		} else {
 			console.error(`Invalid format: ${remainTime}`);
 		}
@@ -78,7 +82,7 @@ class Arena {
 	// 現ゲームの複雑さ/(平均複雑さ/(残り時間(秒)/残りゲーム数))
 	// 1を採用
 	public estimateWinTime(difficulty: number) {
-		const result = Math.trunc(difficulty / (this.difficulty / (this.timeLimit / this.games)));
+		const result = Math.trunc(difficulty / (this.averageDifficulty / (this.timeLimit / this.games)));
 		return formatSecToHMS(result);
 	}
 }

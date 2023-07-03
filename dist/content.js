@@ -23,38 +23,42 @@ const arenaObserver = new MutationObserver(mutations => {
             const elite = !!levelElite?.[2];
             const gameStatus = await getGameStatus();
             if (gameStatus instanceof Arena &&
-                gameStatus.wins !== wins &&
                 gameStatus.type === type &&
                 gameStatus.level === level &&
                 gameStatus.elite === elite) {
                 const remainTime = document.getElementById('arena_remain_time');
                 const difficultyRegx = /(?:複雑さ|Difficulty|Schwierigkeit|Сложность|Complejidad|Dificuldade|Difficoltà|Difficulté|难度|難度|난이도)(?: ?: |：)(?:<img src="\/img\/skull.svg" class="diff-icon" alt="Difficulty"\/>)?([\d ]+)/;
-                const difficulty = difficultyRegx.exec(mutation.target.getAttribute('data-content') ?? '')?.[1].trim();
+                const difficulty = Number(difficultyRegx.exec(mutation.target.getAttribute('data-content') ?? '')?.[1].trim());
+                const sizeRegx = /\d+x\d+\/\d+/;
+                const size = sizeRegx.exec(mutation.target.getAttribute('data-content') ?? '')?.[0];
                 const options = await getOptions();
-                if (remainTime && difficulty && options) {
-                    gameStatus.recordWin(wins, remainTime.innerText);
-                    let textToSpeak = '';
-                    if (options.arenaRemainGame) {
-                        textToSpeak += `残り, ${gameStatus.remainGame}回, `;
-                    }
-                    if (options.arenaDifficulty) {
-                        textToSpeak += `複雑さ, ${difficulty}, `;
-                    }
-                    if (options.arenaTargetTime) {
-                        textToSpeak += `目標, ${gameStatus.estimateWinTime(parseInt(difficulty))}, `;
-                    }
-                    speak(textToSpeak, options.volume);
-                    setGameStatus(gameStatus);
-                    if (options.arenaTheatreMode) {
-                        const shadow = document.getElementById('shadow');
-                        const themeSwitcher = document.getElementById('theme-switcher');
-                        if (shadow?.style.display !== 'block' && themeSwitcher) {
-                            Array.from(themeSwitcher.getElementsByTagName('a')).find(a => / (Theatre mode|シアターモード|Theatermodus|Режим кинотеатра|Modo teatro|Modo Teatro|Modalità teatro|Mode théâtre|剧院模式|劇院模式|극장 모드)/.test(a.textContent ?? ''))?.click();
+                if (remainTime && difficulty && size && options) {
+                    if (gameStatus.wins !== wins ||
+                        gameStatus.currentSize !== size) {
+                        gameStatus.recordWin(wins, remainTime.innerText, size);
+                        let textToSpeak = '';
+                        if (options.arenaRemainGame) {
+                            textToSpeak += `残り, ${gameStatus.remainGame}回, `;
+                        }
+                        if (options.arenaDifficulty) {
+                            textToSpeak += `複雑さ, ${difficulty}, `;
+                        }
+                        if (options.arenaTargetTime) {
+                            textToSpeak += `目標, ${gameStatus.estimateWinTime(difficulty)}, `;
+                        }
+                        speak(textToSpeak, options.volume);
+                        setGameStatus(gameStatus);
+                        if (options.arenaTheatreMode) {
+                            const shadow = document.getElementById('shadow');
+                            const themeSwitcher = document.getElementById('theme-switcher');
+                            if (shadow?.style.display !== 'block' && themeSwitcher) {
+                                Array.from(themeSwitcher.getElementsByTagName('a')).find(a => / (Theatre mode|シアターモード|Theatermodus|Режим кинотеатра|Modo teatro|Modo Teatro|Modalità teatro|Mode théâtre|剧院模式|劇院模式|극장 모드)/.test(a.textContent ?? ''))?.click();
+                            }
                         }
                     }
                 }
                 else {
-                    console.error(`difficulty: ${difficulty} or options: ${options} does not exist`);
+                    console.error(`remainTime: ${remainTime} or difficulty: ${difficulty} or options: ${options} does not exist`);
                 }
             }
         }
@@ -77,9 +81,6 @@ const arenaTimeObserver = new MutationObserver(mutations => {
                 if (gameStatus instanceof Arena) {
                     const remainTime = gameStatus.calcRemainTime(mutation.target.innerText);
                     const remainTimeInMinutes = Math.trunc(remainTime / 60);
-                    console.log(`remainTime: ${remainTime}`);
-                    console.log(`remainTimeInMinutes: ${remainTimeInMinutes}`);
-                    console.log(`arenaNextNotificationTime: ${arenaNextNotificationTime}`);
                     if (remainTimeInMinutes < arenaNextNotificationTime) {
                         const textToSpeak = `${formatSecToHM(remainTime + 60)}, `;
                         speak(textToSpeak, options.volume);
