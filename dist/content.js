@@ -173,7 +173,8 @@ const enduranceObserver = new MutationObserver(mutations => {
                         gameStatus.recordWin(winPathname);
                         let textToSpeak = '';
                         if (options.enduranceWins &&
-                            gameStatus.getWins() < 100) {
+                            (gameStatus.getWins() < 100 ||
+                                !options.enduranceElapsedTime)) {
                             textToSpeak += `${gameStatus.getWins()}回, `;
                         }
                         if (options.enduranceElapsedTime &&
