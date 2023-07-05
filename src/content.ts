@@ -5,9 +5,10 @@ import { setGameStatus, getGameStatus, formatSecToHM, getOptions } from './commo
 const utterance = new SpeechSynthesisUtterance();
 utterance.lang = 'ja-JP';
 
-const speak = (text: string, volume: number = 0.5) => {
+const speak = (text: string, volume: number = 0.5, rate: number = 1) => {
 	utterance.text = text;
 	utterance.volume = volume;
+	utterance.rate = rate;
 	speechSynthesis.speak(utterance);
 } 
 
@@ -66,7 +67,7 @@ const arenaObserver = new MutationObserver(mutations => {
 						if(options.arenaTargetTime) {
 							textToSpeak += `目標, ${gameStatus.estimateWinTime(difficulty)}, `;
 						}
-						speak(textToSpeak, options.volume);
+						speak(textToSpeak, options.volume, options.rate);
 						setGameStatus(gameStatus);
 						if(options.arenaTheatreMode) {
 							const shadow = document.getElementById('shadow');
@@ -116,7 +117,7 @@ const arenaTimeObserver = new MutationObserver(mutations => {
 					const remainTimeInMinutes = Math.trunc(remainTime / 60);
 					if(remainTimeInMinutes < arenaNextNotificationTime) {
 						const textToSpeak = `${formatSecToHM(remainTime + 60)}, `;
-						speak(textToSpeak, options.volume);
+						speak(textToSpeak, options.volume, options.rate);
 						// NOTE: arenaNextNotificationTimeはarenaRemainTimeNotifyIntervalの倍数にする
 						arenaNextNotificationTime = Math.floor(remainTimeInMinutes / options.arenaRemainTimeNotifyInterval) * options.arenaRemainTimeNotifyInterval;
 					}
@@ -226,7 +227,7 @@ const enduranceObserver = new MutationObserver(mutations => {
 						) {
 							textToSpeak += `${gameStatus.getRecordTimeHMS()}, `;
 						}
-						speak(textToSpeak, options.volume);
+						speak(textToSpeak, options.volume, options.rate);
 						setGameStatus(gameStatus);
 					} else {
 						console.error(`options: ${options} does not exist`);
@@ -266,7 +267,7 @@ const startEndurance = () => {
 				const elapsedTimeInMinutes = gameStatus.getElapsedTime() / 60;
 				if(elapsedTimeInMinutes >= nextNotificationTime) {
 					const textToSpeak = `${gameStatus.getElapsedTimeHM()}, `;
-					speak(textToSpeak, options.volume);
+					speak(textToSpeak, options.volume, options.rate);
 					// NOTE: nextNotificationTimeはenduranceElapsedTimeNotifyIntervalの倍数にする
 					nextNotificationTime = Math.ceil((elapsedTimeInMinutes + 1) / options.enduranceElapsedTimeNotifyInterval) * options.enduranceElapsedTimeNotifyInterval;
 				}

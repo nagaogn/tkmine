@@ -2,6 +2,7 @@ import { setOptions, getOptions } from './common.js';
 chrome.runtime.onInstalled.addListener(async (details) => {
     const defaultOptions = {
         volume: 0.5,
+        rate: 1,
         arenaRemainGame: true,
         arenaRemainTime: true,
         arenaRemainTimeNotifyInterval: 5,

@@ -4,6 +4,7 @@
     const options = await getOptions();
     if(options) {
         (document.getElementById('volume') as HTMLInputElement).value = options.volume.toString();
+        (document.getElementById('rate') as HTMLInputElement).value = options.rate.toString();
         (document.getElementById('arenaRemainGame') as HTMLInputElement).checked = options.arenaRemainGame;
         (document.getElementById('arenaRemainTime') as HTMLInputElement).checked = options.arenaRemainTime;
         (document.getElementById('arenaRemainTimeNotifyInterval') as HTMLInputElement).value = options.arenaRemainTimeNotifyInterval.toString();
@@ -22,6 +23,7 @@
 
 (document.getElementById('save') as HTMLElement).onclick = () => {
     const volume = Number((document.getElementById('volume') as HTMLInputElement).value);
+    const rate = Number((document.getElementById('rate') as HTMLInputElement).value);
     const arenaRemainGame = (document.getElementById('arenaRemainGame') as HTMLInputElement).checked;
     const arenaRemainTime = (document.getElementById('arenaRemainTime') as HTMLInputElement).checked;
     const arenaRemainTimeNotifyInterval = Math.trunc(Number((document.getElementById('arenaRemainTimeNotifyInterval') as HTMLInputElement).value));
@@ -35,6 +37,7 @@
     const enduranceElapsedTimeNotifyInterval = Math.trunc(Number((document.getElementById('enduranceElapsedTimeNotifyInterval') as HTMLInputElement).value));
     const options: Options = {
         volume,
+        rate,
         arenaRemainGame,
         arenaRemainTime,
         arenaRemainTimeNotifyInterval,

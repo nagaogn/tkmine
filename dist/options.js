@@ -3,6 +3,7 @@ import { setOptions, getOptions } from './common.js';
     const options = await getOptions();
     if (options) {
         document.getElementById('volume').value = options.volume.toString();
+        document.getElementById('rate').value = options.rate.toString();
         document.getElementById('arenaRemainGame').checked = options.arenaRemainGame;
         document.getElementById('arenaRemainTime').checked = options.arenaRemainTime;
         document.getElementById('arenaRemainTimeNotifyInterval').value = options.arenaRemainTimeNotifyInterval.toString();
@@ -21,6 +22,7 @@ import { setOptions, getOptions } from './common.js';
 })();
 document.getElementById('save').onclick = () => {
     const volume = Number(document.getElementById('volume').value);
+    const rate = Number(document.getElementById('rate').value);
     const arenaRemainGame = document.getElementById('arenaRemainGame').checked;
     const arenaRemainTime = document.getElementById('arenaRemainTime').checked;
     const arenaRemainTimeNotifyInterval = Math.trunc(Number(document.getElementById('arenaRemainTimeNotifyInterval').value));
@@ -34,6 +36,7 @@ document.getElementById('save').onclick = () => {
     const enduranceElapsedTimeNotifyInterval = Math.trunc(Number(document.getElementById('enduranceElapsedTimeNotifyInterval').value));
     const options = {
         volume,
+        rate,
         arenaRemainGame,
         arenaRemainTime,
         arenaRemainTimeNotifyInterval,

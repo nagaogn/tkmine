@@ -58,6 +58,7 @@ const formatSecToHMS = (sec: number) => {
 
 interface Options {
 	volume: number;
+	rate: number;
     arenaRemainGame: boolean;
     arenaRemainTime: boolean;
 	arenaRemainTimeNotifyInterval: number;

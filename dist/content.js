@@ -3,9 +3,10 @@ import { ENDURANCE, Endurance } from './endurance.js';
 import { setGameStatus, getGameStatus, formatSecToHM, getOptions } from './common.js';
 const utterance = new SpeechSynthesisUtterance();
 utterance.lang = 'ja-JP';
-const speak = (text, volume = 0.5) => {
+const speak = (text, volume = 0.5, rate = 1) => {
     utterance.text = text;
     utterance.volume = volume;
+    utterance.rate = rate;
     speechSynthesis.speak(utterance);
 };
 const isCorrectArenaTypes = (panel, correctType, correctLevel, correctElite) => {
@@ -57,7 +58,7 @@ const arenaObserver = new MutationObserver(mutations => {
                         if (options.arenaTargetTime) {
                             textToSpeak += `目標, ${gameStatus.estimateWinTime(difficulty)}, `;
                         }
-                        speak(textToSpeak, options.volume);
+                        speak(textToSpeak, options.volume, options.rate);
                         setGameStatus(gameStatus);
                         if (options.arenaTheatreMode) {
                             const shadow = document.getElementById('shadow');
@@ -97,7 +98,7 @@ const arenaTimeObserver = new MutationObserver(mutations => {
                     const remainTimeInMinutes = Math.trunc(remainTime / 60);
                     if (remainTimeInMinutes < arenaNextNotificationTime) {
                         const textToSpeak = `${formatSecToHM(remainTime + 60)}, `;
-                        speak(textToSpeak, options.volume);
+                        speak(textToSpeak, options.volume, options.rate);
                         arenaNextNotificationTime = Math.floor(remainTimeInMinutes / options.arenaRemainTimeNotifyInterval) * options.arenaRemainTimeNotifyInterval;
                     }
                 }
@@ -181,7 +182,7 @@ const enduranceObserver = new MutationObserver(mutations => {
                             gameStatus.getWins() >= 100) {
                             textToSpeak += `${gameStatus.getRecordTimeHMS()}, `;
                         }
-                        speak(textToSpeak, options.volume);
+                        speak(textToSpeak, options.volume, options.rate);
                         setGameStatus(gameStatus);
                     }
                     else {
@@ -215,7 +216,7 @@ const startEndurance = () => {
                 const elapsedTimeInMinutes = gameStatus.getElapsedTime() / 60;
                 if (elapsedTimeInMinutes >= nextNotificationTime) {
                     const textToSpeak = `${gameStatus.getElapsedTimeHM()}, `;
-                    speak(textToSpeak, options.volume);
+                    speak(textToSpeak, options.volume, options.rate);
                     nextNotificationTime = Math.ceil((elapsedTimeInMinutes + 1) / options.enduranceElapsedTimeNotifyInterval) * options.enduranceElapsedTimeNotifyInterval;
                 }
             }
