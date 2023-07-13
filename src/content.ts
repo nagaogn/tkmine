@@ -1,6 +1,7 @@
 ﻿import { ARENA, Arena } from './arena.js';
 import { ENDURANCE, Endurance } from './endurance.js';
-import { setGameStatus, getGameStatus, formatSecToHM, getOptions } from './common.js';
+import { setGameStatus, getGameStatus, formatSecToHM } from './common.js';
+import { getOptions } from './options.js';
 
 const utterance = new SpeechSynthesisUtterance();
 utterance.lang = 'ja-JP';

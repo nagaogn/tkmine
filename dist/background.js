@@ -1,4 +1,4 @@
-import { setOptions, getOptions } from './common.js';
+import { setOptions, getOptions } from './options.js';
 chrome.runtime.onInstalled.addListener(async (details) => {
     const defaultOptions = {
         volume: 0.5,

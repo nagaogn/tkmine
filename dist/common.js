@@ -1,6 +1,6 @@
 import { ARENA, Arena } from './arena.js';
 import { ENDURANCE, Endurance } from './endurance.js';
-export { setGameStatus, getGameStatus, removeGameStatus, formatSecToHM, formatSecToHMS, setOptions, getOptions };
+export { setGameStatus, getGameStatus, removeGameStatus, formatSecToHM, formatSecToHMS };
 const setGameStatus = (gameStatus) => {
     chrome.storage.local.set({ gameStatus: gameStatus });
 };
@@ -40,12 +40,4 @@ const formatSecToHMS = (sec) => {
     result += m === 0 ? '' : `${m}分`;
     result += s === 0 ? '' : `${s}秒`;
     return result;
-};
-const setOptions = (options) => {
-    chrome.storage.local.set({ options: options });
-};
-const getOptions = async () => {
-    return await new Promise(resolve => {
-        chrome.storage.local.get('options', result => resolve(result.options));
-    });
 };
