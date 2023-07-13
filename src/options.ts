@@ -1,4 +1,4 @@
-export { Options, setOptions, getOptions };
+export { Options, defaultOptions, setOptions, getOptions };
 
 interface Options {
 	volume: number;
@@ -15,6 +15,22 @@ interface Options {
     enduranceElapsedTime: boolean;
 	enduranceElapsedTimeNotifyInterval: number;
 }
+
+const defaultOptions: Options = {
+    volume: 0.5,
+    rate: 1,
+    arenaRemainGame: true,
+    arenaRemainTime: true,
+    arenaRemainTimeNotifyInterval: 5,
+    arenaMineDensity: false,
+    arenaDifficulty: false,
+    arenaWinProbability: false,
+    arenaTargetTime: false,
+    arenaTheatreMode: false,
+    enduranceWins: true,
+    enduranceElapsedTime: true,
+    enduranceElapsedTimeNotifyInterval: 5
+};
 
 const setOptions = (options: Options) => {
 	chrome.storage.local.set({ options: options });
