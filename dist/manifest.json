@@ -1,18 +1,25 @@
 {
 	"name": "タイムキーパー for Minesweeper Online",
 	"short_name": "tkmine",
-	"version": "1.0",
+	"version": "1.0.1",
 	"manifest_version": 3,
-	"description": "Minesweeper Onlineのアリーナや耐久のプレイ中にガイド音声を出す",
+	"description": "Minesweeper Onlineのアリーナや耐久の進捗状況を音声で知らせる",
 	"permissions": [
 		"storage",
 		"tabs"
 	],
+	"icons": {
+		"16": "icon16.png",
+		"48": "icon48.png",
+		"128": "icon128.png"
+	  },
 	"action": {
 		"default_title": "タイムキーパー for Minesweeper Online",
 		"default_popup": "popup.html",
 		"default_icon": {
-			"32": "fa-fa-clock-o.png"
+			"16": "icon16.png",
+			"48": "icon48.png",
+			"128": "icon128.png"
 		}
 	},
 	"options_ui": {
