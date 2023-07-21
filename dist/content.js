@@ -53,7 +53,7 @@ const arenaObserver = new MutationObserver(mutations => {
                         if (options.arenaDifficulty) {
                             textToSpeak += `複雑さ, ${difficulty}, `;
                         }
-                        if (options.arenaWinProbability) {
+                        if (options.arenaWinProbability && !!winProbability) {
                             textToSpeak += `勝率, ${winProbability}, `;
                         }
                         if (options.arenaTargetTime) {
