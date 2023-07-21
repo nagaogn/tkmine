@@ -1,7 +1,7 @@
 {
 	"name": "タイムキーパー for Minesweeper Online",
 	"short_name": "tkmine",
-	"version": "1.0.1",
+	"version": "1.0.2",
 	"manifest_version": 3,
 	"description": "Minesweeper Onlineのアリーナや耐久の進捗状況を音声で知らせる",
 	"permissions": [

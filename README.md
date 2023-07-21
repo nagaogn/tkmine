@@ -3,15 +3,9 @@
 アリーナと耐久の進捗状況などを音声で知らせるChrome拡張機能です。  
 プレイ中は進捗を確認する余裕が無いので、音声で教えてくれたら便利かと思って作ってみました。  
 
-### インストール方法
-- ダウンロード: https://github.com/nagaogn/tkmine/raw/master/tkmine-release.zip  
-- zipファイルを好きなフォルダに解凍する  
-- ブラウザでchrome://extensionsを開く  
-- ｢デベロッパーモード｣(Edgeは｢開発者モード｣)を有効化する  
-- ｢パッケージ化されていない拡張機能を読み込む｣(Edgeは｢展開して読み込み｣)をクリック  
-- 解凍したフォルダを開き｢フォルダの選択｣をクリック  
+### インストール
+[こちら](https://chrome.google.com/webstore/detail/%E3%82%BF%E3%82%A4%E3%83%A0%E3%82%AD%E3%83%BC%E3%83%91%E3%83%BC-for-minesweeper-o/bjdlhjalichcnpbngjojfbilmfbpaakc)からインストールしてください。  
 
-拡張機能一覧に｢タイムキーパー for Minesweeper Online｣が表示されればインストール成功です。  
 すでにMinesweeper Onlineを開いている場合は、ページを再読み込みしてから使用してください。  
 
 <sub>※拡張機能は提供元を信頼できる場合のみインストールしてください。</sub>
