@@ -15,6 +15,7 @@ import { setOptions, getOptions } from './options.js';
         document.getElementById('enduranceWins').checked = options.enduranceWins;
         document.getElementById('enduranceElapsedTime').checked = options.enduranceElapsedTime;
         document.getElementById('enduranceElapsedTimeNotifyInterval').value = options.enduranceElapsedTimeNotifyInterval.toString();
+        document.getElementById('language').value = options.language;
     }
     else {
         console.error(`options does not exist`);
@@ -34,6 +35,7 @@ document.getElementById('save').onclick = () => {
     const enduranceWins = document.getElementById('enduranceWins').checked;
     const enduranceElapsedTime = document.getElementById('enduranceElapsedTime').checked;
     const enduranceElapsedTimeNotifyInterval = Math.trunc(Number(document.getElementById('enduranceElapsedTimeNotifyInterval').value));
+    const language = document.getElementById('language').value;
     const options = {
         volume,
         rate,
@@ -47,7 +49,9 @@ document.getElementById('save').onclick = () => {
         arenaTheatreMode,
         enduranceWins,
         enduranceElapsedTime,
-        enduranceElapsedTimeNotifyInterval
+        enduranceElapsedTimeNotifyInterval,
+        language
     };
     setOptions(options);
+    location.reload();
 };

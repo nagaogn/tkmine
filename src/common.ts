@@ -1,7 +1,7 @@
 import { ARENA, Arena } from './arena.js';
 import { ENDURANCE, Endurance } from './endurance.js';
 
-export { GameStatus, setGameStatus, getGameStatus, removeGameStatus, formatSecToHM, formatSecToHMS };
+export { setGameStatus, getGameStatus, removeGameStatus, formatSecToHM, formatSecToHMS };
 
 type GameStatus = Arena | Endurance;
 

@@ -1,18 +1,25 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-	<title>タイムキーパー for Minesweeper Online: Options</title>
+	<title>Timekeeper for Minesweeper Online: Options</title>
 	<script type="module" src="options_page.js"></script>
 </head>
 <body>
-<h2>タイムキーパー for Minesweeper Online</h2>
+<h2>Timekeeper for Minesweeper Online</h2>
 <h3>読み上げ音声</h3>
 <div>
-	音量
+	<b>言語</b>&emsp;
+	<select id="language" name="language">
+		<option value="en">English</option>
+		<option value="ja">日本語</option>
+	</select>
+</div>
+<div>
+	<b>音量</b>&emsp;
 	<input type="range" id="volume" name="volume" min="0" max="1" step="0.05">
 </div>
 <div>
-	速度
+	<b>速度</b>&emsp;
 	<select id="rate" name="rate">
 		<option value="1">1</option>
 		<option value="1.5">1.5</option>
@@ -32,13 +39,13 @@
 <div>
 	<label for="arenaRemainGame">
 		<input type="checkbox" id="arenaRemainGame" name="arenaRemainGame" value="arenaRemainGame">
-		残りゲーム数
+		<b>残りゲーム数</b>
 	</label>
 </div>
 <div>
 	<label for="arenaRemainTime">
 		<input type="checkbox" id="arenaRemainTime" name="arenaRemainTime" value="arenaRemainTime">
-		残り時間　
+		<b>残り時間</b>&emsp;
 	</label>
 	<select id="arenaRemainTimeNotifyInterval" name="arenaRemainTimeNotifyInterval">
 		<option value="1">1</option>
@@ -52,44 +59,44 @@
 <div>
 	<label for="arenaMineDensity">
 		<input type="checkbox" id="arenaMineDensity" name="arenaMineDensity" value="arenaMineDensity">
-		爆弾の密度
+		<b>爆弾の密度</b>
 	</label>
 </div>
 <div>
 	<label for="arenaDifficulty">
 		<input type="checkbox" id="arenaDifficulty" name="arenaDifficulty" value="arenaDifficulty">
-		複雑さ
+		<b>複雑さ</b>
 	</label>
 </div>
 <div>
 	<label for="arenaWinProbability">
 		<input type="checkbox" id="arenaWinProbability" name="arenaWinProbability" value="arenaWinProbability">
-		勝率
+		<b>勝率</b>
 	</label>
 </div>
 <div>
 	<label for="arenaTargetTime">
 		<input type="checkbox" id="arenaTargetTime" name="arenaTargetTime" value="arenaTargetTime">
-		目標時間　計算式: 現ゲームの複雑さ/(平均複雑さ/(全所要時間/全ゲーム数))
+		<b>目標時間</b>&emsp;計算式: 現ゲームの複雑さ/(平均複雑さ/(全所要時間/全ゲーム数))
 	</label>
 </div>
 <div>
 	<label for="arenaTheatreMode">
 		<input type="checkbox" id="arenaTheatreMode" name="arenaTheatreMode" value="arenaTheatreMode">
-		始まったらシアターモードにする
+		<b>始まったらシアターモードにする</b>
 	</label>
 </div>
 <h3>耐久</h3>
 <div>
 	<label for="enduranceWins">
 		<input type="checkbox" id="enduranceWins" name="enduranceWins" value="enduranceWins">
-		勝利数
+		<b>勝利数</b>
 	</label>
 </div>
 <div>
 	<label for="enduranceElapsedTime">
 		<input type="checkbox" id="enduranceElapsedTime" name="enduranceElapsedTime" value="enduranceElapsedTime">
-		経過時間　
+		<b>経過時間</b>&emsp;
 	</label>
 	<select id="enduranceElapsedTimeNotifyInterval" name="enduranceElapsedTimeNotifyInterval">
 		<option value="1">1</option>

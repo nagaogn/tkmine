@@ -12,7 +12,8 @@ const defaultOptions = {
     arenaTheatreMode: false,
     enduranceWins: true,
     enduranceElapsedTime: true,
-    enduranceElapsedTimeNotifyInterval: 5
+    enduranceElapsedTimeNotifyInterval: 5,
+    language: 'en'
 };
 const setOptions = (options) => {
     chrome.storage.local.set({ options: options });

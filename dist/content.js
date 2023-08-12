@@ -3,9 +3,9 @@ import { ENDURANCE, Endurance } from './endurance.js';
 import { setGameStatus, getGameStatus, formatSecToHM } from './common.js';
 import { getOptions } from './options.js';
 const utterance = new SpeechSynthesisUtterance();
-utterance.lang = 'ja-JP';
-const speak = (text, volume = 0.5, rate = 1) => {
+const speak = (text, volume = 0.5, rate = 1, lang = 'en') => {
     utterance.text = text;
+    utterance.lang = lang;
     utterance.volume = volume;
     utterance.rate = rate;
     speechSynthesis.speak(utterance);

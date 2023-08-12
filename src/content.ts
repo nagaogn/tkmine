@@ -4,14 +4,14 @@ import { setGameStatus, getGameStatus, formatSecToHM } from './common.js';
 import { getOptions } from './options.js';
 
 const utterance = new SpeechSynthesisUtterance();
-utterance.lang = 'ja-JP';
 
-const speak = (text: string, volume: number = 0.5, rate: number = 1) => {
+const speak = (text: string, volume: number = 0.5, rate: number = 1, lang: string = 'en') => {
 	utterance.text = text;
+	utterance.lang = lang;
 	utterance.volume = volume;
 	utterance.rate = rate;
 	speechSynthesis.speak(utterance);
-} 
+}
 
 const isCorrectArenaTypes = (panel: Element, correctType: string, correctLevel: string, correctElite: boolean) => {
 	const typeRegx = /ticket\d{1,2}/;

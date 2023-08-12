@@ -5,29 +5,29 @@
 	<link rel="stylesheet" href="popup.css">
 </head>
 <body>
-	<h1>タイムキーパー for Minesweeper Online</h1>
+	<h1>Timekeeper for Minesweeper Online</h1>
 	<div>
 		<label for="arena">
 			<input type="radio" id="arena" name="category" value="arena" checked>
-			アリーナ
+			<span data-i18n="arena"></span>
 		</label>
 		<label for="endurance">
 			<input type="radio" id="endurance" name="category" value="endurance">
-			耐久
+			<span data-i18n="endurance"></span>
 		</label>
 	</div>
 	<div>
 		<select id="type" name="type">
-			<option value="ticket1">速度</option>
-			<option value="ticket2">速度NG</option>
-			<option value="ticket3">フラグなし</option>
-			<option value="ticket4">効率</option>
-			<option value="ticket5">高難易度</option>
-			<option value="ticket6">ランダム難易度</option>
-			<option value="ticket7">ハードコア</option>
-			<option value="ticket8">ハードコアNG</option>
-			<option value="ticket9">耐久</option>
-			<option value="ticket10">ナイトメア</option>
+			<option value="ticket1" data-i18n="ticket1"></option>
+			<option value="ticket2" data-i18n="ticket2"></option>
+			<option value="ticket3" data-i18n="ticket3"></option>
+			<option value="ticket4" data-i18n="ticket4"></option>
+			<option value="ticket5" data-i18n="ticket5"></option>
+			<option value="ticket6" data-i18n="ticket6"></option>
+			<option value="ticket7" data-i18n="ticket7"></option>
+			<option value="ticket8" data-i18n="ticket8"></option>
+			<option value="ticket9" data-i18n="ticket9"></option>
+			<option value="ticket10" data-i18n="ticket10"></option>
 		</select>
 		<select id="level" name="level">
 			<option value="L1">L1</option>
@@ -41,19 +41,19 @@
 		</select>
 		<label for="elite">
 			<input type="checkbox" id="elite" name="elite" value="E">
-			エリート
+			<span data-i18n="elite"></span>
 		</label>
 	</div>
 	<div>
 		<select id="size" name="size">
-			<option value="Beginner">初級</option>
-			<option value="Intermediate">中級</option>
-			<option value="Expert">上級</option>
+			<option value="Beginner" data-i18n="beginner"></option>
+			<option value="Intermediate" data-i18n="intermediate"></option>
+			<option value="Expert" data-i18n="expert"></option>
 		</select>
 	</div>
 	<br>
-	<input type="button" id="start" class="blue" value="開始">
-	<input type="button" id="stop" class="red" value="終了">
+	<input type="button" id="start" class="blue" data-i18n="start">
+	<input type="button" id="stop" class="red" data-i18n="stop">
 	<div id="options">⚙</div>
 </body>
 </html>

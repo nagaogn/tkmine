@@ -16,6 +16,7 @@
         (document.getElementById('enduranceWins') as HTMLInputElement).checked = options.enduranceWins;
         (document.getElementById('enduranceElapsedTime') as HTMLInputElement).checked = options.enduranceElapsedTime;
         (document.getElementById('enduranceElapsedTimeNotifyInterval') as HTMLInputElement).value = options.enduranceElapsedTimeNotifyInterval.toString();
+        (document.getElementById('language') as HTMLInputElement).value = options.language;
     } else {
         console.error(`options does not exist`);
     }
@@ -35,6 +36,7 @@
     const enduranceWins = (document.getElementById('enduranceWins') as HTMLInputElement).checked;
     const enduranceElapsedTime = (document.getElementById('enduranceElapsedTime') as HTMLInputElement).checked;
     const enduranceElapsedTimeNotifyInterval = Math.trunc(Number((document.getElementById('enduranceElapsedTimeNotifyInterval') as HTMLInputElement).value));
+    const language = (document.getElementById('language') as HTMLInputElement).value;
     const options: Options = {
         volume,
         rate,
@@ -48,7 +50,9 @@
         arenaTheatreMode,
         enduranceWins,
         enduranceElapsedTime,
-        enduranceElapsedTimeNotifyInterval
+        enduranceElapsedTimeNotifyInterval,
+        language
     };
     setOptions(options);
+    location.reload();
 }

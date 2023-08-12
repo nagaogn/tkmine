@@ -1,0 +1,21 @@
+{
+	"description": { "message": "Minesweeper Onlineのアリーナや耐久の進捗状況を音声で知らせる。" },
+	"arena": { "message": "アリーナ" },
+	"endurance": { "message": "耐久" },
+	"ticket1": { "message": "速度" },
+	"ticket2": { "message": "速度NG" },
+	"ticket3": { "message": "フラグなし" },
+	"ticket4": { "message": "効率" },
+	"ticket5": { "message": "高難易度" },
+	"ticket6": { "message": "ランダム難易度" },
+	"ticket7": { "message": "ハードコア" },
+	"ticket8": { "message": "ハードコアNG" },
+	"ticket9": { "message": "耐久" },
+	"ticket10": { "message": "ナイトメア" },
+	"elite": { "message": "エリート" },
+	"beginner": { "message": "初級" },
+	"intermediate": { "message": "中級" },
+	"expert": { "message": "上級" },
+	"start": { "message": "開始" },
+	"stop": { "message": "終了" }
+}
