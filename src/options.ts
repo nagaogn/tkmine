@@ -14,6 +14,7 @@ interface Options {
     enduranceWins: boolean;
     enduranceElapsedTime: boolean;
 	enduranceElapsedTimeNotifyInterval: number;
+    language: string;
 }
 
 const defaultOptions: Options = {
@@ -29,7 +30,8 @@ const defaultOptions: Options = {
     arenaTheatreMode: false,
     enduranceWins: true,
     enduranceElapsedTime: true,
-    enduranceElapsedTimeNotifyInterval: 5
+    enduranceElapsedTimeNotifyInterval: 5,
+    language: 'en'
 };
 
 const setOptions = (options: Options) => {

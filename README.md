@@ -1,4 +1,4 @@
-## タイムキーパー for Minesweeper Online
+## Timekeeper for Minesweeper Online
 
 アリーナと耐久の進捗状況などを音声で知らせるChrome拡張機能です。  
 プレイ中は進捗を確認する余裕が無いので、音声で教えてくれたら便利かと思って作ってみました。  

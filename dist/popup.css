@@ -1,8 +1,8 @@
 * {
-	font-size: 14px;
+	font-size: medium;
 }
 body {
-	width: 265px;
+	width: 23em;
 	position: relative;
 }
 #options {

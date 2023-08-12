@@ -1,0 +1,24 @@
+{
+	"description": {
+		"message": "Provides audio updates for Arena and Endurance progress on Minesweeper Online.",
+		"description": "Description of this tool"
+	},
+	"arena": { "message": "Arena" },
+	"endurance": { "message": "Endurance" },
+	"ticket1": { "message": "Speed" },
+	"ticket2": { "message": "Speed NG" },
+	"ticket3": { "message": "No flags" },
+	"ticket4": { "message": "Efficiency" },
+	"ticket5": { "message": "High difficulty" },
+	"ticket6": { "message": "Random difficulty" },
+	"ticket7": { "message": "Hardcore" },
+	"ticket8": { "message": "Hardcore NG" },
+	"ticket9": { "message": "Endurance" },
+	"ticket10": { "message": "Nightmare" },
+	"elite": { "message": "Elite" },
+	"beginner": { "message": "Beginner" },
+	"intermediate": { "message": "Intermediate" },
+	"expert": { "message": "Expert" },
+	"start": { "message": "Start" },
+	"stop": { "message": "Stop" }
+}

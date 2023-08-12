@@ -1,9 +1,28 @@
 import { ARENA, Arena, isGameType, isLevelType } from './arena.js';
 import { ENDURANCE, Endurance, isSizeType } from './endurance.js';
 import { setGameStatus, getGameStatus, removeGameStatus } from './common.js';
+import { getOptions } from './options.js';
+import { Messages } from './messages.js';
 (async () => {
+    const options = await getOptions();
+    const messages = await Messages.create(options?.language);
+    const elements = document.querySelectorAll('[data-i18n]');
+    for (const e of elements) {
+        const messageName = e.getAttribute('data-i18n');
+        if (!!messageName) {
+            const message = messages.message[messageName].message;
+            if (!!message) {
+                if (e instanceof HTMLInputElement) {
+                    e.value = message;
+                }
+                else {
+                    e.textContent = message;
+                }
+            }
+        }
+    }
     const gameStatus = await getGameStatus();
-    if (gameStatus) {
+    if (!!gameStatus) {
         if (gameStatus instanceof Arena) {
             document.getElementById('arena').checked = true;
             document.getElementById('type').value = gameStatus.type;
