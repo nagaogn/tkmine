@@ -266,11 +266,12 @@ const startEndurance = () => {
 				gameStatus instanceof Endurance &&
 				gameStatus.getWins() < 100
 			) {
-				const elapsedTimeInMinutes = gameStatus.getElapsedTime() / 60;
+				const elapsedTimeInMinutes = Math.floor(gameStatus.getElapsedTime() / 60);
 				if(elapsedTimeInMinutes >= nextNotificationTime) {
+					//NOTE: 0分だとgetElapsedTimeHMが空文字になるから一番最初は読み上げない
 					const textToSpeak = `${gameStatus.getElapsedTimeHM()}, `;
 					speak(textToSpeak, options.volume, options.rate);
-					// NOTE: nextNotificationTimeはenduranceElapsedTimeNotifyIntervalの倍数にする
+					//NOTE: nextNotificationTimeはenduranceElapsedTimeNotifyIntervalの倍数にする
 					nextNotificationTime = Math.ceil((elapsedTimeInMinutes + 1) / options.enduranceElapsedTimeNotifyInterval) * options.enduranceElapsedTimeNotifyInterval;
 				}
 			}

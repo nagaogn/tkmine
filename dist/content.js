@@ -215,7 +215,7 @@ const startEndurance = () => {
             const gameStatus = await GameStatusManager.getGameStatus();
             if (gameStatus instanceof Endurance &&
                 gameStatus.getWins() < 100) {
-                const elapsedTimeInMinutes = gameStatus.getElapsedTime() / 60;
+                const elapsedTimeInMinutes = Math.floor(gameStatus.getElapsedTime() / 60);
                 if (elapsedTimeInMinutes >= nextNotificationTime) {
                     const textToSpeak = `${gameStatus.getElapsedTimeHM()}, `;
                     speak(textToSpeak, options.volume, options.rate);
