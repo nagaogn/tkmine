@@ -32,7 +32,7 @@ const arenaObserver = new MutationObserver(mutations => {
 		if(panel && mutation.target instanceof HTMLElement) {
 			const winsRegx = /(\d+) \/ \d+/;
 			const wins = parseInt(winsRegx.exec(panel.innerHTML)?.[1] ?? '');
-			const gameStatus = await GameStatusManager.getGameStatus();
+			const gameStatus = await GameStatusManager.get();
 			if(
 				gameStatus instanceof Arena &&
 				isCorrectArenaTypes(panel, gameStatus.type, gameStatus.level, gameStatus.elite)
@@ -46,7 +46,7 @@ const arenaObserver = new MutationObserver(mutations => {
 				const mineDensity = mineDensityRegx.exec(mutation.target.getAttribute('data-content') ?? '')?.[1];
 				const winProbabilityRegx = /(?:勝率|Win Probability|Sieg|Вероятность победы|Probabilidad de victoria|Probabilidade da Vitória|Probabilità di vittoria|Probabilité de victoire|胜率|獲勝機率|승리 확률)(?: ?: |：)(\d+(\.\d+)?%)/;
 				const winProbability = winProbabilityRegx.exec(mutation.target.getAttribute('data-content') ?? '')?.[1];
-				const options = await OptionsManager.getOptions();
+				const options = await OptionsManager.get();
 				if(remainTime && difficulty && size && options) {
 					if(
 						gameStatus.wins !== wins ||
@@ -70,7 +70,7 @@ const arenaObserver = new MutationObserver(mutations => {
 							textToSpeak += `目標, ${gameStatus.estimateWinTime(difficulty)}, `;
 						}
 						speak(textToSpeak, options.volume, options.rate);
-						GameStatusManager.setGameStatus(gameStatus);
+						GameStatusManager.set(gameStatus);
 						if(options.arenaTheatreMode) {
 							const shadow = document.getElementById('shadow');
 							const themeSwitcher = document.getElementById('theme-switcher');
@@ -103,13 +103,13 @@ const arenaTimeObserver = new MutationObserver(mutations => {
 			mutation.target instanceof HTMLElement &&
 			mutation.target.id === 'arena_remain_time'
 		) {
-			const options = await OptionsManager.getOptions();
+			const options = await OptionsManager.get();
 			if(
 				options &&
 				options.arenaRemainTime
 			) {
 				const panel = document.querySelector('.pull-left.arena-panel');
-				const gameStatus = await GameStatusManager.getGameStatus();
+				const gameStatus = await GameStatusManager.get();
 				if(
 					panel &&
 					gameStatus instanceof Arena &&
@@ -186,14 +186,14 @@ const enduranceObserver = new MutationObserver(mutations => {
 			) {
 				const tmpPathname = startPathname;
 				startPathname = location.pathname;//NOTE: getGameStatusが何回も実行されるのを防ぐ
-				const gameStatus = await GameStatusManager.getGameStatus();
+				const gameStatus = await GameStatusManager.get();
 				if(
 					gameStatus instanceof Endurance &&
 					matchSize(gameStatus.size) &&
 					gameStatus.isCorrectStartPathname(startPathname)
 				) {
 					gameStatus.recordStart(startPathname);
-					GameStatusManager.setGameStatus(gameStatus);
+					GameStatusManager.set(gameStatus);
 				} else {
 					startPathname = tmpPathname;
 				}
@@ -204,13 +204,13 @@ const enduranceObserver = new MutationObserver(mutations => {
 			) {
 				const tmpPathname = winPathname;
 				winPathname = location.pathname;
-				const gameStatus = await GameStatusManager.getGameStatus();
+				const gameStatus = await GameStatusManager.get();
 				if(
 					gameStatus instanceof Endurance &&
 					matchSize(gameStatus.size) &&
 					gameStatus.isCorrectWinPathname(winPathname)
 				) {
-					const options = await OptionsManager.getOptions();
+					const options = await OptionsManager.get();
 					if(options) {
 						gameStatus.recordWin(winPathname);
 						let textToSpeak = '';
@@ -230,7 +230,7 @@ const enduranceObserver = new MutationObserver(mutations => {
 							textToSpeak += `${gameStatus.getRecordTimeHMS()}, `;
 						}
 						speak(textToSpeak, options.volume, options.rate);
-						GameStatusManager.setGameStatus(gameStatus);
+						GameStatusManager.set(gameStatus);
 					} else {
 						console.error(`options: ${options} does not exist`);
 					}
@@ -256,12 +256,12 @@ const startEndurance = () => {
 
 	let nextNotificationTime = 0;
 	intervalId = setInterval(async () => {
-		const options = await OptionsManager.getOptions();
+		const options = await OptionsManager.get();
 		if(
 			options &&
 			options.enduranceElapsedTime
 		) {
-			const gameStatus = await GameStatusManager.getGameStatus();
+			const gameStatus = await GameStatusManager.get();
 			if(
 				gameStatus instanceof Endurance &&
 				gameStatus.getWins() < 100
@@ -287,7 +287,7 @@ const stopEndurance = () => {
     }
 }
 
-GameStatusManager.getGameStatus().then(gameStatus => {
+GameStatusManager.get().then(gameStatus => {
 	if(gameStatus && Object.keys(gameStatus).length) {
 		if(gameStatus instanceof Arena) {
 			startArena();

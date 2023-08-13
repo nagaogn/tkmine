@@ -4,7 +4,7 @@ import { GameStatusManager } from './game_status.js';
 import { OptionsManager } from './options.js';
 import { MessagesLoader } from './messages.js';
 (async () => {
-    const options = await OptionsManager.getOptions();
+    const options = await OptionsManager.get();
     const messages = await MessagesLoader.loadMessages(options?.language);
     const elements = document.querySelectorAll('[data-i18n]');
     for (const e of elements) {
@@ -21,7 +21,7 @@ import { MessagesLoader } from './messages.js';
             }
         }
     }
-    const gameStatus = await GameStatusManager.getGameStatus();
+    const gameStatus = await GameStatusManager.get();
     if (!!gameStatus) {
         if (gameStatus instanceof Arena) {
             document.getElementById('arena').checked = true;
@@ -74,7 +74,7 @@ document.getElementById('start').onclick = () => {
         console.error(`Unexpected category: ${category}`);
         return;
     }
-    GameStatusManager.setGameStatus(gameStatus);
+    GameStatusManager.set(gameStatus);
     chrome.tabs.query({ url: 'https://minesweeper.online/*' }, tabs => {
         tabs.forEach(tab => {
             if (tab.id) {
@@ -85,7 +85,7 @@ document.getElementById('start').onclick = () => {
     window.close();
 };
 document.getElementById('stop').onclick = () => {
-    GameStatusManager.removeGameStatus();
+    GameStatusManager.remove();
     chrome.tabs.query({ url: 'https://minesweeper.online/*' }, tabs => {
         tabs.forEach(tab => {
             if (tab.id) {

@@ -16,10 +16,10 @@ class OptionsManager {
         enduranceElapsedTimeNotifyInterval: 5,
         language: 'en'
     };
-    static setOptions = (options) => {
+    static set = (options) => {
         chrome.storage.local.set({ options: options });
     };
-    static getOptions = async () => {
+    static get = async () => {
         return await new Promise(resolve => {
             chrome.storage.local.get('options', result => resolve(result.options));
         });

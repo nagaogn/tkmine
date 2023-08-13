@@ -2,10 +2,10 @@ export { GameStatusManager };
 import { ARENA, Arena } from './arena.js';
 import { ENDURANCE, Endurance } from './endurance.js';
 class GameStatusManager {
-    static setGameStatus = (gameStatus) => {
+    static set = (gameStatus) => {
         chrome.storage.local.set({ gameStatus: gameStatus });
     };
-    static getGameStatus = async () => {
+    static get = async () => {
         const gameStatus = await new Promise(resolve => {
             chrome.storage.local.get('gameStatus', result => resolve(result.gameStatus));
         });
@@ -23,7 +23,7 @@ class GameStatusManager {
         }
         return result;
     };
-    static removeGameStatus = () => {
+    static remove = () => {
         chrome.storage.local.remove('gameStatus');
     };
 }

@@ -2,10 +2,10 @@
 
 chrome.runtime.onInstalled.addListener(async (details) => {
 	if(details.reason === 'install') {
-		OptionsManager.setOptions(OptionsManager.defaultOptions);
+		OptionsManager.set(OptionsManager.defaultOptions);
 	} else if(details.reason === 'update') {
-		const currentOptions = await OptionsManager.getOptions();
+		const currentOptions = await OptionsManager.get();
 		const mergedOptions = { ...OptionsManager.defaultOptions, ...currentOptions };
-		OptionsManager.setOptions(mergedOptions);
+		OptionsManager.set(mergedOptions);
 	}
 });

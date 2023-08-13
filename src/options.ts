@@ -35,11 +35,11 @@ class OptionsManager{
 		language: 'en'
 	} as const;
 
-	static setOptions = (options: Options) => {
+	static set = (options: Options) => {
 		chrome.storage.local.set({ options: options });
 	}
 
-	static getOptions = async (): Promise<Options | undefined> => {
+	static get = async (): Promise<Options | undefined> => {
 		return await new Promise(resolve => {
 			chrome.storage.local.get('options', result => resolve(result.options));
 		});

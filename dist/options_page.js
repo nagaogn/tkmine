@@ -1,6 +1,6 @@
 import { OptionsManager } from './options.js';
 (async () => {
-    const options = await OptionsManager.getOptions();
+    const options = await OptionsManager.get();
     if (options) {
         document.getElementById('volume').value = options.volume.toString();
         document.getElementById('rate').value = options.rate.toString();
@@ -52,6 +52,6 @@ document.getElementById('save').onclick = () => {
         enduranceElapsedTimeNotifyInterval,
         language
     };
-    OptionsManager.setOptions(options);
+    OptionsManager.set(options);
     location.reload();
 };
