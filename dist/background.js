@@ -1,11 +1,11 @@
-import { defaultOptions, setOptions, getOptions } from './options.js';
+import { OptionsManager } from './options.js';
 chrome.runtime.onInstalled.addListener(async (details) => {
     if (details.reason === 'install') {
-        setOptions(defaultOptions);
+        OptionsManager.setOptions(OptionsManager.defaultOptions);
     }
     else if (details.reason === 'update') {
-        const currentOptions = await getOptions();
-        const mergedOptions = { ...defaultOptions, ...currentOptions };
-        setOptions(mergedOptions);
+        const currentOptions = await OptionsManager.getOptions();
+        const mergedOptions = { ...OptionsManager.defaultOptions, ...currentOptions };
+        OptionsManager.setOptions(mergedOptions);
     }
 });

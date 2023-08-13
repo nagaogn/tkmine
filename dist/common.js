@@ -1,30 +1,4 @@
-import { ARENA, Arena } from './arena.js';
-import { ENDURANCE, Endurance } from './endurance.js';
-export { setGameStatus, getGameStatus, removeGameStatus, formatSecToHM, formatSecToHMS };
-const setGameStatus = (gameStatus) => {
-    chrome.storage.local.set({ gameStatus: gameStatus });
-};
-const getGameStatus = async () => {
-    const gameStatus = await new Promise(resolve => {
-        chrome.storage.local.get('gameStatus', result => resolve(result.gameStatus));
-    });
-    let result;
-    if (gameStatus) {
-        if (gameStatus.category === ARENA) {
-            result = new Arena(gameStatus.type, gameStatus.level, gameStatus.elite, gameStatus);
-        }
-        else if (gameStatus.category === ENDURANCE) {
-            result = new Endurance(gameStatus.size, gameStatus);
-        }
-        else {
-            console.error(`Unexpected category: ${gameStatus.category}`);
-        }
-    }
-    return result;
-};
-const removeGameStatus = () => {
-    chrome.storage.local.remove('gameStatus');
-};
+export { formatSecToHM, formatSecToHMS };
 const formatSecToHM = (sec) => {
     const h = Math.trunc(sec / 3600);
     const m = Math.trunc((sec % 3600) / 60);

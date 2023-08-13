@@ -1,20 +1,15 @@
-export { Message, Messages };
+export { MessagesLoader };
 
-interface Message {
+interface Messages {
 	[index: string]: {
 		message: string;
 	};
 }
 
-class Messages {
-	protected constructor(
-		public lang: string,
-		public message: Message
-	) {}
-
-	static create = async (lang: string = 'en') : Promise<Messages> => {
+class MessagesLoader {
+	static loadMessages = async (lang: string = 'en') : Promise<Messages> => {
 		const response = await fetch(chrome.runtime.getURL(`_locales/${lang}/messages.json`));
 		const message = await response.json();
-		return new Messages(lang, message);
+		return message;
 	}
 }

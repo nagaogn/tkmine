@@ -1,10 +1,7 @@
-export { ENDURANCE, Endurance, isSizeType };
+export { ENDURANCE, Endurance };
 import { formatSecToHM, formatSecToHMS } from './common.js';
 const ENDURANCE = 'endurance';
 const sizeType = ['Beginner', 'Intermediate', 'Expert'];
-const isSizeType = (value) => {
-    return sizeType.some(v => v === value);
-};
 class Endurance {
     size;
     category = ENDURANCE;
@@ -16,6 +13,9 @@ class Endurance {
         this.size = size;
         Object.assign(this, init);
     }
+    static isSizeType = (value) => {
+        return sizeType.some(v => v === value);
+    };
     recordStartTime() {
         this.startTimes.push(new Date().toISOString());
     }

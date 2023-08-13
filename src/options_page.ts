@@ -1,7 +1,7 @@
-﻿import { Options, setOptions, getOptions } from './options.js';
+﻿import { OptionsManager } from './options.js';
 
 (async () => {
-    const options = await getOptions();
+    const options = await OptionsManager.getOptions();
     if(options) {
         (document.getElementById('volume') as HTMLInputElement).value = options.volume.toString();
         (document.getElementById('rate') as HTMLInputElement).value = options.rate.toString();
@@ -37,7 +37,7 @@
     const enduranceElapsedTime = (document.getElementById('enduranceElapsedTime') as HTMLInputElement).checked;
     const enduranceElapsedTimeNotifyInterval = Math.trunc(Number((document.getElementById('enduranceElapsedTimeNotifyInterval') as HTMLInputElement).value));
     const language = (document.getElementById('language') as HTMLInputElement).value;
-    const options: Options = {
+    const options = {
         volume,
         rate,
         arenaRemainGame,
@@ -53,6 +53,6 @@
         enduranceElapsedTimeNotifyInterval,
         language
     };
-    setOptions(options);
+    OptionsManager.setOptions(options);
     location.reload();
 }

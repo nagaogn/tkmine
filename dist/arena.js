@@ -1,14 +1,8 @@
-export { ARENA, Arena, isGameType, isLevelType };
+export { ARENA, Arena };
 import { formatSecToHMS } from './common.js';
 const ARENA = 'arena';
 const gameType = ['ticket1', 'ticket2', 'ticket3', 'ticket4', 'ticket5', 'ticket6', 'ticket7', 'ticket8', 'ticket9', 'ticket10'];
 const levelType = ['L1', 'L2', 'L3', 'L4', 'L5', 'L6', 'L7', 'L8'];
-const isGameType = (value) => {
-    return gameType.some(v => v === value);
-};
-const isLevelType = (value) => {
-    return levelType.some(v => v === value);
-};
 class Arena {
     type;
     level;
@@ -31,6 +25,12 @@ class Arena {
         this.remainTime = this.timeLimit;
         Object.assign(this, init);
     }
+    static isGameType = (value) => {
+        return gameType.some(v => v === value);
+    };
+    static isLevelType = (value) => {
+        return levelType.some(v => v === value);
+    };
     recordWin(wins, remainTime, size) {
         this.wins = wins;
         this.remainGame = this.games - wins + 1;

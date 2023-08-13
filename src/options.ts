@@ -1,45 +1,47 @@
-export { Options, defaultOptions, setOptions, getOptions };
+export { OptionsManager };
 
 interface Options {
 	volume: number;
 	rate: number;
-    arenaRemainGame: boolean;
-    arenaRemainTime: boolean;
+	arenaRemainGame: boolean;
+	arenaRemainTime: boolean;
 	arenaRemainTimeNotifyInterval: number;
-    arenaMineDensity: boolean;
-    arenaDifficulty: boolean;
-    arenaWinProbability: boolean;
-    arenaTargetTime: boolean;
-    arenaTheatreMode: boolean;
-    enduranceWins: boolean;
-    enduranceElapsedTime: boolean;
+	arenaMineDensity: boolean;
+	arenaDifficulty: boolean;
+	arenaWinProbability: boolean;
+	arenaTargetTime: boolean;
+	arenaTheatreMode: boolean;
+	enduranceWins: boolean;
+	enduranceElapsedTime: boolean;
 	enduranceElapsedTimeNotifyInterval: number;
-    language: string;
+	language: string;
 }
 
-const defaultOptions: Options = {
-    volume: 0.5,
-    rate: 1,
-    arenaRemainGame: true,
-    arenaRemainTime: true,
-    arenaRemainTimeNotifyInterval: 5,
-    arenaMineDensity: false,
-    arenaDifficulty: false,
-    arenaWinProbability: false,
-    arenaTargetTime: false,
-    arenaTheatreMode: false,
-    enduranceWins: true,
-    enduranceElapsedTime: true,
-    enduranceElapsedTimeNotifyInterval: 5,
-    language: 'en'
-};
+class OptionsManager{
+	static defaultOptions: Options = {
+		volume: 0.5,
+		rate: 1,
+		arenaRemainGame: true,
+		arenaRemainTime: true,
+		arenaRemainTimeNotifyInterval: 5,
+		arenaMineDensity: false,
+		arenaDifficulty: false,
+		arenaWinProbability: false,
+		arenaTargetTime: false,
+		arenaTheatreMode: false,
+		enduranceWins: true,
+		enduranceElapsedTime: true,
+		enduranceElapsedTimeNotifyInterval: 5,
+		language: 'en'
+	} as const;
 
-const setOptions = (options: Options) => {
-	chrome.storage.local.set({ options: options });
-}
+	static setOptions = (options: Options) => {
+		chrome.storage.local.set({ options: options });
+	}
 
-const getOptions = async (): Promise<Options | undefined> => {
-	return await new Promise(resolve => {
-		chrome.storage.local.get('options', result => resolve(result.options));
-	});
+	static getOptions = async (): Promise<Options | undefined> => {
+		return await new Promise(resolve => {
+			chrome.storage.local.get('options', result => resolve(result.options));
+		});
+	}
 }

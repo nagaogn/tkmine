@@ -40,7 +40,14 @@
 	"web_accessible_resources": [
 		{
 			"matches": ["https://minesweeper.online/*"],
-			"resources": ["content.js", "arena.js", "endurance.js", "common.js", "options.js"]
+			"resources": [
+				"content.js",
+				"arena.js",
+				"endurance.js",
+				"game_status.js",
+				"common.js",
+				"options.js"
+			]
 		}
 	]
 }

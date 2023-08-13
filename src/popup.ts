@@ -1,17 +1,17 @@
-﻿import { ARENA, Arena, isGameType, isLevelType } from './arena.js';
-import { ENDURANCE, Endurance, isSizeType } from './endurance.js';
-import { setGameStatus, getGameStatus, removeGameStatus } from './common.js';
-import { getOptions } from './options.js';
-import { Messages } from './messages.js';
+﻿import { ARENA, Arena } from './arena.js';
+import { ENDURANCE, Endurance } from './endurance.js';
+import { GameStatusManager } from './game_status.js';
+import { OptionsManager } from './options.js';
+import { MessagesLoader } from './messages.js';
 
 (async () => {
-	const options = await getOptions();
-	const messages = await Messages.create(options?.language);
+	const options = await OptionsManager.getOptions();
+	const messages = await MessagesLoader.loadMessages(options?.language);
 	const elements = document.querySelectorAll('[data-i18n]');
 	for (const e of elements) {
 		const messageName = e.getAttribute('data-i18n');
 		if(!!messageName) {
-			const message = messages.message[messageName].message;
+			const message = messages[messageName].message;
 			if (!!message) {
 				if(e instanceof HTMLInputElement) {
 					e.value = message;
@@ -21,7 +21,7 @@ import { Messages } from './messages.js';
 			}
 		}
 	}
-	const gameStatus = await getGameStatus();
+	const gameStatus = await GameStatusManager.getGameStatus();
 	if(!!gameStatus) {
 		if(gameStatus instanceof Arena) {
 			(document.getElementById('arena') as HTMLInputElement).checked = true;
@@ -50,7 +50,7 @@ import { Messages } from './messages.js';
 		const type = (document.getElementById('type') as HTMLInputElement).value;
 		const level = (document.getElementById('level') as HTMLInputElement).value;
 		const elite = (document.getElementById('elite') as HTMLInputElement).checked;
-		if(isGameType(type) && isLevelType(level)) {
+		if(Arena.isGameType(type) && Arena.isLevelType(level)) {
 			gameStatus = new Arena(type, level, elite);
 		} else {
 			console.error(`Invalid game type: ${type} or level: ${level}`);
@@ -58,7 +58,7 @@ import { Messages } from './messages.js';
 		}
 	} else if(category === ENDURANCE) {
 		const size = (document.getElementById('size') as HTMLInputElement).value;
-		if(isSizeType(size)) {
+		if(Endurance.isSizeType(size)) {
 			gameStatus = new Endurance(size);
 		} else {
 			console.error(`Invalid size: ${size}`);
@@ -68,7 +68,7 @@ import { Messages } from './messages.js';
 		console.error(`Unexpected category: ${category}`);
 		return;
 	}
-	setGameStatus(gameStatus);
+	GameStatusManager.setGameStatus(gameStatus);
 	chrome.tabs.query({ url: 'https://minesweeper.online/*' }, tabs => {
 		tabs.forEach(tab => {
 			if(tab.id) {
@@ -80,7 +80,7 @@ import { Messages } from './messages.js';
 }
 
 (document.getElementById('stop') as HTMLElement).onclick = () => {
-	removeGameStatus();
+	GameStatusManager.removeGameStatus();
 	chrome.tabs.query({ url: 'https://minesweeper.online/*' }, tabs => {
 		tabs.forEach(tab => {
 			if(tab.id) {
