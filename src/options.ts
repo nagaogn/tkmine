@@ -3,7 +3,7 @@ export { OptionsManager };
 interface Options {
 	volume: number;
 	rate: number;
-	arenaRemainGame: boolean;
+	arenaRemainGames: boolean;
 	arenaRemainTime: boolean;
 	arenaRemainTimeNotifyInterval: number;
 	arenaMineDensity: boolean;
@@ -21,7 +21,7 @@ class OptionsManager{
 	static defaultOptions: Options = {
 		volume: 0.5,
 		rate: 1,
-		arenaRemainGame: true,
+		arenaRemainGames: true,
 		arenaRemainTime: true,
 		arenaRemainTimeNotifyInterval: 5,
 		arenaMineDensity: false,

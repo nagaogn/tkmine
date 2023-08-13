@@ -6,20 +6,21 @@
 </head>
 <body>
 <h2>Timekeeper for Minesweeper Online</h2>
-<h3>読み上げ音声</h3>
+<h3 data-i18n="voice"></h3>
 <div>
-	<b>言語</b>&emsp;
+	<b data-i18n="language"></b>&emsp;
 	<select id="language" name="language">
 		<option value="en">English</option>
 		<option value="ja">日本語</option>
 	</select>
 </div>
 <div>
-	<b>音量</b>&emsp;
+	<b data-i18n="volume"></b>&emsp;
 	<input type="range" id="volume" name="volume" min="0" max="1" step="0.05">
 </div>
 <div>
-	<b>速度</b>&emsp;
+	<b data-i18n="rate"></b>&emsp;
+	<span data-i18n="ratePrefix"></span>
 	<select id="rate" name="rate">
 		<option value="1">1</option>
 		<option value="1.5">1.5</option>
@@ -33,20 +34,21 @@
 		<option value="9">9</option>
 		<option value="10">10</option>
 	</select>
-	倍速
+	<span data-i18n="rateSuffix"></span>
 </div>
-<h3>アリーナ</h3>
+<h3 data-i18n="arena"></h3>
 <div>
-	<label for="arenaRemainGame">
-		<input type="checkbox" id="arenaRemainGame" name="arenaRemainGame" value="arenaRemainGame">
-		<b>残りゲーム数</b>
+	<label for="arenaRemainGames">
+		<input type="checkbox" id="arenaRemainGames" name="arenaRemainGames" value="arenaRemainGames">
+		<b data-i18n="remainGames"></b>
 	</label>
 </div>
 <div>
 	<label for="arenaRemainTime">
 		<input type="checkbox" id="arenaRemainTime" name="arenaRemainTime" value="arenaRemainTime">
-		<b>残り時間</b>&emsp;
+		<b data-i18n="remainTime"></b>&emsp;
 	</label>
+	<span data-i18n="intervalPrefix"></span>
 	<select id="arenaRemainTimeNotifyInterval" name="arenaRemainTimeNotifyInterval">
 		<option value="1">1</option>
 		<option value="5">5</option>
@@ -54,50 +56,51 @@
 		<option value="15">15</option>
 		<option value="30">30</option>
 	</select>
-	分に1回
+	<span data-i18n="intervalSuffix"></span>
 </div>
 <div>
 	<label for="arenaMineDensity">
 		<input type="checkbox" id="arenaMineDensity" name="arenaMineDensity" value="arenaMineDensity">
-		<b>爆弾の密度</b>
+		<b data-i18n="mineDensity"></b>
 	</label>
 </div>
 <div>
 	<label for="arenaDifficulty">
 		<input type="checkbox" id="arenaDifficulty" name="arenaDifficulty" value="arenaDifficulty">
-		<b>複雑さ</b>
+		<b data-i18n="difficulty"></b>
 	</label>
 </div>
 <div>
 	<label for="arenaWinProbability">
 		<input type="checkbox" id="arenaWinProbability" name="arenaWinProbability" value="arenaWinProbability">
-		<b>勝率</b>
+		<b data-i18n="winProbability"></b>
 	</label>
 </div>
 <div>
 	<label for="arenaTargetTime">
 		<input type="checkbox" id="arenaTargetTime" name="arenaTargetTime" value="arenaTargetTime">
-		<b>目標時間</b>&emsp;計算式: 現ゲームの複雑さ/(平均複雑さ/(全所要時間/全ゲーム数))
+		<b data-i18n="targetTime"></b>&emsp;<span data-i18n="formula"></span>
 	</label>
 </div>
 <div>
 	<label for="arenaTheatreMode">
 		<input type="checkbox" id="arenaTheatreMode" name="arenaTheatreMode" value="arenaTheatreMode">
-		<b>始まったらシアターモードにする</b>
+		<b data-i18n="theatreMode"></b>
 	</label>
 </div>
-<h3>耐久</h3>
+<h3 data-i18n="endurance"></h3>
 <div>
 	<label for="enduranceWins">
 		<input type="checkbox" id="enduranceWins" name="enduranceWins" value="enduranceWins">
-		<b>勝利数</b>
+		<b data-i18n="wins"></b>
 	</label>
 </div>
 <div>
 	<label for="enduranceElapsedTime">
 		<input type="checkbox" id="enduranceElapsedTime" name="enduranceElapsedTime" value="enduranceElapsedTime">
-		<b>経過時間</b>&emsp;
+		<b data-i18n="elapsedTime"></b>&emsp;
 	</label>
+	<span data-i18n="intervalPrefix"></span>
 	<select id="enduranceElapsedTimeNotifyInterval" name="enduranceElapsedTimeNotifyInterval">
 		<option value="1">1</option>
 		<option value="5">5</option>
@@ -105,9 +108,9 @@
 		<option value="15">15</option>
 		<option value="30">30</option>
 	</select>
-	分に1回
+	<span data-i18n="intervalSuffix"></span>
 </div>
 <br>
-<input type="button" id="save" value="保存">
+<input type="button" id="save" data-i18n="save">
 </body>
 </html>

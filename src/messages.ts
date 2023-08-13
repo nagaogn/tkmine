@@ -7,7 +7,7 @@ interface Messages {
 }
 
 class MessagesLoader {
-	static loadMessages = async (lang: string = 'en') : Promise<Messages> => {
+	static load = async (lang: string = 'en') : Promise<Messages> => {
 		const response = await fetch(chrome.runtime.getURL(`_locales/${lang}/messages.json`));
 		const message = await response.json();
 		return message;

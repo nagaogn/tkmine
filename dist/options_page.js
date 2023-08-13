@@ -1,10 +1,27 @@
 import { OptionsManager } from './options.js';
+import { MessagesLoader } from './messages.js';
 (async () => {
     const options = await OptionsManager.get();
-    if (options) {
+    if (!!options) {
+        const messages = await MessagesLoader.load(options.language);
+        const elements = document.querySelectorAll('[data-i18n]');
+        for (const e of elements) {
+            const messageName = e.getAttribute('data-i18n');
+            if (!!messageName) {
+                const message = messages[messageName].message;
+                if (!!message) {
+                    if (e instanceof HTMLInputElement) {
+                        e.value = message;
+                    }
+                    else {
+                        e.textContent = message;
+                    }
+                }
+            }
+        }
         document.getElementById('volume').value = options.volume.toString();
         document.getElementById('rate').value = options.rate.toString();
-        document.getElementById('arenaRemainGame').checked = options.arenaRemainGame;
+        document.getElementById('arenaRemainGames').checked = options.arenaRemainGames;
         document.getElementById('arenaRemainTime').checked = options.arenaRemainTime;
         document.getElementById('arenaRemainTimeNotifyInterval').value = options.arenaRemainTimeNotifyInterval.toString();
         document.getElementById('arenaMineDensity').checked = options.arenaMineDensity;
@@ -24,7 +41,7 @@ import { OptionsManager } from './options.js';
 document.getElementById('save').onclick = () => {
     const volume = Number(document.getElementById('volume').value);
     const rate = Number(document.getElementById('rate').value);
-    const arenaRemainGame = document.getElementById('arenaRemainGame').checked;
+    const arenaRemainGames = document.getElementById('arenaRemainGames').checked;
     const arenaRemainTime = document.getElementById('arenaRemainTime').checked;
     const arenaRemainTimeNotifyInterval = Math.trunc(Number(document.getElementById('arenaRemainTimeNotifyInterval').value));
     const arenaMineDensity = document.getElementById('arenaMineDensity').checked;
@@ -39,7 +56,7 @@ document.getElementById('save').onclick = () => {
     const options = {
         volume,
         rate,
-        arenaRemainGame,
+        arenaRemainGames,
         arenaRemainTime,
         arenaRemainTimeNotifyInterval,
         arenaMineDensity,

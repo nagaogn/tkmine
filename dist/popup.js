@@ -5,7 +5,7 @@ import { OptionsManager } from './options.js';
 import { MessagesLoader } from './messages.js';
 (async () => {
     const options = await OptionsManager.get();
-    const messages = await MessagesLoader.loadMessages(options?.language);
+    const messages = await MessagesLoader.load(options?.language);
     const elements = document.querySelectorAll('[data-i18n]');
     for (const e of elements) {
         const messageName = e.getAttribute('data-i18n');

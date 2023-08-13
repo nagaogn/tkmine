@@ -3,7 +3,7 @@ class OptionsManager {
     static defaultOptions = {
         volume: 0.5,
         rate: 1,
-        arenaRemainGame: true,
+        arenaRemainGames: true,
         arenaRemainTime: true,
         arenaRemainTimeNotifyInterval: 5,
         arenaMineDensity: false,

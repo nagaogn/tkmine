@@ -45,7 +45,7 @@ const arenaObserver = new MutationObserver(mutations => {
                         gameStatus.currentSize !== size) {
                         gameStatus.recordWin(wins, remainTime.innerText, size);
                         let textToSpeak = '';
-                        if (options.arenaRemainGame) {
+                        if (options.arenaRemainGames) {
                             textToSpeak += `残り, ${gameStatus.remainGame}回, `;
                         }
                         if (options.arenaMineDensity) {
