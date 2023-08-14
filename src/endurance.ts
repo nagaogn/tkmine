@@ -1,4 +1,5 @@
 export { ENDURANCE, Endurance };
+import { Messages } from './messages.js';
 import { formatSecToHM, formatSecToHMS } from './common.js';
 
 const ENDURANCE = 'endurance' as const;
@@ -76,8 +77,8 @@ class Endurance {
 		return recordTime;
 	}
 
-	public getElapsedTimeHM() {
-		return formatSecToHM(this.getElapsedTime());
+	public getElapsedTimeHM(messages: Messages) {
+		return formatSecToHM(this.getElapsedTime(), messages);
 	}
 
 	public getRecordTime() {
@@ -89,8 +90,8 @@ class Endurance {
 		return recordTime;
 	}
 
-	public getRecordTimeHMS() {
-		return formatSecToHMS(this.getRecordTime());
+	public getRecordTimeHMS(messages: Messages) {
+		return formatSecToHMS(this.getRecordTime(), messages);
 	}
 
 	public getWins() {

@@ -1,19 +1,21 @@
+import { Messages, MessagesLoader } from "./messages.js";
+
 export { formatSecToHM, formatSecToHMS };
 
-const formatSecToHM = (sec: number) => {
+const formatSecToHM = (sec: number, messages: Messages) => {
 	const h = Math.trunc(sec / 3600);
 	const m = Math.trunc((sec % 3600) / 60);
-	let result = h === 0 ? '' : `${h}時間`;
-	result += m === 0 ? '' : `${m}分`;
+	let result = h === 0 ? '' : MessagesLoader.replace(messages['notifyHours'].message, {'hours': h});
+	result += m === 0 ? '' : MessagesLoader.replace(messages['notifyMinutes'].message, {'minutes': m});
 	return result;
 }
 
-const formatSecToHMS = (sec: number) => {
+const formatSecToHMS = (sec: number, messages: Messages) => {
 	const h = Math.trunc(sec / 3600);
 	const m = Math.trunc((sec % 3600) / 60);
 	const s = Math.trunc(sec % 60);
-	let result = h === 0 ? '' : `${h}時間`;
-	result += m === 0 ? '' : `${m}分`;
-	result += s === 0 ? '' : `${s}秒`;
+	let result = h === 0 ? '' : MessagesLoader.replace(messages['notifyHours'].message, {'hours': h});
+	result += m === 0 ? '' : MessagesLoader.replace(messages['notifyMinutes'].message, {'minutes': m});
+	result += s === 0 ? '' : MessagesLoader.replace(messages['notifySeconds'].message, {'seconds': m});
 	return result;
 }

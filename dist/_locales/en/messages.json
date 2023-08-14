@@ -30,7 +30,7 @@
 	"remainGames": { "message": "Remain games", "description": "Used in options" },
 	"remainTime": { "message": "Remain time", "description": "Used in options" },
 	"intervalPrefix": { "message": "Every", "description": "Used in options" },
-	"intervalSuffix": { "message": "time", "description": "Used in options" },
+	"intervalSuffix": { "message": "minutes", "description": "Used in options" },
 	"mineDensity": { "message": "Mine density", "description": "Used in options" },
 	"difficulty": { "message": "Difficulty", "description": "Used in options" },
 	"winProbability": { "message": "Win probability", "description": "Used in options" },
@@ -39,5 +39,41 @@
 	"theatreMode": { "message": "Theatre mode", "description": "Used in options" },
 	"wins": { "message": "Wins", "description": "Used in options" },
 	"elapsedTime": { "message": "Elapsed time", "description": "Used in options" },
-	"save": { "message": " Save", "description": "Used in options" }
+	"save": { "message": " Save", "description": "Used in options" },
+	"notifyRemainGames": {
+		"message": "残り, $remainGames$回, ",
+		"placeholders": { "remainGames": { "content": "$remainGames$" } }
+	},
+	"notifyMineDensity": {
+		"message": "密度, $mineDensity$, ",
+		"placeholders": { "mineDensity": { "content": "$mineDensity$" } }
+	},
+	"notifyDifficulty": {
+		"message": "複雑さ, $difficulty$, ",
+		"placeholders": { "difficulty": { "content": "$difficulty$" } }
+	},
+	"notifyWinProbability": {
+		"message": "勝率, $winProbability$, ",
+		"placeholders": { "winProbability": { "content": "$winProbability$" } }
+	},
+	"notifyTargetTime": {
+		"message": "目標, $targetTime$, ",
+		"placeholders": { "targetTime": { "content": "$targetTime$" } }
+	},
+	"notifyWins": {
+		"message": "$wins$ game, ",
+		"placeholders": { "wins": { "content": "$wins$" } }
+	},
+	"notifyHours": {
+		"message": "$hours$時間",
+		"placeholders": { "hours": { "content": "$hours$" } }
+	},
+	"notifyMinutes": {
+		"message": "$minutes$分",
+		"placeholders": { "minutes": { "content": "$minutes$" } }
+	},
+	"notifySeconds": {
+		"message": "$seconds$秒",
+		"placeholders": { "seconds": { "content": "$seconds$" } }
+	}
 }

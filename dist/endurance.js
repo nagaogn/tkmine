@@ -56,8 +56,8 @@ class Endurance {
         const recordTime = Math.trunc((now - start) / 1000);
         return recordTime;
     }
-    getElapsedTimeHM() {
-        return formatSecToHM(this.getElapsedTime());
+    getElapsedTimeHM(messages) {
+        return formatSecToHM(this.getElapsedTime(), messages);
     }
     getRecordTime() {
         const start = new Date(this.startTimes[this.startPathnames.indexOf(this.winPathnames[0])]).getTime();
@@ -65,8 +65,8 @@ class Endurance {
         const recordTime = Math.trunc((last - start) / 1000);
         return recordTime;
     }
-    getRecordTimeHMS() {
-        return formatSecToHMS(this.getRecordTime());
+    getRecordTimeHMS(messages) {
+        return formatSecToHMS(this.getRecordTime(), messages);
     }
     getWins() {
         return this.winTimes.length;

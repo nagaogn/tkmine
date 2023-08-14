@@ -1,4 +1,5 @@
 export { ARENA, Arena };
+import { Messages } from './messages.js';
 import { formatSecToHMS } from './common.js';
 
 const ARENA = 'arena' as const;
@@ -16,7 +17,7 @@ class Arena {
 	averageDifficulty: number;
 	wins: number = 0;
 	remainTime: number;
-	remainGame: number;
+	remainGames: number;
 	lastGameTime: number = 0;
 	currentSize: string = '';
 
@@ -27,7 +28,7 @@ class Arena {
 		init?: Partial<Arena>
 	) {
 		[this.games, this.timeLimit, this.averageDifficulty] = GAMES_AND_TIME_LIMITS[this.type][this.level][this.elite ? 'elite' : 'classic'];
-		this.remainGame = this.games;
+		this.remainGames = this.games;
 		this.remainTime = this.timeLimit;
 		Object.assign(this, init);
 	}
@@ -42,7 +43,7 @@ class Arena {
 	
 	public recordWin(wins: number, remainTime: string, size: string) {
 		this.wins = wins;
-		this.remainGame = this.games - wins + 1;
+		this.remainGames = this.games - wins + 1;
 		const t = this.calcRemainTime(remainTime);
 		this.lastGameTime = this.remainTime - t;
 		this.remainTime = t;
@@ -60,7 +61,7 @@ class Arena {
 				result += t * (60 ** (4 - i));
 			}
 			if(!!match[1]) {
-				const borderTime = this.timeLimit / this.games * (this.remainGame - 1);
+				const borderTime = this.timeLimit / this.games * (this.remainGames - 1);
 				if(match[1] === '+') {
 					result = borderTime + result;
 				} else if(match[1] === '–') {
@@ -79,9 +80,9 @@ class Arena {
 	// 2: 複雑さ、残り時間、残りゲーム数を考慮したクリア時間目安
 	// 現ゲームの複雑さ/(平均複雑さ/(残り時間(秒)/残りゲーム数))
 	// 1を採用
-	public estimateWinTime(difficulty: number) {
+	public estimateWinTime(difficulty: number, messages: Messages) {
 		const result = Math.trunc(difficulty / (this.averageDifficulty / (this.timeLimit / this.games)));
-		return formatSecToHMS(result);
+		return formatSecToHMS(result, messages);
 	}
 }
 

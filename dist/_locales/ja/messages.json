@@ -36,5 +36,41 @@
 	"theatreMode": { "message": "始まったらシアターモードにする" },
 	"wins": { "message": "勝利数" },
 	"elapsedTime": { "message": "経過時間" },
-	"save": { "message": "保存" }
+	"save": { "message": "保存" },
+	"notifyRemainGames": {
+		"message": "残り, $remainGames$回, ",
+		"placeholders": { "remainGames": { "content": "$remainGames$" } }
+	},
+	"notifyMineDensity": {
+		"message": "密度, $mineDensity$, ",
+		"placeholders": { "mineDensity": { "content": "$mineDensity$" } }
+	},
+	"notifyDifficulty": {
+		"message": "複雑さ, $difficulty$, ",
+		"placeholders": { "difficulty": { "content": "$difficulty$" } }
+	},
+	"notifyWinProbability": {
+		"message": "勝率, $winProbability$, ",
+		"placeholders": { "winProbability": { "content": "$winProbability$" } }
+	},
+	"notifyTargetTime": {
+		"message": "目標, $targetTime$, ",
+		"placeholders": { "targetTime": { "content": "$targetTime$" } }
+	},
+	"notifyWins": {
+		"message": "$wins$回, ",
+		"placeholders": { "wins": { "content": "$wins$" } }
+	},
+	"notifyHours": {
+		"message": "$hours$時間",
+		"placeholders": { "hours": { "content": "$hours$" } }
+	},
+	"notifyMinutes": {
+		"message": "$minutes$分",
+		"placeholders": { "minutes": { "content": "$minutes$" } }
+	},
+	"notifySeconds": {
+		"message": "$seconds$秒",
+		"placeholders": { "seconds": { "content": "$seconds$" } }
+	}
 }

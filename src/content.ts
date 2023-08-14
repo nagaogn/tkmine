@@ -3,6 +3,7 @@ import { ENDURANCE, Endurance } from './endurance.js';
 import { GameStatusManager } from './game_status.js';
 import { formatSecToHM } from './common.js';
 import { OptionsManager } from './options.js';
+import { MessagesLoader } from './messages.js';
 
 const utterance = new SpeechSynthesisUtterance();
 
@@ -48,6 +49,7 @@ const arenaObserver = new MutationObserver(mutations => {
 				const winProbability = winProbabilityRegx.exec(mutation.target.getAttribute('data-content') ?? '')?.[1];
 				const options = await OptionsManager.get();
 				if(remainTime && difficulty && size && options) {
+					const messages = await MessagesLoader.load(options.language);
 					if(
 						gameStatus.wins !== wins ||
 						gameStatus.currentSize !== size
@@ -55,19 +57,19 @@ const arenaObserver = new MutationObserver(mutations => {
 						gameStatus.recordWin(wins, remainTime.innerText, size);
 						let textToSpeak = '';
 						if(options.arenaRemainGames) {
-							textToSpeak += `残り, ${gameStatus.remainGame}回, `;
+							textToSpeak += MessagesLoader.replace(messages['notifyRemainGames'].message, {'remainGames': gameStatus.remainGames});
 						}
-						if(options.arenaMineDensity) {
-							textToSpeak += `密度, ${mineDensity}, `;
+						if(options.arenaMineDensity && !!mineDensity) {
+							textToSpeak += MessagesLoader.replace(messages['notifyMineDensity'].message, {'mineDensity': mineDensity});
 						}
-						if(options.arenaDifficulty) {
-							textToSpeak += `複雑さ, ${difficulty}, `;
+						if(options.arenaDifficulty && !!difficulty) {
+							textToSpeak += MessagesLoader.replace(messages['notifyDifficulty'].message, {'difficulty': difficulty});
 						}
 						if(options.arenaWinProbability && !!winProbability) {
-							textToSpeak += `勝率, ${winProbability}, `;
+							textToSpeak += MessagesLoader.replace(messages['notifyWinProbability'].message, {'winProbability': winProbability});
 						}
-						if(options.arenaTargetTime) {
-							textToSpeak += `目標, ${gameStatus.estimateWinTime(difficulty)}, `;
+						if(options.arenaTargetTime && !!difficulty) {
+							textToSpeak += MessagesLoader.replace(messages['notifyTargetTime'].message, {'targetTime': gameStatus.estimateWinTime(difficulty, messages)});
 						}
 						speak(textToSpeak, options.volume, options.rate);
 						GameStatusManager.set(gameStatus);
@@ -118,7 +120,8 @@ const arenaTimeObserver = new MutationObserver(mutations => {
 					const remainTime = gameStatus.calcRemainTime(mutation.target.innerText);
 					const remainTimeInMinutes = Math.trunc(remainTime / 60);
 					if(remainTimeInMinutes < arenaNextNotificationTime) {
-						const textToSpeak = `${formatSecToHM(remainTime + 60)}, `;
+						const messages = await MessagesLoader.load(options.language);
+						const textToSpeak = `${formatSecToHM(remainTime + 60, messages)}, `;
 						speak(textToSpeak, options.volume, options.rate);
 						// NOTE: arenaNextNotificationTimeはarenaRemainTimeNotifyIntervalの倍数にする
 						arenaNextNotificationTime = Math.floor(remainTimeInMinutes / options.arenaRemainTimeNotifyInterval) * options.arenaRemainTimeNotifyInterval;
@@ -211,7 +214,8 @@ const enduranceObserver = new MutationObserver(mutations => {
 					gameStatus.isCorrectWinPathname(winPathname)
 				) {
 					const options = await OptionsManager.get();
-					if(options) {
+					if(!!options) {
+						const messages = await MessagesLoader.load(options.language);
 						gameStatus.recordWin(winPathname);
 						let textToSpeak = '';
 						if(
@@ -221,13 +225,13 @@ const enduranceObserver = new MutationObserver(mutations => {
 								!options.enduranceElapsedTime
 							)
 						) {
-							textToSpeak += `${gameStatus.getWins()}回, `;
+							textToSpeak += MessagesLoader.replace(messages['notifyWins'].message, {'wins': gameStatus.getWins()});
 						}
 						if(
 							options.enduranceElapsedTime &&
 							gameStatus.getWins() >= 100
 						) {
-							textToSpeak += `${gameStatus.getRecordTimeHMS()}, `;
+							textToSpeak += `${gameStatus.getRecordTimeHMS(messages)}, `;
 						}
 						speak(textToSpeak, options.volume, options.rate);
 						GameStatusManager.set(gameStatus);
@@ -268,8 +272,9 @@ const startEndurance = () => {
 			) {
 				const elapsedTimeInMinutes = Math.floor(gameStatus.getElapsedTime() / 60);
 				if(elapsedTimeInMinutes >= nextNotificationTime) {
+					const messages = await MessagesLoader.load(options.language);
 					//NOTE: 0分だとgetElapsedTimeHMが空文字になるから一番最初は読み上げない
-					const textToSpeak = `${gameStatus.getElapsedTimeHM()}, `;
+					const textToSpeak = `${gameStatus.getElapsedTimeHM(messages)}, `;
 					speak(textToSpeak, options.volume, options.rate);
 					//NOTE: nextNotificationTimeはenduranceElapsedTimeNotifyIntervalの倍数にする
 					nextNotificationTime = Math.ceil((elapsedTimeInMinutes + 1) / options.enduranceElapsedTimeNotifyInterval) * options.enduranceElapsedTimeNotifyInterval;

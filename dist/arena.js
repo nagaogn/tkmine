@@ -13,7 +13,7 @@ class Arena {
     averageDifficulty;
     wins = 0;
     remainTime;
-    remainGame;
+    remainGames;
     lastGameTime = 0;
     currentSize = '';
     constructor(type, level, elite, init) {
@@ -21,7 +21,7 @@ class Arena {
         this.level = level;
         this.elite = elite;
         [this.games, this.timeLimit, this.averageDifficulty] = GAMES_AND_TIME_LIMITS[this.type][this.level][this.elite ? 'elite' : 'classic'];
-        this.remainGame = this.games;
+        this.remainGames = this.games;
         this.remainTime = this.timeLimit;
         Object.assign(this, init);
     }
@@ -33,7 +33,7 @@ class Arena {
     };
     recordWin(wins, remainTime, size) {
         this.wins = wins;
-        this.remainGame = this.games - wins + 1;
+        this.remainGames = this.games - wins + 1;
         const t = this.calcRemainTime(remainTime);
         this.lastGameTime = this.remainTime - t;
         this.remainTime = t;
@@ -50,7 +50,7 @@ class Arena {
                 result += t * (60 ** (4 - i));
             }
             if (!!match[1]) {
-                const borderTime = this.timeLimit / this.games * (this.remainGame - 1);
+                const borderTime = this.timeLimit / this.games * (this.remainGames - 1);
                 if (match[1] === '+') {
                     result = borderTime + result;
                 }
@@ -64,9 +64,9 @@ class Arena {
         }
         return result;
     }
-    estimateWinTime(difficulty) {
+    estimateWinTime(difficulty, messages) {
         const result = Math.trunc(difficulty / (this.averageDifficulty / (this.timeLimit / this.games)));
-        return formatSecToHMS(result);
+        return formatSecToHMS(result, messages);
     }
 }
 const createLevels = (classicGames, eliteGames, classicTimeLimits, eliteTimeLimits, classicDifficulty, eliteDifficulty) => {

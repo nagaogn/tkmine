@@ -46,7 +46,10 @@
 				"endurance.js",
 				"game_status.js",
 				"common.js",
-				"options.js"
+				"options.js",
+				"messages.js",
+				"_locales/en/messages.json",
+				"_locales/ja/messages.json"
 			]
 		}
 	]
