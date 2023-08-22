@@ -1,6 +1,16 @@
 import { OptionsManager } from './options.js';
 import { MessagesLoader } from './messages.js';
-(async () => {
+const setLanguages = () => {
+    const voices = speechSynthesis.getVoices().map(voice => voice.lang.split('-')[0]);
+    const languageElement = document.getElementById('language');
+    for (const option of languageElement.options) {
+        if (!voices.includes(option.value)) {
+            option.disabled = true;
+        }
+    }
+};
+speechSynthesis.onvoiceschanged = async () => {
+    setLanguages();
     const options = await OptionsManager.get();
     if (!!options) {
         const messages = await MessagesLoader.load(options.language);
@@ -19,6 +29,7 @@ import { MessagesLoader } from './messages.js';
                 }
             }
         }
+        document.getElementById('language').value = options.language;
         document.getElementById('volume').value = options.volume.toString();
         document.getElementById('rate').value = options.rate.toString();
         document.getElementById('arenaRemainGames').checked = options.arenaRemainGames;
@@ -32,13 +43,13 @@ import { MessagesLoader } from './messages.js';
         document.getElementById('enduranceWins').checked = options.enduranceWins;
         document.getElementById('enduranceElapsedTime').checked = options.enduranceElapsedTime;
         document.getElementById('enduranceElapsedTimeNotifyInterval').value = options.enduranceElapsedTimeNotifyInterval.toString();
-        document.getElementById('language').value = options.language;
     }
     else {
         console.error(`options does not exist`);
     }
-})();
+};
 document.getElementById('save').onclick = () => {
+    const language = document.getElementById('language').value;
     const volume = Number(document.getElementById('volume').value);
     const rate = Number(document.getElementById('rate').value);
     const arenaRemainGames = document.getElementById('arenaRemainGames').checked;
@@ -52,8 +63,8 @@ document.getElementById('save').onclick = () => {
     const enduranceWins = document.getElementById('enduranceWins').checked;
     const enduranceElapsedTime = document.getElementById('enduranceElapsedTime').checked;
     const enduranceElapsedTimeNotifyInterval = Math.trunc(Number(document.getElementById('enduranceElapsedTimeNotifyInterval').value));
-    const language = document.getElementById('language').value;
     const options = {
+        language,
         volume,
         rate,
         arenaRemainGames,
@@ -67,7 +78,6 @@ document.getElementById('save').onclick = () => {
         enduranceWins,
         enduranceElapsedTime,
         enduranceElapsedTimeNotifyInterval,
-        language
     };
     OptionsManager.set(options);
     location.reload();

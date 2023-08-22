@@ -1,0 +1,3 @@
+#language:not(:has(:disabled)) ~ #languageHint {
+	display: none;
+}

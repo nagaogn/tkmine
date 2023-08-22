@@ -71,7 +71,7 @@ const arenaObserver = new MutationObserver(mutations => {
 						if(options.arenaTargetTime && !!difficulty) {
 							textToSpeak += MessagesLoader.replace(messages['notifyTargetTime'].message, {'targetTime': gameStatus.estimateWinTime(difficulty, messages)});
 						}
-						speak(textToSpeak, options.volume, options.rate);
+						speak(textToSpeak, options.volume, options.rate, options.language);
 						GameStatusManager.set(gameStatus);
 						if(options.arenaTheatreMode) {
 							const shadow = document.getElementById('shadow');
@@ -122,7 +122,7 @@ const arenaTimeObserver = new MutationObserver(mutations => {
 					if(remainTimeInMinutes < arenaNextNotificationTime) {
 						const messages = await MessagesLoader.load(options.language);
 						const textToSpeak = `${formatSecToHM(remainTime + 60, messages)}, `;
-						speak(textToSpeak, options.volume, options.rate);
+						speak(textToSpeak, options.volume, options.rate, options.language);
 						// NOTE: arenaNextNotificationTimeはarenaRemainTimeNotifyIntervalの倍数にする
 						arenaNextNotificationTime = Math.floor(remainTimeInMinutes / options.arenaRemainTimeNotifyInterval) * options.arenaRemainTimeNotifyInterval;
 					}
@@ -233,7 +233,7 @@ const enduranceObserver = new MutationObserver(mutations => {
 						) {
 							textToSpeak += `${gameStatus.getRecordTimeHMS(messages)}, `;
 						}
-						speak(textToSpeak, options.volume, options.rate);
+						speak(textToSpeak, options.volume, options.rate, options.language);
 						GameStatusManager.set(gameStatus);
 					} else {
 						console.error(`options: ${options} does not exist`);
@@ -275,7 +275,7 @@ const startEndurance = () => {
 					const messages = await MessagesLoader.load(options.language);
 					//NOTE: 0分だとgetElapsedTimeHMが空文字になるから一番最初は読み上げない
 					const textToSpeak = `${gameStatus.getElapsedTimeHM(messages)}, `;
-					speak(textToSpeak, options.volume, options.rate);
+					speak(textToSpeak, options.volume, options.rate, options.language);
 					//NOTE: nextNotificationTimeはenduranceElapsedTimeNotifyIntervalの倍数にする
 					nextNotificationTime = Math.ceil((elapsedTimeInMinutes + 1) / options.enduranceElapsedTimeNotifyInterval) * options.enduranceElapsedTimeNotifyInterval;
 				}

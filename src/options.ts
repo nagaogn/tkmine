@@ -1,6 +1,7 @@
-export { OptionsManager };
+export { Options, OptionsManager };
 
 interface Options {
+	language: string;
 	volume: number;
 	rate: number;
 	arenaRemainGames: boolean;
@@ -14,27 +15,9 @@ interface Options {
 	enduranceWins: boolean;
 	enduranceElapsedTime: boolean;
 	enduranceElapsedTimeNotifyInterval: number;
-	language: string;
 }
 
 class OptionsManager{
-	static defaultOptions: Options = {
-		volume: 0.5,
-		rate: 1,
-		arenaRemainGames: true,
-		arenaRemainTime: true,
-		arenaRemainTimeNotifyInterval: 5,
-		arenaMineDensity: false,
-		arenaDifficulty: false,
-		arenaWinProbability: false,
-		arenaTargetTime: false,
-		arenaTheatreMode: false,
-		enduranceWins: true,
-		enduranceElapsedTime: true,
-		enduranceElapsedTimeNotifyInterval: 5,
-		language: 'en'
-	} as const;
-
 	static set = (options: Options) => {
 		chrome.storage.local.set({ options: options });
 	}

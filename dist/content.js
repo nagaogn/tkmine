@@ -62,7 +62,7 @@ const arenaObserver = new MutationObserver(mutations => {
                         if (options.arenaTargetTime && !!difficulty) {
                             textToSpeak += MessagesLoader.replace(messages['notifyTargetTime'].message, { 'targetTime': gameStatus.estimateWinTime(difficulty, messages) });
                         }
-                        speak(textToSpeak, options.volume, options.rate);
+                        speak(textToSpeak, options.volume, options.rate, options.language);
                         GameStatusManager.set(gameStatus);
                         if (options.arenaTheatreMode) {
                             const shadow = document.getElementById('shadow');
@@ -103,7 +103,7 @@ const arenaTimeObserver = new MutationObserver(mutations => {
                     if (remainTimeInMinutes < arenaNextNotificationTime) {
                         const messages = await MessagesLoader.load(options.language);
                         const textToSpeak = `${formatSecToHM(remainTime + 60, messages)}, `;
-                        speak(textToSpeak, options.volume, options.rate);
+                        speak(textToSpeak, options.volume, options.rate, options.language);
                         arenaNextNotificationTime = Math.floor(remainTimeInMinutes / options.arenaRemainTimeNotifyInterval) * options.arenaRemainTimeNotifyInterval;
                     }
                 }
@@ -188,7 +188,7 @@ const enduranceObserver = new MutationObserver(mutations => {
                             gameStatus.getWins() >= 100) {
                             textToSpeak += `${gameStatus.getRecordTimeHMS(messages)}, `;
                         }
-                        speak(textToSpeak, options.volume, options.rate);
+                        speak(textToSpeak, options.volume, options.rate, options.language);
                         GameStatusManager.set(gameStatus);
                     }
                     else {
@@ -223,7 +223,7 @@ const startEndurance = () => {
                 if (elapsedTimeInMinutes >= nextNotificationTime) {
                     const messages = await MessagesLoader.load(options.language);
                     const textToSpeak = `${gameStatus.getElapsedTimeHM(messages)}, `;
-                    speak(textToSpeak, options.volume, options.rate);
+                    speak(textToSpeak, options.volume, options.rate, options.language);
                     nextNotificationTime = Math.ceil((elapsedTimeInMinutes + 1) / options.enduranceElapsedTimeNotifyInterval) * options.enduranceElapsedTimeNotifyInterval;
                 }
             }

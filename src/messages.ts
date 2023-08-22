@@ -1,5 +1,9 @@
 export { Messages, MessagesLoader };
 
+const languageType = ['en', 'ja'] as const;
+
+type LanguageType = typeof languageType[number];
+
 interface Messages {
 	[index: string]: {
 		message: string;
@@ -8,10 +12,19 @@ interface Messages {
 
 //TODO: こっちで値を持つようにする
 class MessagesLoader {
+	static isLanguageType = (value: string): value is LanguageType => {
+		return languageType.some(v => v.split('-')[0] === value);
+	}
+
 	static load = async (lang: string = 'en') : Promise<Messages> => {
-		const response = await fetch(chrome.runtime.getURL(`_locales/${lang}/messages.json`));
-		const messages = await response.json();
-		return messages;
+		let result = {};
+		if(MessagesLoader.isLanguageType(lang)) {
+			const response = await fetch(chrome.runtime.getURL(`_locales/${lang}/messages.json`));
+			result = await response.json();
+		} else {
+			console.error(`Invalid LanguageType: ${lang}`);
+		}
+		return result;
 	}
 
 	//TODO: 第一引数をmessageNameにする?
