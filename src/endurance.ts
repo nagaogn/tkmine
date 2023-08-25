@@ -1,4 +1,4 @@
-export { ENDURANCE, Endurance };
+export { ENDURANCE, EnduranceStatus };
 import { Messages } from './messages.js';
 import { formatSecToHM, formatSecToHMS } from './common.js';
 
@@ -8,7 +8,7 @@ const sizeType = ['Beginner', 'Intermediate', 'Expert'] as const;
 
 type SizeType = typeof sizeType[number];
 
-class Endurance {
+class EnduranceStatus {
 	category: string = ENDURANCE;
 	startTimes: string[] = [];
 	winTimes: string[] = [];
@@ -17,7 +17,7 @@ class Endurance {
 
 	constructor(
 		public size: SizeType,
-		init?: Partial<Endurance>
+		init?: Partial<EnduranceStatus>
 	) {
 		Object.assign(this, init);
 	}

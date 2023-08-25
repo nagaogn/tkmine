@@ -1,5 +1,5 @@
-import { ARENA, Arena } from './arena.js';
-import { ENDURANCE, Endurance } from './endurance.js';
+import { ARENA, ArenaStatus } from './arena.js';
+import { ENDURANCE, EnduranceStatus } from './endurance.js';
 import { GameStatusManager } from './game_status.js';
 import { formatSecToHM } from './common.js';
 import { OptionsManager } from './options.js';
@@ -29,7 +29,7 @@ const arenaObserver = new MutationObserver(mutations => {
             const winsRegx = /(\d+) \/ \d+/;
             const wins = parseInt(winsRegx.exec(panel.innerHTML)?.[1] ?? '');
             const gameStatus = await GameStatusManager.get();
-            if (gameStatus instanceof Arena &&
+            if (gameStatus instanceof ArenaStatus &&
                 isCorrectArenaTypes(panel, gameStatus.type, gameStatus.level, gameStatus.elite)) {
                 const remainTime = document.getElementById('arena_remain_time');
                 const difficultyRegx = /(?:複雑さ|Difficulty|Schwierigkeit|Сложность|Complejidad|Dificuldade|Difficoltà|Difficulté|难度|難度|난이도)(?: ?: |：)(?:<img src="\/img\/skull.svg" class="diff-icon" alt="Difficulty"\/>)?([\d ]+)/;
@@ -96,7 +96,7 @@ const arenaTimeObserver = new MutationObserver(mutations => {
                 const panel = document.querySelector('.pull-left.arena-panel');
                 const gameStatus = await GameStatusManager.get();
                 if (panel &&
-                    gameStatus instanceof Arena &&
+                    gameStatus instanceof ArenaStatus &&
                     isCorrectArenaTypes(panel, gameStatus.type, gameStatus.level, gameStatus.elite)) {
                     const remainTime = gameStatus.calcRemainTime(mutation.target.innerText);
                     const remainTimeInMinutes = Math.trunc(remainTime / 60);
@@ -155,7 +155,7 @@ const enduranceObserver = new MutationObserver(mutations => {
                 const tmpPathname = startPathname;
                 startPathname = location.pathname;
                 const gameStatus = await GameStatusManager.get();
-                if (gameStatus instanceof Endurance &&
+                if (gameStatus instanceof EnduranceStatus &&
                     matchSize(gameStatus.size) &&
                     gameStatus.isCorrectStartPathname(startPathname)) {
                     gameStatus.recordStart(startPathname);
@@ -171,7 +171,7 @@ const enduranceObserver = new MutationObserver(mutations => {
                 const tmpPathname = winPathname;
                 winPathname = location.pathname;
                 const gameStatus = await GameStatusManager.get();
-                if (gameStatus instanceof Endurance &&
+                if (gameStatus instanceof EnduranceStatus &&
                     matchSize(gameStatus.size) &&
                     gameStatus.isCorrectWinPathname(winPathname)) {
                     const options = await OptionsManager.get();
@@ -217,7 +217,7 @@ const startEndurance = () => {
         if (options &&
             options.enduranceElapsedTime) {
             const gameStatus = await GameStatusManager.get();
-            if (gameStatus instanceof Endurance &&
+            if (gameStatus instanceof EnduranceStatus &&
                 gameStatus.getWins() < 100) {
                 const elapsedTimeInMinutes = Math.floor(gameStatus.getElapsedTime() / 60);
                 if (elapsedTimeInMinutes >= nextNotificationTime) {
@@ -239,10 +239,10 @@ const stopEndurance = () => {
 };
 GameStatusManager.get().then(gameStatus => {
     if (gameStatus && Object.keys(gameStatus).length) {
-        if (gameStatus instanceof Arena) {
+        if (gameStatus instanceof ArenaStatus) {
             startArena();
         }
-        else if (gameStatus instanceof Endurance) {
+        else if (gameStatus instanceof EnduranceStatus) {
             startEndurance();
         }
     }

@@ -1,4 +1,4 @@
-export { ARENA, Arena };
+export { ARENA, ArenaStatus };
 import { Messages } from './messages.js';
 import { formatSecToHMS } from './common.js';
 
@@ -10,7 +10,7 @@ const levelType = ['L1', 'L2', 'L3', 'L4', 'L5', 'L6', 'L7', 'L8'] as const;
 type GameType = typeof gameType[number];
 type LevelType = typeof levelType[number];
 
-class Arena {
+class ArenaStatus {
 	category: string = ARENA;
 	games: number;
 	timeLimit: number;
@@ -25,7 +25,7 @@ class Arena {
 		public type: GameType,
 		public level: LevelType,
 		public elite: boolean,
-		init?: Partial<Arena>
+		init?: Partial<ArenaStatus>
 	) {
 		[this.games, this.timeLimit, this.averageDifficulty] = GAMES_AND_TIME_LIMITS[this.type][this.level][this.elite ? 'elite' : 'classic'];
 		this.remainGames = this.games;

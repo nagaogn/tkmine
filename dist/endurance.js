@@ -1,8 +1,8 @@
-export { ENDURANCE, Endurance };
+export { ENDURANCE, EnduranceStatus };
 import { formatSecToHM, formatSecToHMS } from './common.js';
 const ENDURANCE = 'endurance';
 const sizeType = ['Beginner', 'Intermediate', 'Expert'];
-class Endurance {
+class EnduranceStatus {
     size;
     category = ENDURANCE;
     startTimes = [];

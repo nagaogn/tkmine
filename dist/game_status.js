@@ -1,6 +1,6 @@
 export { GameStatusManager };
-import { ARENA, Arena } from './arena.js';
-import { ENDURANCE, Endurance } from './endurance.js';
+import { ARENA, ArenaStatus } from './arena.js';
+import { ENDURANCE, EnduranceStatus } from './endurance.js';
 class GameStatusManager {
     static set = (gameStatus) => {
         chrome.storage.local.set({ gameStatus: gameStatus });
@@ -12,10 +12,10 @@ class GameStatusManager {
         let result;
         if (gameStatus) {
             if (gameStatus.category === ARENA) {
-                result = new Arena(gameStatus.type, gameStatus.level, gameStatus.elite, gameStatus);
+                result = new ArenaStatus(gameStatus.type, gameStatus.level, gameStatus.elite, gameStatus);
             }
             else if (gameStatus.category === ENDURANCE) {
-                result = new Endurance(gameStatus.size, gameStatus);
+                result = new EnduranceStatus(gameStatus.size, gameStatus);
             }
             else {
                 console.error(`Unexpected category: ${gameStatus.category}`);

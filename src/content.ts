@@ -1,5 +1,5 @@
-﻿import { ARENA, Arena } from './arena.js';
-import { ENDURANCE, Endurance } from './endurance.js';
+﻿import { ARENA, ArenaStatus } from './arena.js';
+import { ENDURANCE, EnduranceStatus } from './endurance.js';
 import { GameStatusManager } from './game_status.js';
 import { formatSecToHM } from './common.js';
 import { OptionsManager } from './options.js';
@@ -35,7 +35,7 @@ const arenaObserver = new MutationObserver(mutations => {
 			const wins = parseInt(winsRegx.exec(panel.innerHTML)?.[1] ?? '');
 			const gameStatus = await GameStatusManager.get();
 			if(
-				gameStatus instanceof Arena &&
+				gameStatus instanceof ArenaStatus &&
 				isCorrectArenaTypes(panel, gameStatus.type, gameStatus.level, gameStatus.elite)
 			) {
 				const remainTime = document.getElementById('arena_remain_time');
@@ -114,7 +114,7 @@ const arenaTimeObserver = new MutationObserver(mutations => {
 				const gameStatus = await GameStatusManager.get();
 				if(
 					panel &&
-					gameStatus instanceof Arena &&
+					gameStatus instanceof ArenaStatus &&
 					isCorrectArenaTypes(panel, gameStatus.type, gameStatus.level, gameStatus.elite)
 				) {
 					const remainTime = gameStatus.calcRemainTime(mutation.target.innerText);
@@ -191,7 +191,7 @@ const enduranceObserver = new MutationObserver(mutations => {
 				startPathname = location.pathname;//NOTE: getGameStatusが何回も実行されるのを防ぐ
 				const gameStatus = await GameStatusManager.get();
 				if(
-					gameStatus instanceof Endurance &&
+					gameStatus instanceof EnduranceStatus &&
 					matchSize(gameStatus.size) &&
 					gameStatus.isCorrectStartPathname(startPathname)
 				) {
@@ -209,7 +209,7 @@ const enduranceObserver = new MutationObserver(mutations => {
 				winPathname = location.pathname;
 				const gameStatus = await GameStatusManager.get();
 				if(
-					gameStatus instanceof Endurance &&
+					gameStatus instanceof EnduranceStatus &&
 					matchSize(gameStatus.size) &&
 					gameStatus.isCorrectWinPathname(winPathname)
 				) {
@@ -267,7 +267,7 @@ const startEndurance = () => {
 		) {
 			const gameStatus = await GameStatusManager.get();
 			if(
-				gameStatus instanceof Endurance &&
+				gameStatus instanceof EnduranceStatus &&
 				gameStatus.getWins() < 100
 			) {
 				const elapsedTimeInMinutes = Math.floor(gameStatus.getElapsedTime() / 60);
@@ -294,9 +294,9 @@ const stopEndurance = () => {
 
 GameStatusManager.get().then(gameStatus => {
 	if(gameStatus && Object.keys(gameStatus).length) {
-		if(gameStatus instanceof Arena) {
+		if(gameStatus instanceof ArenaStatus) {
 			startArena();
-		} else if(gameStatus instanceof Endurance) {
+		} else if(gameStatus instanceof EnduranceStatus) {
 			startEndurance();
 		}
 	}

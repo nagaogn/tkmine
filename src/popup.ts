@@ -1,5 +1,5 @@
-﻿import { ARENA, Arena } from './arena.js';
-import { ENDURANCE, Endurance } from './endurance.js';
+﻿import { ARENA, ArenaStatus } from './arena.js';
+import { ENDURANCE, EnduranceStatus } from './endurance.js';
 import { GameStatusManager } from './game_status.js';
 import { OptionsManager } from './options.js';
 import { MessagesLoader } from './messages.js';
@@ -23,12 +23,12 @@ import { MessagesLoader } from './messages.js';
 	}
 	const gameStatus = await GameStatusManager.get();
 	if(!!gameStatus) {
-		if(gameStatus instanceof Arena) {
+		if(gameStatus instanceof ArenaStatus) {
 			(document.getElementById('arena') as HTMLInputElement).checked = true;
 			(document.getElementById('type') as HTMLInputElement).value = gameStatus.type;
 			(document.getElementById('level') as HTMLInputElement).value = gameStatus.level;
 			(document.getElementById('elite') as HTMLInputElement).checked = gameStatus.elite;
-		} else if(gameStatus instanceof Endurance) {
+		} else if(gameStatus instanceof EnduranceStatus) {
 			(document.getElementById('endurance') as HTMLInputElement).checked = true;
 			(document.getElementById('size') as HTMLInputElement).value = gameStatus.size;
 		} else {
@@ -50,16 +50,16 @@ import { MessagesLoader } from './messages.js';
 		const type = (document.getElementById('type') as HTMLInputElement).value;
 		const level = (document.getElementById('level') as HTMLInputElement).value;
 		const elite = (document.getElementById('elite') as HTMLInputElement).checked;
-		if(Arena.isGameType(type) && Arena.isLevelType(level)) {
-			gameStatus = new Arena(type, level, elite);
+		if(ArenaStatus.isGameType(type) && ArenaStatus.isLevelType(level)) {
+			gameStatus = new ArenaStatus(type, level, elite);
 		} else {
 			console.error(`Invalid game type: ${type} or level: ${level}`);
 			return;
 		}
 	} else if(category === ENDURANCE) {
 		const size = (document.getElementById('size') as HTMLInputElement).value;
-		if(Endurance.isSizeType(size)) {
-			gameStatus = new Endurance(size);
+		if(EnduranceStatus.isSizeType(size)) {
+			gameStatus = new EnduranceStatus(size);
 		} else {
 			console.error(`Invalid size: ${size}`);
 			return;
