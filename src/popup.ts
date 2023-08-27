@@ -69,26 +69,11 @@ import { MessagesLoader } from './messages.js';
 		return;
 	}
 	GameStatusManager.set(gameStatus);
-	chrome.tabs.query({ url: 'https://minesweeper.online/*' }, tabs => {
-		tabs.forEach(tab => {
-			if(tab.id) {
-				chrome.tabs.sendMessage(tab.id, { action: 'start', category: category });
-			}
-		});
-	});
 	window.close();
 }
 
 (document.getElementById('stop') as HTMLElement).onclick = () => {
 	GameStatusManager.remove();
-	chrome.tabs.query({ url: 'https://minesweeper.online/*' }, tabs => {
-		tabs.forEach(tab => {
-			if(tab.id) {
-				const category = (document.querySelector('[name="category"]:checked') as HTMLInputElement).value;
-				chrome.tabs.sendMessage(tab.id, { action: 'stop', category: category });
-			}
-		});
-	});
 	window.close();
 }
 

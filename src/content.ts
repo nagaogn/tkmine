@@ -302,24 +302,25 @@ GameStatusManager.get().then(gameStatus => {
 	}
 });
 
-chrome.runtime.onMessage.addListener(request => {
-	if (request.action === 'start') {
-		if(request.category === ARENA) {
-			startArena();
-		} else if(request.category === ENDURANCE) {
-			startEndurance();
-		} else {
-			console.error(`Invalid category: ${request.category}`);
+chrome.storage.onChanged.addListener((changes) => {
+	if('gameStatus' in changes) {
+		const change = changes["gameStatus"];
+        if(!change.oldValue && change.newValue) {
+			if(change.newValue.category === ARENA) {
+				startArena();
+			} else if(change.newValue.category === ENDURANCE) {
+				startEndurance();
+			} else {
+				console.error(`Invalid category: ${change.newValue.category}`);
+			}
+		} else if(change.oldValue && !change.newValue) {
+			if(change.oldValue.category === ARENA) {
+				stopArena();
+			} else if(change.oldValue.category === ENDURANCE) {
+				stopEndurance();
+			} else {
+				console.error(`Invalid category: ${change.oldValue.category}`);
+			}
 		}
-	} else if(request.action === 'stop'){
-		if(request.category === ARENA) {
-			stopArena();
-		} else if(request.category === ENDURANCE) {
-			stopEndurance();
-		} else {
-			console.error(`Invalid category: ${request.category}`);
-		}
-	} else {
-		console.error(`Invalid action: ${request.action}`);
 	}
 });
