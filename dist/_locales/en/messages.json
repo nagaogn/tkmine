@@ -23,7 +23,6 @@
 	"stop": { "message": "Stop", "description": "Displayed on popup" },
 	"voice": { "message": "Voice", "description": "Displayed on options" },
 	"language": { "message": "Language", "description": "Displayed on options" },
-	"languageHint": { "message": "音声データの無い言語があります。音声を追加する方法 :", "description": "Displayed on options" },
 	"volume": { "message": "Volume", "description": "Displayed on options" },
 	"rate": { "message": "Rate", "description": "Displayed on options" },
 	"remainGames": { "message": "Remain games", "description": "Displayed on options" },
@@ -39,6 +38,9 @@
 	"wins": { "message": "Wins", "description": "Displayed on options" },
 	"elapsedTime": { "message": "Elapsed time", "description": "Displayed on options" },
 	"save": { "message": "Save", "description": "Displayed on options" },
+	"annotation": { "message": "うまく動かない場合は", "description": "Displayed on options" },
+	"annotation1": { "message": "- Minesweeper Onlineを再読み込みしてください。", "description": "Displayed on options" },
+	"annotation2": { "message": "- PCに音声を追加してください。", "description": "Displayed on options" },
 	"notifyRemainGames": {
 		"message": "残り, $remainGames$回, ", "description": "Read aloud by text-to-speech",
 		"placeholders": { "remainGames": { "content": "$remainGames$" } }

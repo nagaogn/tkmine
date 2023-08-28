@@ -20,7 +20,6 @@
 	"stop": { "message": "終了" },
 	"voice": { "message": "読み上げ音声" },
 	"language": { "message": "言語" },
-	"languageHint": { "message": "音声データの無い言語があります。音声を追加する方法 :" },
 	"volume": { "message": "音量" },
 	"rate": { "message": "速度" },
 	"remainGames": { "message": "残りゲーム数" },
@@ -36,6 +35,9 @@
 	"wins": { "message": "勝利数" },
 	"elapsedTime": { "message": "経過時間" },
 	"save": { "message": "保存" },
+	"annotation": { "message": "うまく動かない場合は" },
+	"annotation1": { "message": "- Minesweeper Onlineを再読み込みしてください。" },
+	"annotation2": { "message": "- PCに音声を追加してください。" },
 	"notifyRemainGames": {
 		"message": "残り, $remainGames$回, ",
 		"placeholders": { "remainGames": { "content": "$remainGames$" } }
