@@ -1,16 +1,6 @@
 import { OptionsManager } from './options.js';
 import { MessagesLoader } from './messages.js';
-const setLanguages = () => {
-    const voices = speechSynthesis.getVoices().map(voice => voice.lang.split('-')[0]);
-    const languageElement = document.getElementById('language');
-    for (const option of languageElement.options) {
-        if (!voices.includes(option.value)) {
-            option.disabled = true;
-        }
-    }
-};
-speechSynthesis.onvoiceschanged = async () => {
-    setLanguages();
+(async () => {
     const options = await OptionsManager.get();
     if (!!options) {
         const messages = await MessagesLoader.load(options.language);
@@ -47,7 +37,7 @@ speechSynthesis.onvoiceschanged = async () => {
     else {
         console.error(`options does not exist`);
     }
-};
+})();
 document.getElementById('save').onclick = () => {
     const language = document.getElementById('language').value;
     const volume = Number(document.getElementById('volume').value);
