@@ -5,12 +5,12 @@ import { OptionsManager } from './options.js';
 import { MessagesLoader } from './messages.js';
 (async () => {
     const options = await OptionsManager.get();
-    const messages = await MessagesLoader.load(options?.language);
+    const messages = await MessagesLoader.init(options?.language);
     const elements = document.querySelectorAll('[data-i18n]');
     for (const e of elements) {
         const messageName = e.getAttribute('data-i18n');
         if (!!messageName) {
-            const message = messages[messageName].message;
+            const message = messages.getMessage(messageName);
             if (!!message) {
                 if (e instanceof HTMLInputElement) {
                     e.value = message;

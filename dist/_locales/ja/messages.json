@@ -65,7 +65,15 @@
 		"message": "$wins$回, ", "description": "Read aloud by text-to-speech",
 		"placeholders": { "wins": { "content": "$wins$" } }
 	},
+	"notifyWinsPlural": {
+		"message": "$wins$回, ", "description": "Read aloud by text-to-speech",
+		"placeholders": { "wins": { "content": "$wins$" } }
+	},
 	"notifyHours": {
+		"message": "$hours$時間", "description": "Read aloud by text-to-speech",
+		"placeholders": { "hours": { "content": "$hours$" } }
+	},
+	"notifyHoursPlural": {
 		"message": "$hours$時間", "description": "Read aloud by text-to-speech",
 		"placeholders": { "hours": { "content": "$hours$" } }
 	},
@@ -73,7 +81,15 @@
 		"message": "$minutes$分", "description": "Read aloud by text-to-speech",
 		"placeholders": { "minutes": { "content": "$minutes$" } }
 	},
+	"notifyMinutesPlural": {
+		"message": "$minutes$分", "description": "Read aloud by text-to-speech",
+		"placeholders": { "minutes": { "content": "$minutes$" } }
+	},
 	"notifySeconds": {
+		"message": "$seconds$秒", "description": "Read aloud by text-to-speech",
+		"placeholders": { "seconds": { "content": "$seconds$" } }
+	},
+	"notifySecondsPlural": {
 		"message": "$seconds$秒", "description": "Read aloud by text-to-speech",
 		"placeholders": { "seconds": { "content": "$seconds$" } }
 	}

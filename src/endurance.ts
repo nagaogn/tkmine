@@ -1,5 +1,5 @@
 export { ENDURANCE, EnduranceStatus };
-import { Messages } from './messages.js';
+import { MessagesLoader } from './messages.js';
 import { formatSecToHM, formatSecToHMS } from './common.js';
 
 const ENDURANCE = 'endurance' as const;
@@ -77,7 +77,7 @@ class EnduranceStatus {
 		return recordTime;
 	}
 
-	public getElapsedTimeHM(messages: Messages) {
+	public getElapsedTimeHM(messages: MessagesLoader) {
 		return formatSecToHM(this.getElapsedTime(), messages);
 	}
 
@@ -90,7 +90,7 @@ class EnduranceStatus {
 		return recordTime;
 	}
 
-	public getRecordTimeHMS(messages: Messages) {
+	public getRecordTimeHMS(messages: MessagesLoader) {
 		return formatSecToHMS(this.getRecordTime(), messages);
 	}
 

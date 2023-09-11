@@ -42,25 +42,25 @@ const arenaObserver = new MutationObserver(mutations => {
                 const winProbability = winProbabilityRegx.exec(mutation.target.getAttribute('data-content') ?? '')?.[1];
                 const options = await OptionsManager.get();
                 if (remainTime && difficulty && size && options) {
-                    const messages = await MessagesLoader.load(options.language);
+                    const messages = await MessagesLoader.init(options.language);
                     if (gameStatus.wins !== wins ||
                         gameStatus.currentSize !== size) {
                         gameStatus.recordWin(wins, remainTime.innerText, size);
                         let textToSpeak = '';
                         if (options.arenaRemainGames) {
-                            textToSpeak += MessagesLoader.replace(messages['notifyRemainGames'].message, { 'remainGames': gameStatus.remainGames });
+                            textToSpeak += messages.getMessage('notifyRemainGames', { 'remainGames': gameStatus.remainGames });
                         }
                         if (options.arenaMineDensity && !!mineDensity) {
-                            textToSpeak += MessagesLoader.replace(messages['notifyMineDensity'].message, { 'mineDensity': mineDensity });
+                            textToSpeak += messages.getMessage('notifyMineDensity', { 'mineDensity': mineDensity });
                         }
                         if (options.arenaDifficulty && !!difficulty) {
-                            textToSpeak += MessagesLoader.replace(messages['notifyDifficulty'].message, { 'difficulty': difficulty });
+                            textToSpeak += messages.getMessage('notifyDifficulty', { 'difficulty': difficulty });
                         }
                         if (options.arenaWinProbability && !!winProbability) {
-                            textToSpeak += MessagesLoader.replace(messages['notifyWinProbability'].message, { 'winProbability': winProbability });
+                            textToSpeak += messages.getMessage('notifyWinProbability', { 'winProbability': winProbability });
                         }
                         if (options.arenaTargetTime && !!difficulty) {
-                            textToSpeak += MessagesLoader.replace(messages['notifyTargetTime'].message, { 'targetTime': gameStatus.estimateWinTime(difficulty, messages) });
+                            textToSpeak += messages.getMessage('notifyTargetTime', { 'targetTime': gameStatus.estimateWinTime(difficulty, messages) });
                         }
                         speak(textToSpeak, options.volume, options.rate, options.language);
                         GameStatusManager.set(gameStatus);
@@ -101,7 +101,7 @@ const arenaTimeObserver = new MutationObserver(mutations => {
                     const remainTime = gameStatus.calcRemainTime(mutation.target.innerText);
                     const remainTimeInMinutes = Math.trunc(remainTime / 60);
                     if (remainTimeInMinutes < arenaNextNotificationTime) {
-                        const messages = await MessagesLoader.load(options.language);
+                        const messages = await MessagesLoader.init(options.language);
                         const textToSpeak = `${formatSecToHM(remainTime + 60, messages)}, `;
                         speak(textToSpeak, options.volume, options.rate, options.language);
                         arenaNextNotificationTime = Math.floor(remainTimeInMinutes / options.arenaRemainTimeNotifyInterval) * options.arenaRemainTimeNotifyInterval;
@@ -176,13 +176,14 @@ const enduranceObserver = new MutationObserver(mutations => {
                     gameStatus.isCorrectWinPathname(winPathname)) {
                     const options = await OptionsManager.get();
                     if (!!options) {
-                        const messages = await MessagesLoader.load(options.language);
+                        const messages = await MessagesLoader.init(options.language);
                         gameStatus.recordWin(winPathname);
                         let textToSpeak = '';
                         if (options.enduranceWins &&
                             (gameStatus.getWins() < 100 ||
                                 !options.enduranceElapsedTime)) {
-                            textToSpeak += MessagesLoader.replace(messages['notifyWins'].message, { 'wins': gameStatus.getWins() });
+                            const wins = gameStatus.getWins();
+                            textToSpeak += messages.getMessage('notifyWins', { 'wins': wins }, wins);
                         }
                         if (options.enduranceElapsedTime &&
                             gameStatus.getWins() >= 100) {
@@ -221,7 +222,7 @@ const startEndurance = () => {
                 gameStatus.getWins() < 100) {
                 const elapsedTimeInMinutes = Math.floor(gameStatus.getElapsedTime() / 60);
                 if (elapsedTimeInMinutes >= nextNotificationTime) {
-                    const messages = await MessagesLoader.load(options.language);
+                    const messages = await MessagesLoader.init(options.language);
                     const textToSpeak = `${gameStatus.getElapsedTimeHM(messages)}, `;
                     speak(textToSpeak, options.volume, options.rate, options.language);
                     nextNotificationTime = Math.ceil((elapsedTimeInMinutes + 1) / options.enduranceElapsedTimeNotifyInterval) * options.enduranceElapsedTimeNotifyInterval;

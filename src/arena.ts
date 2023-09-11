@@ -1,5 +1,5 @@
 export { ARENA, ArenaStatus };
-import { Messages } from './messages.js';
+import { MessagesLoader } from './messages.js';
 import { formatSecToHMS } from './common.js';
 
 const ARENA = 'arena' as const;
@@ -80,7 +80,7 @@ class ArenaStatus {
 	// 2: 複雑さ、残り時間、残りゲーム数を考慮したクリア時間目安
 	// 現ゲームの複雑さ/(平均複雑さ/(残り時間(秒)/残りゲーム数))
 	// 1を採用
-	public estimateWinTime(difficulty: number, messages: Messages) {
+	public estimateWinTime(difficulty: number, messages: MessagesLoader) {
 		const result = Math.trunc(difficulty / (this.averageDifficulty / (this.timeLimit / this.games)));
 		return formatSecToHMS(result, messages);
 	}

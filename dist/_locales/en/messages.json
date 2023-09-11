@@ -32,49 +32,65 @@
 	"mineDensity": { "message": "Mine density", "description": "Displayed on options" },
 	"difficulty": { "message": "Difficulty", "description": "Displayed on options" },
 	"winProbability": { "message": "Win probability", "description": "Displayed on options" },
-	"targetTime": { "message": "目標時間", "description": "Displayed on options" },
-	"formula": { "message": "計算式: 現ゲームの複雑さ/(平均複雑さ/(全所要時間/全ゲーム数))", "description": "Displayed on options" },
-	"theatreMode": { "message": "始まったらシアターモードにする", "description": "Displayed on options" },
+	"targetTime": { "message": "Target Time", "description": "Displayed on options" },
+	"formula": { "message": "Formula: current game difficulty / (average difficulty / (total required time / total number of games))", "description": "Displayed on options" },
+	"theatreMode": { "message": "Switch to Theater Mode when beginning", "description": "Displayed on options" },
 	"wins": { "message": "Wins", "description": "Displayed on options" },
 	"elapsedTime": { "message": "Elapsed time", "description": "Displayed on options" },
 	"save": { "message": "Save", "description": "Displayed on options" },
-	"annotation": { "message": "うまく動かない場合は", "description": "Displayed on options" },
-	"annotation1": { "message": "- Minesweeper Onlineを再読み込みしてください。", "description": "Displayed on options" },
-	"annotation2": { "message": "- 使用する言語の音声をPCに追加してください。", "description": "Displayed on options" },
+	"annotation": { "message": "Troubleshooting:", "description": "Displayed on options" },
+	"annotation1": { "message": "- Try reloading Minesweeper Online", "description": "Displayed on options" },
+	"annotation2": { "message": "- Check the audio on your computer", "description": "Displayed on options" },
 	"notifyRemainGames": {
-		"message": "残り, $remainGames$回, ", "description": "Read aloud by text-to-speech",
+		"message": "Remaining Games, $remainGames$, ", "description": "Read aloud by text-to-speech",
 		"placeholders": { "remainGames": { "content": "$remainGames$" } }
 	},
 	"notifyMineDensity": {
-		"message": "密度, $mineDensity$, ", "description": "Read aloud by text-to-speech",
+		"message": "Mine Density, $mineDensity$, ", "description": "Read aloud by text-to-speech",
 		"placeholders": { "mineDensity": { "content": "$mineDensity$" } }
 	},
 	"notifyDifficulty": {
-		"message": "複雑さ, $difficulty$, ", "description": "Read aloud by text-to-speech",
+		"message": "Difficulty, $difficulty$, ", "description": "Read aloud by text-to-speech",
 		"placeholders": { "difficulty": { "content": "$difficulty$" } }
 	},
 	"notifyWinProbability": {
-		"message": "勝率, $winProbability$, ", "description": "Read aloud by text-to-speech",
+		"message": "Win Probability, $winProbability$, ", "description": "Read aloud by text-to-speech",
 		"placeholders": { "winProbability": { "content": "$winProbability$" } }
 	},
 	"notifyTargetTime": {
-		"message": "目標, $targetTime$, ", "description": "Read aloud by text-to-speech",
+		"message": "Target, $targetTime$, ", "description": "Read aloud by text-to-speech",
 		"placeholders": { "targetTime": { "content": "$targetTime$" } }
 	},
 	"notifyWins": {
-		"message": "$wins$回, ", "description": "Read aloud by text-to-speech",
+		"message": "$wins$ win, ", "description": "Read aloud by text-to-speech",
+		"placeholders": { "wins": { "content": "$wins$" } }
+	},
+	"notifyWinsPlural": {
+		"message": "$wins$ wins, ", "description": "Read aloud by text-to-speech",
 		"placeholders": { "wins": { "content": "$wins$" } }
 	},
 	"notifyHours": {
-		"message": "$hours$時間", "description": "Read aloud by text-to-speech",
+		"message": "$hours$ hour", "description": "Read aloud by text-to-speech",
+		"placeholders": { "hours": { "content": "$hours$" } }
+	},
+	"notifyHoursPlural": {
+		"message": "$hours$ hours", "description": "Read aloud by text-to-speech",
 		"placeholders": { "hours": { "content": "$hours$" } }
 	},
 	"notifyMinutes": {
-		"message": "$minutes$分", "description": "Read aloud by text-to-speech",
+		"message": "$minutes$ minute", "description": "Read aloud by text-to-speech",
+		"placeholders": { "minutes": { "content": "$minutes$" } }
+	},
+	"notifyMinutesPlural": {
+		"message": "$minutes$ minutes", "description": "Read aloud by text-to-speech",
 		"placeholders": { "minutes": { "content": "$minutes$" } }
 	},
 	"notifySeconds": {
-		"message": "$seconds$秒", "description": "Read aloud by text-to-speech",
+		"message": "$seconds$ second", "description": "Read aloud by text-to-speech",
+		"placeholders": { "seconds": { "content": "$seconds$" } }
+	},
+	"notifySecondsPlural": {
+		"message": "$seconds$ seconds", "description": "Read aloud by text-to-speech",
 		"placeholders": { "seconds": { "content": "$seconds$" } }
 	}
 }
