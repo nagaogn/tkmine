@@ -30,26 +30,26 @@
 		"open_in_tab": true
 	},
 	"background": {
-		"service_worker": "background.js",
+		"service_worker": "js/background.js",
 		"type": "module"
 	},
 	"content_scripts": [
 		{
 			"matches": ["https://minesweeper.online/*"],
-			"js": ["loader.js"]
+			"js": ["js/loader.js"]
 		}
 	],
 	"web_accessible_resources": [
 		{
 			"matches": ["https://minesweeper.online/*"],
 			"resources": [
-				"content.js",
-				"arena.js",
-				"endurance.js",
-				"game_status.js",
-				"common.js",
-				"options.js",
-				"messages.js",
+				"js/content.js",
+				"js/arena.js",
+				"js/endurance.js",
+				"js/game_status.js",
+				"js/common.js",
+				"js/options.js",
+				"js/messages.js",
 				"_locales/en/messages.json",
 				"_locales/ja/messages.json"
 			]

@@ -5,7 +5,7 @@
 		"useDefineForClassFields": true,
 		"module": "ESNext",
 		"rootDir": "./src",
-		"outDir": "./dist",
+		"outDir": "./dist/js",
 		"moduleResolution": "node",
 		"baseUrl": "src",
 		"resolveJsonModule": true,
@@ -20,6 +20,5 @@
 		"noImplicitReturns": true,
 		"skipLibCheck": true
 	},
-	"include": ["src"],
-	"exclude": ["node_modules", "dist", "./tsconfig.json"]
-  }
+	"include": ["src"]
+}
