@@ -1,5 +1,5 @@
-export { ARENA, ArenaStatus };
 import { formatSecToHMS } from './common.js';
+export { ARENA, ArenaStatus };
 const ARENA = 'arena';
 const gameType = ['ticket1', 'ticket2', 'ticket3', 'ticket4', 'ticket5', 'ticket6', 'ticket7', 'ticket8', 'ticket9', 'ticket10'];
 const levelType = ['L1', 'L2', 'L3', 'L4', 'L5', 'L6', 'L7', 'L8'];

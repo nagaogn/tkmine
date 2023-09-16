@@ -1,6 +1,7 @@
-export { GameStatusManager };
 import { ARENA, ArenaStatus } from './arena.js';
 import { ENDURANCE, EnduranceStatus } from './endurance.js';
+
+export { GameStatusManager };
 
 type GameStatus = ArenaStatus | EnduranceStatus;
 

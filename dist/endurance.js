@@ -1,5 +1,5 @@
-export { ENDURANCE, EnduranceStatus };
 import { formatSecToHM, formatSecToHMS } from './common.js';
+export { ENDURANCE, EnduranceStatus };
 const ENDURANCE = 'endurance';
 const sizeType = ['Beginner', 'Intermediate', 'Expert'];
 class EnduranceStatus {

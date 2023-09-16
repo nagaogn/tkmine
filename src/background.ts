@@ -72,5 +72,5 @@ chrome.runtime.onMessage.addListener((message, sender) => {
 				func: changeTheatreMode
 			});
 		}
-    }
+	}
 });

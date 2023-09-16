@@ -1,6 +1,7 @@
-export { ARENA, ArenaStatus };
 import { MessagesLoader } from './messages.js';
 import { formatSecToHMS } from './common.js';
+
+export { ARENA, ArenaStatus };
 
 const ARENA = 'arena' as const;
 

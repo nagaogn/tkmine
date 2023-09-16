@@ -1,6 +1,7 @@
-export { ENDURANCE, EnduranceStatus };
 import { MessagesLoader } from './messages.js';
 import { formatSecToHM, formatSecToHMS } from './common.js';
+
+export { ENDURANCE, EnduranceStatus };
 
 const ENDURANCE = 'endurance' as const;
 
@@ -25,7 +26,7 @@ class EnduranceStatus {
 	static isSizeType = (value: string): value is SizeType => {
 		return sizeType.some(v => v === value);
 	}
-	
+
 	protected recordStartTime() {
 		this.startTimes.push(new Date().toISOString());// NOTE: Date型のままだと保存できない
 	}

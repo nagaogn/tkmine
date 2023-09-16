@@ -127,8 +127,8 @@ const arenaTimeObserver = new MutationObserver(mutations => {
 });
 
 const arenaTimeObserverConfig: MutationObserverInit = {
-    childList: true,
-    subtree: true
+	childList: true,
+	subtree: true
 };
 
 const startArena = () => {
@@ -281,10 +281,10 @@ const startEndurance = () => {
 
 const stopEndurance = () => {
 	enduranceObserver.disconnect();
-    if (intervalId !== null) {
-        clearInterval(intervalId);
-        intervalId = null;
-    }
+	if (intervalId !== null) {
+		clearInterval(intervalId);
+		intervalId = null;
+	}
 }
 
 GameStatusManager.get().then(gameStatus => {
@@ -300,7 +300,7 @@ GameStatusManager.get().then(gameStatus => {
 chrome.storage.onChanged.addListener((changes) => {
 	if('gameStatus' in changes) {
 		const change = changes["gameStatus"];
-        if(!change.oldValue && change.newValue) {
+		if(!change.oldValue && change.newValue) {
 			if(change.newValue.category === ARENA) {
 				startArena();
 			} else if(change.newValue.category === ENDURANCE) {

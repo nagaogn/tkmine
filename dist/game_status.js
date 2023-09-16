@@ -1,6 +1,6 @@
-export { GameStatusManager };
 import { ARENA, ArenaStatus } from './arena.js';
 import { ENDURANCE, EnduranceStatus } from './endurance.js';
+export { GameStatusManager };
 class GameStatusManager {
     static set = (gameStatus) => {
         chrome.storage.local.set({ gameStatus: gameStatus });
