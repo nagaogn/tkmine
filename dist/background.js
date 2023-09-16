@@ -49,3 +49,20 @@ chrome.runtime.onInstalled.addListener(async (details) => {
         OptionsManager.set(mergedOptions);
     }
 });
+const changeTheatreMode = () => {
+    const shadow = document.getElementById('shadow');
+    const themeSwitcher = document.getElementById('theme-switcher');
+    if (shadow?.style.display !== 'block' && themeSwitcher) {
+        Array.from(themeSwitcher.getElementsByTagName('a')).find(a => / (Theatre mode|シアターモード|Theatermodus|Режим кинотеатра|Modo teatro|Modo Teatro|Modalità teatro|Mode théâtre|剧院模式|劇院模式|극장 모드)/.test(a.textContent ?? ''))?.click();
+    }
+};
+chrome.runtime.onMessage.addListener((message, sender) => {
+    if (message.action === "theatreMode") {
+        if (!!sender.tab?.id) {
+            chrome.scripting.executeScript({
+                target: { tabId: sender.tab.id },
+                func: changeTheatreMode
+            });
+        }
+    }
+});

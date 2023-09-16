@@ -42,6 +42,9 @@ const arenaObserver = new MutationObserver(mutations => {
                 const winProbability = winProbabilityRegx.exec(mutation.target.getAttribute('data-content') ?? '')?.[1];
                 const options = await OptionsManager.get();
                 if (remainTime && difficulty && size && options) {
+                    if (options.arenaTheatreMode) {
+                        chrome.runtime.sendMessage({ action: "theatreMode" });
+                    }
                     const messages = await MessagesLoader.init(options.language);
                     if (gameStatus.wins !== wins ||
                         gameStatus.currentSize !== size) {
@@ -64,13 +67,6 @@ const arenaObserver = new MutationObserver(mutations => {
                         }
                         speak(textToSpeak, options.volume, options.rate, options.language);
                         GameStatusManager.set(gameStatus);
-                        if (options.arenaTheatreMode) {
-                            const shadow = document.getElementById('shadow');
-                            const themeSwitcher = document.getElementById('theme-switcher');
-                            if (shadow?.style.display !== 'block' && themeSwitcher) {
-                                Array.from(themeSwitcher.getElementsByTagName('a')).find(a => / (Theatre mode|シアターモード|Theatermodus|Режим кинотеатра|Modo teatro|Modo Teatro|Modalità teatro|Mode théâtre|剧院模式|劇院模式|극장 모드)/.test(a.textContent ?? ''))?.click();
-                            }
-                        }
                     }
                 }
                 else {
