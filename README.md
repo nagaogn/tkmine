@@ -4,11 +4,9 @@
 プレイ中は進捗を確認する余裕が無いので、音声で教えてくれたら便利かと思って作ってみました。  
 
 ### インストール
-[こちら](https://chrome.google.com/webstore/detail/%E3%82%BF%E3%82%A4%E3%83%A0%E3%82%AD%E3%83%BC%E3%83%91%E3%83%BC-for-minesweeper-o/bjdlhjalichcnpbngjojfbilmfbpaakc)からインストールしてください。  
+[chromeウェブストア](https://chrome.google.com/webstore/detail/%E3%82%BF%E3%82%A4%E3%83%A0%E3%82%AD%E3%83%BC%E3%83%91%E3%83%BC-for-minesweeper-o/bjdlhjalichcnpbngjojfbilmfbpaakc)  
 
-すでにMinesweeper Onlineを開いている場合は、ページを再読み込みしてから使用してください。  
-
-<sub>※拡張機能は提供元を信頼できる場合のみインストールしてください。</sub>
+Minesweeper Onlineを開いている場合は、ページを再読み込みしてから使用してください。  
 
 ### 使い方
 拡張機能のアイコンをクリックするとこんな画面が出ます。  
@@ -19,7 +17,8 @@
 終わったらもう一度アイコンをクリックして｢終了｣をクリックしてください。  
 ![image](https://github.com/nagaogn/tkmine/assets/123641522/de0197e5-ee89-456e-83cb-30f73ff006cc)  
 
-このツールは現在改良中です。意見や機能のアイデアなどあれば気軽に連絡ください。  
-こうしたほうが聞き取りやすいとか、この機能がほしい/いらないとか、使った感想などもらえたらうれしいです。  
+意見･感想･バグ報告などあれば[nagao](https://minesweeper.online/player/2554698)までご連絡ください。  
 
-https://minesweeper.online/player/2554698  
+制作: [nagao](https://minesweeper.online/player/2554698)  
+英訳: [Lucas C](https://minesweeper.online/player/4512690)  
+アイコン: Font Awesome by Dave Gandy - https://fontawesome.com  
