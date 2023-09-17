@@ -56,7 +56,19 @@ const changeTheatreMode = () => {
         Array.from(themeSwitcher.getElementsByTagName('a')).find(a => / (Theatre mode|シアターモード|Theatermodus|Режим кинотеатра|Modo teatro|Modo Teatro|Modalità teatro|Mode théâtre|剧院模式|劇院模式|극장 모드)/.test(a.textContent ?? ''))?.click();
     }
 };
-chrome.runtime.onMessage.addListener((message, sender) => {
+const matchSize = (size) => {
+    const currentSize = window.G68.l3;
+    let result = false;
+    if (!!currentSize) {
+        if (size === 'Beginner' && currentSize === 1 ||
+            size === 'Intermediate' && currentSize === 2 ||
+            size === 'Expert' && currentSize === 3) {
+            result = true;
+        }
+    }
+    return result;
+};
+chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     if (message.action === "theatreMode") {
         if (!!sender.tab?.id) {
             chrome.scripting.executeScript({
@@ -65,4 +77,19 @@ chrome.runtime.onMessage.addListener((message, sender) => {
             });
         }
     }
+    else if (message.action === "matchSize") {
+        if (!!sender.tab?.id) {
+            chrome.scripting.executeScript({
+                target: { tabId: sender.tab.id },
+                world: 'MAIN',
+                func: matchSize,
+                args: message.args
+            }).then((injectionResults) => {
+                for (const { result } of injectionResults) {
+                    sendResponse(result);
+                }
+            });
+        }
+    }
+    return true;
 });

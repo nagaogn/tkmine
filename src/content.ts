@@ -142,27 +142,14 @@ const stopArena = () => {
 	arenaTimeObserver.disconnect();
 }
 
-const matchSize = (size: string): boolean => {
-	const currentSize: HTMLElement | null = document.querySelector('.level-select-link.active');
-	let result;
-	if(!!currentSize) {
-		if(
-			size === 'Beginner' && /Beginner|初級|Anfänger|Новичок|Novato|Principiante|Principiante|Débutant|初级|初級|초급/.test(currentSize.innerText) ||
-			size === 'Intermediate' && /Intermediate|中級|Fortgeschrittene|Любитель|Aficionado|Intermédio|Intermedio|Intermédiaire|中级|中級|중급/.test(currentSize.innerText) ||
-			size === 'Expert' && /Expert|上級|Profis|Профессионал|Experimentado|Especialista|Esperto|Expert|高级|高級|상급/.test(currentSize.innerText)
-		) {
-			result = true;
-		} else {
-			result = false;
-		}
-	} else {
-		result = false;
-	}
-	return result;
+const matchSize = async (size: string): Promise<boolean> => {
+	return new Promise((resolve)=>{
+		chrome.runtime.sendMessage({ action: "matchSize", args: [size] }, (response) => {
+			resolve(response);
+		});
+	});
 }
 
-// FIXME: 耐久のカウント対象じゃないやつは除外したい
-// Continue playing、Spectator mode、記録の再生
 const enduranceObserverTarget = document.getElementById('G64') as HTMLElement;
 
 let startPathname = '';
@@ -182,12 +169,12 @@ const enduranceObserver = new MutationObserver(mutations => {
 				)
 			) {
 				const tmpPathname = startPathname;
-				startPathname = location.pathname;//NOTE: getGameStatusが何回も実行されるのを防ぐ
+				startPathname = location.pathname;//NOTE: GameStatusManager.getが何回も実行されるのを防ぐ
 				const gameStatus = await GameStatusManager.get();
 				if(
 					gameStatus instanceof EnduranceStatus &&
-					matchSize(gameStatus.size) &&
-					gameStatus.isCorrectStartPathname(startPathname)
+					gameStatus.isCorrectStartPathname(startPathname) &&
+					await matchSize(gameStatus.size)
 				) {
 					gameStatus.recordStart(startPathname);
 					GameStatusManager.set(gameStatus);
@@ -204,8 +191,8 @@ const enduranceObserver = new MutationObserver(mutations => {
 				const gameStatus = await GameStatusManager.get();
 				if(
 					gameStatus instanceof EnduranceStatus &&
-					matchSize(gameStatus.size) &&
-					gameStatus.isCorrectWinPathname(winPathname)
+					gameStatus.isCorrectWinPathname(winPathname) &&
+					await matchSize(gameStatus.size)
 				) {
 					const options = await OptionsManager.get();
 					if(!!options) {

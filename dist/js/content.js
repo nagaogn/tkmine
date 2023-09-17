@@ -120,23 +120,12 @@ const stopArena = () => {
     arenaObserver.disconnect();
     arenaTimeObserver.disconnect();
 };
-const matchSize = (size) => {
-    const currentSize = document.querySelector('.level-select-link.active');
-    let result;
-    if (!!currentSize) {
-        if (size === 'Beginner' && /Beginner|初級|Anfänger|Новичок|Novato|Principiante|Principiante|Débutant|初级|初級|초급/.test(currentSize.innerText) ||
-            size === 'Intermediate' && /Intermediate|中級|Fortgeschrittene|Любитель|Aficionado|Intermédio|Intermedio|Intermédiaire|中级|中級|중급/.test(currentSize.innerText) ||
-            size === 'Expert' && /Expert|上級|Profis|Профессионал|Experimentado|Especialista|Esperto|Expert|高级|高級|상급/.test(currentSize.innerText)) {
-            result = true;
-        }
-        else {
-            result = false;
-        }
-    }
-    else {
-        result = false;
-    }
-    return result;
+const matchSize = async (size) => {
+    return new Promise((resolve) => {
+        chrome.runtime.sendMessage({ action: "matchSize", args: [size] }, (response) => {
+            resolve(response);
+        });
+    });
 };
 const enduranceObserverTarget = document.getElementById('G64');
 let startPathname = '';
@@ -152,8 +141,8 @@ const enduranceObserver = new MutationObserver(mutations => {
                 startPathname = location.pathname;
                 const gameStatus = await GameStatusManager.get();
                 if (gameStatus instanceof EnduranceStatus &&
-                    matchSize(gameStatus.size) &&
-                    gameStatus.isCorrectStartPathname(startPathname)) {
+                    gameStatus.isCorrectStartPathname(startPathname) &&
+                    await matchSize(gameStatus.size)) {
                     gameStatus.recordStart(startPathname);
                     GameStatusManager.set(gameStatus);
                 }
@@ -168,8 +157,8 @@ const enduranceObserver = new MutationObserver(mutations => {
                 winPathname = location.pathname;
                 const gameStatus = await GameStatusManager.get();
                 if (gameStatus instanceof EnduranceStatus &&
-                    matchSize(gameStatus.size) &&
-                    gameStatus.isCorrectWinPathname(winPathname)) {
+                    gameStatus.isCorrectWinPathname(winPathname) &&
+                    await matchSize(gameStatus.size)) {
                     const options = await OptionsManager.get();
                     if (!!options) {
                         const messages = await MessagesLoader.init(options.language);

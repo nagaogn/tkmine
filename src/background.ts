@@ -64,7 +64,22 @@ const changeTheatreMode = () => {
 	}
 }
 
-chrome.runtime.onMessage.addListener((message, sender) => {
+const matchSize = (size: string): boolean => {
+	const currentSize: number = (window as any).G68.l3;
+	let result = false;
+	if(!!currentSize) {
+		if(
+			size === 'Beginner' && currentSize === 1 ||
+			size === 'Intermediate' && currentSize === 2 ||
+			size === 'Expert' && currentSize === 3
+		) {
+			result = true;
+		}
+	}
+	return result;
+}
+
+chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 	if(message.action === "theatreMode") {
 		if(!!sender.tab?.id) {
 			chrome.scripting.executeScript({
@@ -72,5 +87,19 @@ chrome.runtime.onMessage.addListener((message, sender) => {
 				func: changeTheatreMode
 			});
 		}
+	} else if(message.action === "matchSize") {
+		if(!!sender.tab?.id) {
+			chrome.scripting.executeScript({
+				target: { tabId: sender.tab.id },
+				world: 'MAIN',
+				func: matchSize,
+				args: message.args
+			}).then((injectionResults) => {
+				for (const {result} of injectionResults) {
+					sendResponse(result);
+				}
+			});
+		}
 	}
+	return true;
 });
