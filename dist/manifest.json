@@ -11,6 +11,9 @@
 		"scripting",
 		"activeTab"
 	],
+	"host_permissions": [
+		"https://minesweeper.online/*"
+	],
 	"icons": {
 		"16": "icons/icon16.png",
 		"48": "icons/icon48.png",
