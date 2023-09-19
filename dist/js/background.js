@@ -1,3 +1,6 @@
+import { ARENA, ArenaStatus } from './arena.js';
+import { ENDURANCE, EnduranceStatus } from './endurance.js';
+import { GameStatusManager } from './game_status.js';
 import { OptionsManager } from './options.js';
 import { MessagesLoader } from './messages.js';
 const defaultOptions = {
@@ -92,4 +95,58 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         }
     }
     return true;
+});
+chrome.runtime.onStartup.addListener(() => {
+    GameStatusManager.get().then(gameStatus => {
+        if (gameStatus && Object.keys(gameStatus).length) {
+            let fileName = gameStatus.category;
+            if (gameStatus instanceof ArenaStatus) {
+                fileName += gameStatus.type;
+                chrome.action.setBadgeText({
+                    text: `${gameStatus.level}${gameStatus.elite ? 'E' : ''}`
+                });
+            }
+            else if (gameStatus instanceof EnduranceStatus) {
+                fileName += gameStatus.size;
+            }
+            chrome.action.setIcon({
+                path: {
+                    '128': `/icons/${fileName}.png`
+                }
+            });
+        }
+    });
+});
+chrome.storage.onChanged.addListener((changes) => {
+    if ('gameStatus' in changes) {
+        const change = changes["gameStatus"];
+        if (!change.oldValue && change.newValue) {
+            let fileName = change.newValue.category;
+            if (change.newValue.category === ARENA) {
+                fileName += change.newValue.type;
+                chrome.action.setBadgeText({
+                    text: `${change.newValue.level}${change.newValue.elite ? 'E' : ''}`
+                });
+            }
+            else if (change.newValue.category === ENDURANCE) {
+                fileName += change.newValue.size;
+            }
+            else {
+                console.error(`Invalid category: ${change.newValue.category}`);
+            }
+            chrome.action.setIcon({
+                path: {
+                    '128': `/icons/${fileName}.png`
+                }
+            });
+        }
+        else if (change.oldValue && !change.newValue) {
+            chrome.action.setBadgeText({ text: '' });
+            chrome.action.setIcon({
+                path: {
+                    '128': '/icons/icon128.png'
+                }
+            });
+        }
+    }
 });
