@@ -4,7 +4,7 @@
 プレイ中は進捗を確認する余裕が無いので、音声で教えてくれたら便利かと思って作ってみました。  
 
 ### インストール
-[chromeウェブストア](https://chrome.google.com/webstore/detail/%E3%82%BF%E3%82%A4%E3%83%A0%E3%82%AD%E3%83%BC%E3%83%91%E3%83%BC-for-minesweeper-o/bjdlhjalichcnpbngjojfbilmfbpaakc)  
+[chromeウェブストア](https://chrome.google.com/webstore/detail/bjdlhjalichcnpbngjojfbilmfbpaakc)  
 
 Minesweeper Onlineを開いている場合は、ページを再読み込みしてから使用してください。  
 
