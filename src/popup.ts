@@ -25,9 +25,6 @@ import { MessagesLoader } from './messages.js';
 	if(!!gameStatus) {
 		if(gameStatus instanceof ArenaStatus) {
 			(document.getElementById('arena') as HTMLInputElement).checked = true;
-			(document.getElementById('type') as HTMLInputElement).value = gameStatus.type;
-			(document.getElementById('level') as HTMLInputElement).value = gameStatus.level;
-			(document.getElementById('elite') as HTMLInputElement).checked = gameStatus.elite;
 		} else if(gameStatus instanceof EnduranceStatus) {
 			(document.getElementById('endurance') as HTMLInputElement).checked = true;
 			(document.getElementById('size') as HTMLInputElement).value = gameStatus.size;
@@ -43,19 +40,15 @@ import { MessagesLoader } from './messages.js';
 	}
 })();
 
+(document.getElementById('size') as HTMLSelectElement).onfocus = () => {
+	(document.getElementById('endurance') as HTMLInputElement).checked = true;
+}
+
 (document.getElementById('start') as HTMLElement).onclick = () => {
 	const category = (document.querySelector('[name="category"]:checked') as HTMLInputElement).value;
 	let gameStatus;
 	if(category === ARENA) {
-		const type = (document.getElementById('type') as HTMLInputElement).value;
-		const level = (document.getElementById('level') as HTMLInputElement).value;
-		const elite = (document.getElementById('elite') as HTMLInputElement).checked;
-		if(ArenaStatus.isGameType(type) && ArenaStatus.isLevelType(level)) {
-			gameStatus = new ArenaStatus(type, level, elite);
-		} else {
-			console.error(`Invalid game type: ${type} or level: ${level}`);
-			return;
-		}
+		gameStatus = new ArenaStatus();
 	} else if(category === ENDURANCE) {
 		const size = (document.getElementById('size') as HTMLInputElement).value;
 		if(EnduranceStatus.isSizeType(size)) {

@@ -25,9 +25,6 @@ import { MessagesLoader } from './messages.js';
     if (!!gameStatus) {
         if (gameStatus instanceof ArenaStatus) {
             document.getElementById('arena').checked = true;
-            document.getElementById('type').value = gameStatus.type;
-            document.getElementById('level').value = gameStatus.level;
-            document.getElementById('elite').checked = gameStatus.elite;
         }
         else if (gameStatus instanceof EnduranceStatus) {
             document.getElementById('endurance').checked = true;
@@ -45,20 +42,14 @@ import { MessagesLoader } from './messages.js';
         document.getElementById('stop').classList.add('hide');
     }
 })();
+document.getElementById('size').onfocus = () => {
+    document.getElementById('endurance').checked = true;
+};
 document.getElementById('start').onclick = () => {
     const category = document.querySelector('[name="category"]:checked').value;
     let gameStatus;
     if (category === ARENA) {
-        const type = document.getElementById('type').value;
-        const level = document.getElementById('level').value;
-        const elite = document.getElementById('elite').checked;
-        if (ArenaStatus.isGameType(type) && ArenaStatus.isLevelType(level)) {
-            gameStatus = new ArenaStatus(type, level, elite);
-        }
-        else {
-            console.error(`Invalid game type: ${type} or level: ${level}`);
-            return;
-        }
+        gameStatus = new ArenaStatus();
     }
     else if (category === ENDURANCE) {
         const size = document.getElementById('size').value;

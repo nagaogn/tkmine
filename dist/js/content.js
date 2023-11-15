@@ -12,15 +12,6 @@ const speak = (text, volume = 0.5, rate = 1, lang = 'en') => {
     utterance.rate = rate;
     speechSynthesis.speak(utterance);
 };
-const isCorrectArenaTypes = (panel, correctType, correctLevel, correctElite) => {
-    const typeRegx = /ticket\d{1,2}/;
-    const type = typeRegx.exec(panel.innerHTML)?.[0];
-    const levelEliteRegx = /(L\d)(E?)/;
-    const levelElite = levelEliteRegx.exec(panel.innerHTML);
-    const level = levelElite?.[1];
-    const elite = !!levelElite?.[2];
-    return type === correctType && level === correctLevel && elite === correctElite;
-};
 const arenaObserverTarget = document.getElementById('A35');
 const arenaObserver = new MutationObserver(mutations => {
     mutations.forEach(async (mutation) => {
@@ -29,8 +20,15 @@ const arenaObserver = new MutationObserver(mutations => {
             const winsRegx = /(\d+) \/ \d+/;
             const wins = parseInt(winsRegx.exec(panel.innerHTML)?.[1] ?? '');
             const gameStatus = await GameStatusManager.get();
-            if (gameStatus instanceof ArenaStatus &&
-                isCorrectArenaTypes(panel, gameStatus.type, gameStatus.level, gameStatus.elite)) {
+            if (gameStatus instanceof ArenaStatus) {
+                const arenaParams = await new Promise((resolve) => {
+                    chrome.runtime.sendMessage({ action: "getArenaParams" }, (response) => {
+                        resolve(response);
+                    });
+                });
+                gameStatus.games = arenaParams.games;
+                gameStatus.timeLimit = arenaParams.time * 60;
+                gameStatus.averageDifficulty = (arenaParams.diffMin + arenaParams.diffMax) / 2;
                 const remainTime = document.getElementById('arena_remain_time');
                 const difficultyRegx = /(?:複雑さ|Difficulty|Schwierigkeit|Сложность|Complejidad|Dificuldade|Difficoltà|Difficulté|难度|難度|난이도)(?: ?: |：)(?:<img src="\/img\/skull.svg" class="diff-icon" alt="Difficulty"\/>)?([\d ]+)/;
                 const difficulty = Number(difficultyRegx.exec(mutation.target.getAttribute('data-content') ?? '')?.[1].trim());
@@ -92,15 +90,16 @@ const arenaTimeObserver = new MutationObserver(mutations => {
                 const panel = document.querySelector('.pull-left.arena-panel');
                 const gameStatus = await GameStatusManager.get();
                 if (panel &&
-                    gameStatus instanceof ArenaStatus &&
-                    isCorrectArenaTypes(panel, gameStatus.type, gameStatus.level, gameStatus.elite)) {
+                    gameStatus instanceof ArenaStatus) {
                     const remainTime = gameStatus.calcRemainTime(mutation.target.innerText);
                     const remainTimeInMinutes = Math.trunc(remainTime / 60);
-                    if (remainTimeInMinutes < arenaNextNotificationTime) {
+                    const arenaNextNotificationTimeTemp = Math.trunc(remainTimeInMinutes / options.arenaRemainTimeNotifyInterval) * options.arenaRemainTimeNotifyInterval;
+                    if (remainTimeInMinutes < arenaNextNotificationTime ||
+                        arenaNextNotificationTime < arenaNextNotificationTimeTemp) {
                         const messages = await MessagesLoader.init(options.language);
                         const textToSpeak = `${formatSecToHM(remainTime + 60, messages)}, `;
                         speak(textToSpeak, options.volume, options.rate, options.language);
-                        arenaNextNotificationTime = Math.floor(remainTimeInMinutes / options.arenaRemainTimeNotifyInterval) * options.arenaRemainTimeNotifyInterval;
+                        arenaNextNotificationTime = arenaNextNotificationTimeTemp;
                     }
                 }
             }

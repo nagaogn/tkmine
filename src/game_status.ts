@@ -17,12 +17,7 @@ class GameStatusManager {
 		let result;
 		if(gameStatus) {
 			if(gameStatus.category === ARENA) {
-				result = new ArenaStatus(
-					(gameStatus as ArenaStatus).type,
-					(gameStatus as ArenaStatus).level,
-					(gameStatus as ArenaStatus).elite,
-					gameStatus as ArenaStatus
-				);
+				result = new ArenaStatus(gameStatus as ArenaStatus);
 			} else if(gameStatus.category === ENDURANCE) {
 				result = new EnduranceStatus(
 					(gameStatus as EnduranceStatus).size,

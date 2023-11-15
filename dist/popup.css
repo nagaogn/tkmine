@@ -33,9 +33,3 @@ select {
 .hide {
 	display: none;
 }
-div:has(#arena:checked) ~ div:has(#size) {
-	display: none;
-}
-div:has(#endurance:checked) ~ div:has(#type) {
-	display: none;
-}

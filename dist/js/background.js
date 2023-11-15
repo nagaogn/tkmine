@@ -1,4 +1,3 @@
-import { ARENA, ArenaStatus } from './arena.js';
 import { ENDURANCE, EnduranceStatus } from './endurance.js';
 import { GameStatusManager } from './game_status.js';
 import { OptionsManager } from './options.js';
@@ -52,6 +51,10 @@ chrome.runtime.onInstalled.addListener(async (details) => {
         OptionsManager.set(mergedOptions);
     }
 });
+const getArenaParams = () => {
+    const G68 = window.G68;
+    return window.A1.g1(G68.a21.type, G68.a21.mode, G68.a21.extraConf);
+};
 const changeTheatreMode = () => {
     const shadow = document.getElementById('shadow');
     const themeSwitcher = document.getElementById('theme-switcher');
@@ -72,7 +75,21 @@ const matchSize = (size) => {
     return result;
 };
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
-    if (message.action === "theatreMode") {
+    if (message.action === "getArenaParams") {
+        if (!!sender.tab?.id) {
+            chrome.scripting.executeScript({
+                target: { tabId: sender.tab.id },
+                world: 'MAIN',
+                func: getArenaParams,
+                args: message.args
+            }).then((injectionResults) => {
+                for (const { result } of injectionResults) {
+                    sendResponse(result);
+                }
+            });
+        }
+    }
+    else if (message.action === "theatreMode") {
         if (!!sender.tab?.id) {
             chrome.scripting.executeScript({
                 target: { tabId: sender.tab.id },
@@ -100,13 +117,7 @@ chrome.runtime.onStartup.addListener(() => {
     GameStatusManager.get().then(gameStatus => {
         if (gameStatus && Object.keys(gameStatus).length) {
             let fileName = gameStatus.category;
-            if (gameStatus instanceof ArenaStatus) {
-                fileName += gameStatus.type;
-                chrome.action.setBadgeText({
-                    text: `${gameStatus.level}${gameStatus.elite ? 'E' : ''}`
-                });
-            }
-            else if (gameStatus instanceof EnduranceStatus) {
+            if (gameStatus instanceof EnduranceStatus) {
                 fileName += gameStatus.size;
             }
             chrome.action.setIcon({
@@ -122,17 +133,8 @@ chrome.storage.onChanged.addListener((changes) => {
         const change = changes["gameStatus"];
         if (!change.oldValue && change.newValue) {
             let fileName = change.newValue.category;
-            if (change.newValue.category === ARENA) {
-                fileName += change.newValue.type;
-                chrome.action.setBadgeText({
-                    text: `${change.newValue.level}${change.newValue.elite ? 'E' : ''}`
-                });
-            }
-            else if (change.newValue.category === ENDURANCE) {
+            if (change.newValue.category === ENDURANCE) {
                 fileName += change.newValue.size;
-            }
-            else {
-                console.error(`Invalid category: ${change.newValue.category}`);
             }
             chrome.action.setIcon({
                 path: {
@@ -141,7 +143,6 @@ chrome.storage.onChanged.addListener((changes) => {
             });
         }
         else if (change.oldValue && !change.newValue) {
-            chrome.action.setBadgeText({ text: '' });
             chrome.action.setIcon({
                 path: {
                     '128': '/icons/icon128.png'
