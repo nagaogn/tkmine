@@ -22,7 +22,7 @@ interface ArenaParams {
 	diffMax: number;
   }
 
-const arenaObserverTarget = document.getElementById('A35') as HTMLElement;
+const observerTarget = document.getElementById('page') as HTMLElement;
 
 const arenaObserver = new MutationObserver(mutations => {
 	mutations.forEach(async mutation => {
@@ -139,9 +139,9 @@ const arenaTimeObserverConfig: MutationObserverInit = {
 };
 
 const startArena = () => {
-	arenaObserver.observe(arenaObserverTarget, arenaObserverConfig);
+	arenaObserver.observe(observerTarget, arenaObserverConfig);
 	arenaNextNotificationTime = Infinity;
-	arenaTimeObserver.observe(arenaObserverTarget, arenaTimeObserverConfig);
+	arenaTimeObserver.observe(observerTarget, arenaTimeObserverConfig);
 }
 
 const stopArena = () => {
@@ -156,8 +156,6 @@ const matchSize = async (size: string): Promise<boolean> => {
 		});
 	});
 }
-
-const enduranceObserverTarget = document.getElementById('G64') as HTMLElement;
 
 let startPathname = '';
 let winPathname = '';
@@ -245,7 +243,7 @@ const enduranceObserveConfig: MutationObserverInit = {
 let intervalId: number | null = null;
 
 const startEndurance = () => {
-	enduranceObserver.observe(enduranceObserverTarget, enduranceObserveConfig);
+	enduranceObserver.observe(observerTarget, enduranceObserveConfig);
 
 	let nextNotificationTime = 0;
 	intervalId = setInterval(async () => {

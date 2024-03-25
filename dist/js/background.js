@@ -57,7 +57,7 @@ const getArenaParams = () => {
 };
 const changeTheatreMode = () => {
     const shadow = document.getElementById('shadow');
-    const themeSwitcher = document.getElementById('theme-switcher');
+    const themeSwitcher = document.getElementsByClassName('theme-switcher')[0];
     if (shadow?.style.display !== 'block' && themeSwitcher) {
         Array.from(themeSwitcher.getElementsByTagName('a')).find(a => / (Theatre mode|シアターモード|Theatermodus|Режим кинотеатра|Modo teatro|Modo Teatro|Modalità teatro|Mode théâtre|剧院模式|劇院模式|극장 모드)/.test(a.textContent ?? ''))?.click();
     }

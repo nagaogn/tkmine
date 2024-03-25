@@ -12,7 +12,7 @@ const speak = (text, volume = 0.5, rate = 1, lang = 'en') => {
     utterance.rate = rate;
     speechSynthesis.speak(utterance);
 };
-const arenaObserverTarget = document.getElementById('A35');
+const observerTarget = document.getElementById('page');
 const arenaObserver = new MutationObserver(mutations => {
     mutations.forEach(async (mutation) => {
         const panel = document.querySelector('.pull-left.arena-panel');
@@ -111,9 +111,9 @@ const arenaTimeObserverConfig = {
     subtree: true
 };
 const startArena = () => {
-    arenaObserver.observe(arenaObserverTarget, arenaObserverConfig);
+    arenaObserver.observe(observerTarget, arenaObserverConfig);
     arenaNextNotificationTime = Infinity;
-    arenaTimeObserver.observe(arenaObserverTarget, arenaTimeObserverConfig);
+    arenaTimeObserver.observe(observerTarget, arenaTimeObserverConfig);
 };
 const stopArena = () => {
     arenaObserver.disconnect();
@@ -126,7 +126,6 @@ const matchSize = async (size) => {
         });
     });
 };
-const enduranceObserverTarget = document.getElementById('G64');
 let startPathname = '';
 let winPathname = '';
 const enduranceObserver = new MutationObserver(mutations => {
@@ -195,7 +194,7 @@ const enduranceObserveConfig = {
 };
 let intervalId = null;
 const startEndurance = () => {
-    enduranceObserver.observe(enduranceObserverTarget, enduranceObserveConfig);
+    enduranceObserver.observe(observerTarget, enduranceObserveConfig);
     let nextNotificationTime = 0;
     intervalId = setInterval(async () => {
         const options = await OptionsManager.get();
