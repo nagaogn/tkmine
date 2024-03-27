@@ -93,8 +93,6 @@ const arenaObserverConfig: MutationObserverInit = {
 	subtree: true
 };
 
-//TODO: そのまま次のアリーナを始めたとき、これもリセットしたい
-//TODO: 14分で5分おきのとき10だけど、1分おきにしたとき13になるようにしたい
 let arenaNextNotificationTime = Infinity;
 
 const arenaTimeObserver = new MutationObserver(mutations => {
